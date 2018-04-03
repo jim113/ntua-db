@@ -1,0 +1,16 @@
+<!doctype html>
+<title>eHotels DBMS</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h1>eHotels Database Management System</h1>
+  <div class=metanav>
+
+    <a href="/">Home Page</a>
+    <a href="/checkin">Check-in</a>
+    <a href="/reservation">Make Reservation</a>
+    <a href="/customers">Customers</a>
+    <a href="/employees">Employees</a>
+    <a href="/about">About</a>
+  </div>
+  {% block body %}{% endblock %}
+</div>

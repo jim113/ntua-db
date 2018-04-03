@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if not error %}
+Success! Here are your resutls for registering an {{ type_of_result }}:
+<br>
+
+<center>
+<table border = 1>
+      {% for key, value in result.items() %}
+
+         <tr>
+            <th> {{ key }} </th>
+            <td> {{ value }} </td>
+         </tr>
+
+      {% endfor %}
+   </table>
+</center>
+
+{% else %}
+
+<p style="color: red">Ooops! There was an error in {{ type_of_result }}!</p>
+
+{% endif %}
+
+{% endblock %}
