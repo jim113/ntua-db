@@ -1,0 +1,12 @@
+Employee: Social Security Number, IRS Number, Last Name, First Name, Address_id, Work_id, Rent_id
+Address: Street, Number, Postal Code, City, Address_id
+Works: Start Date, Position, Finish Date, Work_id[],Hotel_id[]
+Hotel: Stars, Phone number[], Email Address[],Hotel ID, Address_id, Number_of_rooms
+Has_hotels: Hotel ID[], Hotel group ID
+Hotel_group: Address_id, Email Address[], Hotel group ID, Phone number[], Number_of_hotels
+Rents: Start Date, Finish Date, rent_id, payment_id, room_id
+Payment Transaction: payment_id, Payment Amount, Payment Method
+Has_rooms: hotel_id, room_id[]
+Hotel_room: Price, room_id, Repairs_need, Expandable, View, Capacity, Amenities[], rent_id, reserves_id
+Reserves: Start Date, Paid, Finish Date, reserves_id, customer_id
+Customer: First Registration, Social Security Number, IRS Number, Last name, First Name, Address_id, customer_id, rent_id
