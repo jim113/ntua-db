@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 import mysql.connector
 import configparser, os
 app = Flask(__name__)
@@ -46,7 +46,7 @@ def about():
 
 @app.route('/result/<type_of_result>', methods = ['POST', 'GET'])
 def result(type_of_result):
-	error = True
+	error = False
 	if request.method == 'POST':
 		result = request.form
 		return render_template("result.html",result = result, error=error, type_of_result=type_of_result)
