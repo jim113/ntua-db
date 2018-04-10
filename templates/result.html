@@ -2,14 +2,33 @@
 {% block body %}
 
 {% if not error %}
-Success! Here are your resutls for registering an {{ type_of_result }}:
+Success! Here are your resutls for searching {{ type_of_result }}s:
 <br>
 
 <div style="padding: 2rem">
 <center>
 <table align="left|left" border = 0>
       {% for key, value in result.items() %}
+      {% if value != '' %}
+         <tr>
+            <th> {{ key }} </th>
+            <td> {{ value }} </td>
+         </tr>
+      {% endif %}
+      {% endfor %}
+   </table>
+</center>
+</div>
 
+<div style="padding: 2rem">
+<p>Your search returned {{ number_of_results }} results</p>
+{% if number_of_results > 0 %}
+<center>
+
+{% for x in search_results %}
+<div style="padding: 2rem">
+<table align="left|left" border = 0>
+      {% for key, value in x.items() %}
          <tr>
             <th> {{ key }} </th>
             <td> {{ value }} </td>
@@ -17,8 +36,21 @@ Success! Here are your resutls for registering an {{ type_of_result }}:
 
       {% endfor %}
    </table>
+   <button>Delete {{ type_of_result }}</button>
+   <button>Edit {{ type_of_result }}</button>
+   <br>
+   {% endfor %}
+
+ </div>
 </center>
 </div>
+{% else %}
+<p>Your search returned no result so you can create one:<p>
+<center>
+<button>Create {{ type_of_result }}</button>
+</center>
+
+{% endif %}
 
 {% else %}
 

@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
-
+<style>
+  input {
+    width: 100%;
+  }
+</style>
 
 <h2>Manage Customers</h2>
 
@@ -8,14 +12,14 @@
 <br>
 <h2 style="text-align: center">Customer Details</h2>
 <form action = "result/customer" method = "POST">
-    <p>IRS Number <input required type = "text" name = "IRSNumber" /></p>
-     <p>First Name <input type = "text" name = "FirstName" /></p>
-     <p>Last Name <input type = "text" name = "LastName" /></p>
-     <p>Social Security Number <input type = "text" name = "SocialSecurityNumber" /></p>
-     <p>Address (Street) <input type ="text" name = "Address" /></p>
-     <p>Number <input type ="text" name = "Number" /></p>
-     <p>Postal Code <input type="text" name = "PostalCode" /></p>
-     <p>City <input type="text" name = "City" /></p>
+    <p>IRS Number<br><input type = "text" name = "IRSNumber" /></p>
+     <p>First Name<br> <input type = "text" name = "FirstName" /></p>
+     <p>Last Name<br> <input type = "text" name = "LastName" /></p>
+     <p>Social Security Number<br> <input type = "text" name = "SocialSecurityNumber" /></p>
+     <p>Address (Street)<br> <input type ="text" name = "Address" /></p>
+     <p>Number<br> <input type ="text" name = "StreetNumber" /></p>
+     <p>Postal Code<br> <input type="text" name = "PostalCode" /></p>
+     <p>City<br> <input type="text" name = "City" /></p>
      <p style="text-align: center"><input type = "submit" value = "Search" /></p>
 
   </form>

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, flash
 import mysql.connector
 import configparser, os
+from query_builder import *
 app = Flask(__name__)
 
 config = configparser.ConfigParser()
@@ -13,7 +14,7 @@ cnx = mysql.connector.connect(user=config.get('DBCredentials', 'USER'),
 								host=config.get('DBCredentials', 'HOST'),
 								database=config.get('DBCredentials', 'DB') )
 # cursor
-cursor = cnx.cursor()
+cursor = cnx.cursor(dictionary=True)
 
 def exec_query(q):
 	global cursor
@@ -47,9 +48,31 @@ def about():
 @app.route('/result/<type_of_result>', methods = ['POST', 'GET'])
 def result(type_of_result):
 	error = False
+	if type_of_result == 'customer':
+		tbl = 'Customer'
+	elif type_of_result == 'employee':
+		tbl = 'Employee'
+
 	if request.method == 'POST':
 		result = request.form
-		return render_template("result.html",result = result, error=error, type_of_result=type_of_result)
+
+		if all([x == '' for x in result.values()]):
+			error = True
+			search_results = {}
+		else:
+			query = build_search_query(result, tbl)
+			print(result)
+			try:
+				search_results = exec_query(query)
+				print('Found {} matches:'.format(len(search_results)))
+				print(search_results)
+			except:
+				error = True
+
+
+		return render_template("result.html",result = result, search_results = search_results, number_of_results = len(search_results), error=error, type_of_result=type_of_result)
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True)

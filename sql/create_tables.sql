@@ -4,16 +4,6 @@ create database eHOTELS;
 USE eHOTELS;
 
 -- drop tables
--- drop table if exists Employee;
--- drop table if exists Customer;
--- drop table if exists HotelGroupEmailAddress;
--- drop table if exists HotelGroupPhoneNumbers;
--- drop table if exists HotelGroup;
--- drop table if exists HotelPhoneNumbers;
--- drop table if exists HotelEmailAddress;
--- drop table if exists Hotel;
---
--- drop table if exists Address;
 
 -- Address(AddressID, Street, Number, PostalCode, City)
 
@@ -24,20 +14,12 @@ create table Employee (
   FirstName varchar(255),
   LastName varchar(255) not null default '',
   SocialSecurityNumber int(11) not null default 0,
-  primary key (IRSNumber),
-  index (IRSNumber, LastName, FirstName)
-);
-
-create table EmployeeAddress (
-  AddressID int not null auto_increment,
-  IRSNumber int not null,
   Street varchar(255),
   StreetNumber varchar(4),
   PostalCode varchar(5),
   City varchar(255),
-  primary key (AddressID),
-  foreign key (IRSNumber) references Employee(IRSNumber),
-  index(PostalCode, Street)
+  primary key (IRSNumber),
+  index (IRSNumber, LastName, FirstName)
 );
 
 create table Customer (
@@ -46,20 +28,12 @@ create table Customer (
   LastName varchar(255) not null default '',
   FirstRegistration datetime not null default CURRENT_TIMESTAMP,
   SocialSecurityNumber int(11) not null default 0,
-  primary key (IRSNumber),
-  index (IRSNumber, LastName, FirstName)
-);
-
-create table CustomerAddress (
-  AddressID int not null auto_increment,
-  IRSNumber int,
   Street varchar(255),
   StreetNumber varchar(4),
   PostalCode varchar(5),
   City varchar(255),
-  primary key (AddressID),
-  foreign key (IRSNumber) references Customer(IRSNumber),
-  index (PostalCode, Street)
+  primary key (IRSNumber),
+  index (IRSNumber, LastName, FirstName)
 );
 
 -- HotelGroup(HotelGroupID, NumberOfHotels, EmailAddress[], PhoneNumber[], AddressID)
@@ -67,19 +41,11 @@ create table CustomerAddress (
 create table HotelGroup (
   HotelGroupID int not null auto_increment,
   NumberOfHotels int not null default 0,
-  primary key (HotelGroupID)
-);
-
-create table HotelGroupAddress (
-  AddressID int not null auto_increment,
-  HotelGroupID int,
   Street varchar(255),
   StreetNumber varchar(4),
   PostalCode varchar(5),
   City varchar(255),
-  foreign key (HotelGroupID) references HotelGroup(HotelGroupID),
-  primary key (AddressID),
-  index (PostalCode, Street)
+  primary key (HotelGroupID)
 );
 
 create table HotelGroupEmailAddress (
@@ -105,19 +71,12 @@ create table Hotel (
   Stars int(1) not null default 0,
   NumberOfRooms int not null default 0,
   HotelGroupID int,
-  primary key (HotelID),
-  foreign key (HotelGroupID) references HotelGroup(HotelGroupID)
-);
-
-create table HotelAddress (
-  AddressID int not null auto_increment,
-  HotelID int,
   Street varchar(255),
   StreetNumber varchar(4),
   PostalCode varchar(5),
   City varchar(255),
-  foreign key (HotelID) references Hotel(HotelID),
-  primary key (AddressID)
+  primary key (HotelID),
+  foreign key (HotelGroupID) references HotelGroup(HotelGroupID)
 );
 
 create table HotelEmailAddress (
@@ -147,13 +106,15 @@ create table HotelRoom (
   Expandable int(1) not null default 0,
   RepairsNeed int(1) not null default 0,
   primary key (HotelRoomID),
-  foreign key (HotelID) references Hotel(HotelID)
+  foreign key (HotelID) references Hotel(HotelID),
+  index (HotelID, HotelRoomID)
 );
 
 create table Amenities (
   HotelRoomID int,
   Amenity varchar(50),
-  foreign key (HotelRoomID) references HotelRoom(HotelRoomID)
+  foreign key (HotelRoomID) references HotelRoom(HotelRoomID),
+  index (HotelRoomID)
 );
 
 -- N : M relations
