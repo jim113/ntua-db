@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if not error %}
+<p>Successfully deleted {{ type_of_result }} with IRS Number {{ irs_number }}</p>
+
+{% else %}
+<p style="color: red;">There was an error in deleting {{ type_of_result }} with number {{ irs_number }}</p>
+{% endif %}
+
+{% endblock %}

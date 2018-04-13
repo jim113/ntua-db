@@ -36,8 +36,8 @@ Success! Here are your resutls for searching {{ type_of_result }}s:
 
       {% endfor %}
    </table>
-   <button>Delete {{ type_of_result }}</button>
-   <button>Edit {{ type_of_result }}</button>
+   <a href="/result/{{ type_of_result }}/delete/{{ x['IRSNumber'] }}">Delete {{ type_of_result }}</a>
+   <a href="/result/{{ type_of_result }}/edit/{{ x|tojson|safe }}">Edit {{ type_of_result }}</a>
    <br>
    {% endfor %}
 
@@ -47,7 +47,7 @@ Success! Here are your resutls for searching {{ type_of_result }}s:
 {% else %}
 <p>Your search returned no result so you can create one:<p>
 <center>
-<button>Create {{ type_of_result }}</button>
+<a href="/result/{{ type_of_result }}/edit/{{ result|tojson|safe }}">Create {{ type_of_result }}</a>
 </center>
 
 {% endif %}
