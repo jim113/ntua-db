@@ -20,7 +20,8 @@ cursor = cnx.cursor(dictionary=True)
 global link_tables
 link_tables = {
 	'customer' : 'Customer',
-	'employee' : 'Employee'
+	'employee' : 'Employee',
+	'hotel' : 'Hotel'
 }
 
 
@@ -46,6 +47,10 @@ def customers():
 @app.route('/employees')
 def employees():
 	return render_template('employees.html')
+
+@app.route('/hotels')
+def hotels():
+	return render_template('hotels.html')
 
 @app.route('/checkin')
 def checkin():
@@ -108,6 +113,29 @@ def result_delete(type_of_result, irs_number):
 
 	return render_template("result_delete.html", irs_number = irs_number, type_of_result = type_of_result, error=error)
 
+@app.route('/create/<type_of_result>', methods=['GET', 'POST'])
+def create(type_of_result):
+	global link_tables
+	error = False
+	tbl = link_tables[type_of_result]
+	error_log = ''
+
+	if request.method == 'GET':
+		print('GET')
+	elif request.method == 'POST':
+		print('POST')
+		result = request.form
+		try:
+			query = build_insert_query(result, tbl)
+			print('Insert query is \n' + query)
+			exec_query(q = query, commit = True)
+		except Exception as e:
+			error = True
+			error_log = str(e)
+			print(error_log)
+			print('There was an error in insertion')
+
+	return render_template("person_create.html", type_of_result=type_of_result, error=error, tbl = tbl, error_log = error_log)
 
 
 if __name__ == '__main__':

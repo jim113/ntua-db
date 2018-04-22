@@ -1,5 +1,31 @@
 {% extends "layout.html" %}
 {% block body %}
+<style>
+  input {
+    width: 100%;
+  }
+</style>
+
 <h2>Manage Employees</h2>
+
+<p>This is the Employees Page. From here you can create an employee, find an employee and alter his details or delete existing employees </p>
+<br>
+<h2 style="text-align: center">Employee Details</h2>
+<form action = "result/employee" method = "POST">
+    <p>IRS Number<br><input type = "text" name = "IRSNumber" /></p>
+     <p>First Name<br> <input type = "text" name = "FirstName" /></p>
+     <p>Last Name<br> <input type = "text" name = "LastName" /></p>
+     <p>Social Security Number<br> <input type = "text" name = "SocialSecurityNumber" /></p>
+     <p>Address (Street)<br> <input type ="text" name = "Street" /></p>
+     <p>Number<br> <input type ="text" name = "StreetNumber" /></p>
+     <p>Postal Code<br> <input type="text" name = "PostalCode" /></p>
+     <p>City<br> <input type="text" name = "City" /></p>
+     <p style="text-align: center"><input type = "submit" value = "Search" /></p>
+
+  </form>
+
+  <p style="text-align: center"> You can create a employee from here
+  <a href="create/employee">Create an Employee</a>
+  </p>
 
 {% endblock %}

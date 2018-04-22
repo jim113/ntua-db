@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+<style>
+  input {
+    width: 100%;
+  }
+</style>
+
+<h2>Manage Hotels</h2>
+
+<p>This is the Hotels Page. From here you can create an employee, find a hotel and alter his details or delete existing hotels </p>
+<br>
+<h2 style="text-align: center">Hotels Details</h2>
+<form action = "result/hotel" method = "POST">
+     <p>Hotel ID<br><input type = "text" name = "HotelID" /></p>
+     <p>Stars<br> <input type = "text" name = "Stars" /></p>
+     <p>Hotel Group ID<br> <input type = "text" name = "HotelGroupID" /></p>
+     <p>Number of Rooms<br> <input type = "text" name = "NumberOfRooms" /></p>
+     <p>Address (Street)<br> <input type ="text" name = "Street" /></p>
+     <p>Number<br> <input type ="text" name = "StreetNumber" /></p>
+     <p>Postal Code<br> <input type="text" name = "PostalCode" /></p>
+     <p>City<br> <input type="text" name = "City" /></p>
+     <p style="text-align: center"><input type = "submit" value = "Search" /></p>
+
+  </form>
+
+  <p style="text-align: center"> You can create a hotel from here
+  <a href="create/hotel">Create a hotel</a>
+  </p>
+
+{% endblock %}
