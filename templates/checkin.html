@@ -1,15 +1,33 @@
 {% extends "layout.html" %}
 {% block body %}
-<h2>Check-in for an accomodation</h2>
+<style>
+  input {
+    width: 100%;
+  }
+</style>
 
-<!-- Sample form taken from the internet -->
-<form action = "result/employee" method = "POST">
-     <p>Name <input type = "text" name = "Name" /></p>
-     <p>Physics <input type = "text" name = "Physics" /></p>
-     <p>Chemistry <input type = "text" name = "chemistry" /></p>
-     <p>Maths <input type ="text" name = "Mathematics" /></p>
-     <p><input type = "submit" value = "submit" /></p>
+<h2>Manage Checkins</h2>
+
+<p>This is the Checkin Page. From here you can see the available rooms according to your criteria and make a reservation. </p>
+<br>
+<h2 style="text-align: center">Checkin Details</h2>
+<form action = "checkin_result/checkin_result" method = "POST">
+    <p>Capacity<br><input type = "text" name = "Capacity" /></p>
+     <p>Price<br> <input type = "text" name = "Price" /></p>
+     <p>StartDate<br> <input type = "text" name = "StartDate" /></p>
+     <p>FinishDate<br> <input type = "text" name = "FinishDate" /></p>
+     <p>View<br> <input type = "text" name = "View" /></p>
+     <p>Expandable<br> <input type = "text" name = "Expandable" /></p>
+     <p>RepairsNeed<br> <input type ="text" name = "RepairsNeed" /></p>
+     <p>Stars<br> <input type ="text" name = "Stars" /></p>
+     <p>HotelGroupID<br> <input type="text" name = "HotelGroupID" /></p>
+     <p>NumberOfRooms<br> <input type="text" name = "NumberOfRooms" /></p>	
+     <p>City<br> <input type="text" name = "City" /></p>
+     <p style="text-align: center"><input type = "submit" value = "Search" /></p>
+
   </form>
 
+  
+  </p>
 
 {% endblock %}

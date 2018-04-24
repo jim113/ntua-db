@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, flash
 import mysql.connector
 import configparser, os
 from query_builder import *
+from datetime import date, datetime, timedelta
 app = Flask(__name__)
 
 config = configparser.ConfigParser()
@@ -25,11 +26,11 @@ link_tables = {
 }
 
 
-def exec_query(q, refresh = True, commit = False):
+def exec_query(q, refresh = True, commit = False,kl=''):
 	global cnx
 	global cursor
 	if refresh: cnx.cmd_refresh(mysql.connector.RefreshOption.LOG | mysql.connector.RefreshOption.THREADS)
-	cursor.execute(q)
+	cursor.execute(q,kl)
 	if not commit:
 		return cursor.fetchall()
 	else:
@@ -66,6 +67,50 @@ def about():
 
 
 # Returns search results
+@app.route('/checkin_result/<type_of_result>', methods = ['POST', 'GET'])
+def checkin_result(type_of_result):
+	global link_tables
+	error = False
+	search_results = []
+	print(link_tables)
+	try:
+		tbl = link_tables[type_of_result]
+	except KeyError:
+		print ("Key error")
+		tbl = ''
+
+	if request.method == 'POST':
+		result = request.form
+
+		if all([x == '' for x in result.values()]):
+			error = True
+		else:
+			lista=kl(result)
+			if(len(lista)!=0):
+				query = build_join_query(result,1,lista)
+			else:
+				query = build_join_query(result,0,lista)
+			print(result)
+
+			try:
+				if(len(lista)!=0):
+					in_p=', '.join(list(map(lambda x: '%s', lista)))
+					query = query % in_p				
+					print(query)
+					cursor.execute(query,lista)
+					search_results=cursor.fetchall()
+				else:
+					print(query)
+					search_results = exec_query(query, refresh=False,kl=lista)
+				print('Found {} matches:'.format(len(search_results)))
+				print(search_results)
+			except:
+				error = True
+
+
+		return render_template("checkin_result.html",result = result, search_results = search_results, number_of_results = len(search_results), error=error, type_of_result=type_of_result)
+
+
 @app.route('/result/<type_of_result>', methods = ['POST', 'GET'])
 def result(type_of_result):
 	global link_tables
@@ -95,6 +140,7 @@ def result(type_of_result):
 
 
 		return render_template("result.html",result = result, search_results = search_results, number_of_results = len(search_results), error=error, type_of_result=type_of_result)
+
 
 @app.route('/result/<type_of_result>/delete/<irs_number>')
 def result_delete(type_of_result, irs_number):

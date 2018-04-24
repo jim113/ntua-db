@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if not error %}
+Success! Here are your resutls for searching {{ type_of_result }}s:
+<br>
+
+<div style="padding: 2rem">
+<center>
+<table align="left|left" border = 0>
+      {% for key, value in result.items() %}
+      {% if value != '' %}
+         <tr>
+            <th> {{ key }} </th>
+            <td> {{ value }} </td>
+         </tr>
+      {% endif %}
+      {% endfor %}
+   </table>
+</center>
+</div>
+
+<div style="padding: 2rem">
+<p>Your search returned {{ number_of_results }} results</p>
+{% if number_of_results > 0 %}
+<center>
+
+{% for x in search_results %}
+<div style="padding: 2rem">
+<table align="left|left" border = 0>
+      {% for key, value in x.items() %}
+         <tr>
+            <th> {{ key }} </th>
+            <td> {{ value }} </td>
+         </tr>
+
+      {% endfor %}
+   </table>
+   <a href="/result/{{ type_of_result }}/edit/{{ x|tojson|safe }}">Make Reservation</a>
+   <br>
+   {% endfor %}
+
+ </div>
+</center>
+</div>
+{% else %}
+<p>Your search returned no result so you can create one:<p>
+<center>
+<a href="/create/{{ type_of_result }}/{{ result|tojson|safe }}">Create {{ type_of_result }}</a>
+</center>
+
+{% endif %}
+
+{% else %}
+
+<p style="color: red">Ooops! There was an error in {{ type_of_result }}!</p>
+
+{% endif %}
+
+{% endblock %}
