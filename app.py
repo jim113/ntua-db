@@ -26,7 +26,7 @@ link_tables = {
 }
 
 
-def exec_query(q, refresh = True, commit = False,kl=''):
+def exec_query(q, refresh = True, commit = False, kl=''):
 	global cnx
 	global cursor
 	if refresh: cnx.cmd_refresh(mysql.connector.RefreshOption.LOG | mysql.connector.RefreshOption.THREADS)
@@ -35,7 +35,7 @@ def exec_query(q, refresh = True, commit = False,kl=''):
 		return cursor.fetchall()
 	else:
 		cnx.commit()
-		return []
+		return {}
 
 @app.route('/')
 def home():
@@ -43,7 +43,8 @@ def home():
 
 @app.route('/customers')
 def customers():
-	return render_template('customers.html')
+	x = 10
+	return render_template('customers.html', x = x)
 
 @app.route('/employees')
 def employees():
@@ -95,7 +96,7 @@ def checkin_result(type_of_result):
 			try:
 				if(len(lista)!=0):
 					in_p=', '.join(list(map(lambda x: '%s', lista)))
-					query = query % in_p				
+					query = query % in_p
 					print(query)
 					cursor.execute(query,lista)
 					search_results=cursor.fetchall()
@@ -158,6 +159,11 @@ def result_delete(type_of_result, irs_number):
 	except: error = True
 
 	return render_template("result_delete.html", irs_number = irs_number, type_of_result = type_of_result, error=error)
+
+@app.route('/welcome')
+def welcome():
+	return 'Welcome!'
+
 
 @app.route('/create/<type_of_result>', methods=['GET', 'POST'])
 def create(type_of_result):
