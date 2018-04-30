@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, abort
 import mysql.connector
 import configparser, os
 from query_builder import *
@@ -25,6 +25,10 @@ link_tables = {
 	'hotel' : 'Hotel'
 }
 
+global is_admin
+is_admin = False;
+
+
 
 def exec_query(q, refresh = True, commit = False, kl=''):
 	global cnx
@@ -37,9 +41,26 @@ def exec_query(q, refresh = True, commit = False, kl=''):
 		cnx.commit()
 		return {}
 
+
 @app.route('/')
 def home():
 	return render_template('index.html')
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+	global is_admin
+	if request.method == 'GET':
+		return render_template('login.html')
+
+	elif request.method == 'POST':
+		if request.form['password'] == 'admin' and request.form['username'] == 'admin':
+			is_admin = True
+			return render_template('index.html')
+		else:
+			print('wrong password!')
+			return render_template('login.html')
+
 
 @app.route('/customers')
 def customers():
