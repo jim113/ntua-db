@@ -49,6 +49,12 @@ def create_list(q):
 			result.append(v)
 	return result;
 
+def check_admin(h):
+	global is_admin
+	if is_admin : return render_template(h)
+	else: return render_template('admin_error.html')
+
+
 @app.route('/')
 def home():
 	return render_template('index.html')
@@ -79,18 +85,15 @@ def logout():
 
 @app.route('/customers')
 def customers():
-	x = 10
-	return render_template('customers.html', x = x)
+	return check_admin('customers.html')
 
 @app.route('/employees')
 def employees():
-	global is_admin
-	if is_admin : return render_template('employees.html')
-	else: return render_template('admin_error.html')
+	return check_admin('employees.html')
 
 @app.route('/hotels')
 def hotels():
-	return render_template('hotels.html')
+	return check_admin('hotels.html')
 
 @app.route('/checkin')
 def checkin():
