@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<center>
+<h2>Logout</h2>
+
+{% if r %}
+  <p>Successfully logged out</p>
+{% else %}
+  <p>You are not administrator. Go to the <a href="/login">Login Page</a> if you want</p>
+
+{% endif %}
+
+<center>
+
+{% endblock %}

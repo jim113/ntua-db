@@ -41,6 +41,13 @@ def exec_query(q, refresh = True, commit = False, kl=''):
 		cnx.commit()
 		return {}
 
+def create_list(q):
+	ddict = exec_query(q)
+	result = []
+	for x in ddict:
+		for k, v in x.items():
+			result.append(v)
+	return result;
 
 @app.route('/')
 def home():
@@ -61,6 +68,14 @@ def login():
 			print('wrong password!')
 			return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+	global is_admin
+	r = False
+	if is_admin:
+		is_admin = False
+		r = True
+	return render_template('logout.html', r=r)
 
 @app.route('/customers')
 def customers():
@@ -69,7 +84,9 @@ def customers():
 
 @app.route('/employees')
 def employees():
-	return render_template('employees.html')
+	global is_admin
+	if is_admin : return render_template('employees.html')
+	else: return render_template('admin_error.html')
 
 @app.route('/hotels')
 def hotels():
@@ -79,9 +96,13 @@ def hotels():
 def checkin():
 	return render_template('checkin.html')
 
-@app.route('/reservation')
+@app.route('/reservation', methods=['POST', 'GET'])
 def reservation():
-	return render_template('reservation.html')
+	if request.method == 'GET':
+		amenities = create_list('SELECT Amenity FROM eHOTELS.Amenities;')
+		views = create_list('SELECT View FROM eHOTELS.HotelRoom;')
+		print('Amenities are: ', views)
+	return render_template('reservation.html', amenities=amenities, views=views)
 
 @app.route('/about')
 def about():

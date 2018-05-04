@@ -1,5 +1,54 @@
 {% extends "layout.html" %}
 {% block body %}
+<style>
+
+#checkboxes ul {
+  list-style: none;
+}
+#checkboxes input {
+  width: 25% !important;
+}
+
+select {
+  width: 100%;
+}
+
+</style>
+
 <h2>Make a reservation</h2>
+
+<p>Please select your preferences below</p>
+<br>
+
+<form action = "result/hotel" method = "POST">
+    <p>Minimum Price (min 0)<br> <input type = "number" name = "MinimumStars" value="0"/></p>
+    <p>Maximum Price<br> <input type = "number" name = "MaximumStars"/></p>
+
+     <p>Minimum Stars (min 0)<br> <input type = "number" name = "MinimumStars" value="0"/></p>
+     <p>Maximum Stars (max 5, default 5)<br> <input type = "number" name = "MaximumStars" value="5" /></p>
+     <p>Check-in Date<br> <input required type = "date" name = "CheckinDate" /></p>
+     <p>Check-out Date<br><input required type = "date" name = "CheckoutDate"/></p>
+     <p>View<br> <select name="View">
+      {% for x in views %}
+        <option value="{{ x }}">{{ x }}</option>
+      {% endfor %}
+    </select></p>
+     <p>Number of Beds<br> <input type = "text" name = "Capacity" /></p>
+     <p>Address (Street)<br> <input type ="text" name = "Street" /></p>
+     <p>Postal Code<br> <input type="text" name = "PostalCode" /></p>
+     <p>City<br> <input type="text" name = "City" /></p>
+     <div id="checkboxes">
+     <label>Amenities</label>
+     <ul>
+       {% for x in amenities %}
+       <li><input name="{{ x }}" type="checkbox">{{ x }}</li>
+       {% endfor %}
+     </ul>
+     <p style="text-align: center"><input type = "submit" value = "Search" /></p>
+   </div>
+  </form>
+
+
+
 
 {% endblock %}
