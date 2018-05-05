@@ -1,0 +1,26 @@
+INSERT INTO `eHOTELS`.`HotelGroup` (`HotelGroupID`, `NumberOfHotels`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('1', '5', 'Peiraios', '178', '16342', 'Athens');
+INSERT INTO `eHOTELS`.`HotelGroup` (`HotelGroupID`, `NumberOfHotels`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('2', '5', 'Syggrou', '100', '12343', 'Athens');
+INSERT INTO `eHOTELS`.`HotelGroup` (`HotelGroupID`, `NumberOfHotels`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('3', '5', 'Aristotelous', '2', '54321', 'Thessaloniki');
+INSERT INTO `eHOTELS`.`HotelGroup` (`HotelGroupID`, `NumberOfHotels`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('4', '5', 'Mpoumpoulinas', '42', '18211', 'Patras');
+INSERT INTO `eHOTELS`.`HotelGroup` (`HotelGroupID`, `NumberOfHotels`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('5', '5', 'Kolokotroni', '17', '18221', 'Dervenakia');
+
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('1', '2', '3', '1', 'Papastratou', '10', '17237', 'Athens');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('2', '3', '1', '1', 'Imittou', '3', '41231', 'Athens');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('3', '4', '2', '1', 'Kanari', '100', '31298', 'Kolokotronitsi');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('4', '5', '4', '1', 'Adsad', '213', '32133', 'Thesalloniki');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('5', '1', '1', '1', 'Adsaokdp', '312', '39081', 'Patras');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('6', '1', '2', '2', 'Adasdsa', '321', '32132', 'RickAndMorty');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('7', '3', '3', '2', 'Mpotsari', '21', '31212', 'Bolzano');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('8', '3', '1', '2', 'Adsadasd', '23', '33213', 'Weierstrass');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('9', '4', '1', '2', 'ASdsadsa', '234', '32121', 'Bolzano');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('10', '5', '1', '2', 'Adsadsad', '342', '43242', 'Einstein');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('21', '1', '1', '5', 'ASdsadas', '345', '32423', 'Weierstrass');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('22', '2', '2', '5', 'Adasdsadas', '432', '32131', 'Rassias');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('23', '3', '3', '5', 'Adasidla', '423', '87989', 'Palo Alto Arkadias');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('24', '4', '2', '5', 'Adsadasa', '321', '23123', 'Cuppertino');
+INSERT INTO `eHOTELS`.`Hotel` (`HotelID`, `Stars`, `NumberOfRooms`, `HotelGroupID`, `Street`, `StreetNumber`, `PostalCode`, `City`) VALUES ('25', '5', '4', '5', 'Elm Street', '321', '32312', 'Rassias');
+INSERT INTO eHOTELS.`Hotel` (HotelID, Stars, NumberOfRooms, HotelGroupID, Street, StreetNumber, PostalCode, City) VALUES ('11', '1', '1', '3', 'Ilioupolis', '12', '16263', 'Athens');
+INSERT INTO eHOTELS.`Hotel` (HotelID, Stars, NumberOfRooms, HotelGroupID, Street, StreetNumber, PostalCode, City) VALUES ('12', '2', '2', '3', 'Argiroupolis', '44', '13515', 'Patra');
+INSERT INTO eHOTELS.`Hotel` (HotelID, Stars, NumberOfRooms, HotelGroupID, Street, StreetNumber, PostalCode, City) VALUES ('13', '3', '3', '3', 'Iliou', '123', '41244', 'Patra');
+INSERT INTO eHOTELS.`Hotel` (HotelID, Stars, NumberOfRooms, HotelGroupID, Street, StreetNumber, PostalCode, City) VALUES ('14', '4', '4', '3', 'Os', '125', '12421', 'Bolzano');
+INSERT INTO eHOTELS.`Hotel` (HotelID, Stars, NumberOfRooms, HotelGroupID, Street, StreetNumber, PostalCode, City) VALUES ('15', '5', '5', '3', 'Damni', '124', '51255', 'Einstein');

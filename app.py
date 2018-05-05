@@ -102,9 +102,12 @@ def checkin():
 @app.route('/reservation', methods=['POST', 'GET'])
 def reservation():
 	if request.method == 'GET':
-		amenities = create_list('SELECT Amenity FROM eHOTELS.Amenities;')
-		views = create_list('SELECT View FROM eHOTELS.HotelRoom;')
+		amenities = create_list('SELECT DISTINCT Amenity FROM eHOTELS.Amenities;')
+		views = create_list('SELECT DISTINCT View FROM eHOTELS.HotelRoom;')
 		print('Amenities are: ', views)
+	elif request.method == 'POST':
+		result = result.form
+		# edo vazeis query
 	return render_template('reservation.html', amenities=amenities, views=views)
 
 @app.route('/about')
