@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, flash, abort
 import mysql.connector
 import configparser, os
 from query_builder import *
+import time
 from datetime import date, datetime, timedelta
 app = Flask(__name__)
 
@@ -28,6 +29,7 @@ link_tables = {
 global is_admin
 is_admin = False;
 
+time_now = lambda : datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 
 
 def exec_query(q, refresh = True, commit = False, kl=''):
@@ -104,15 +106,43 @@ def reservation():
 	if request.method == 'GET':
 		amenities = create_list('SELECT DISTINCT Amenity FROM eHOTELS.Amenities;')
 		views = create_list('SELECT DISTINCT View FROM eHOTELS.HotelRoom;')
-		print('Amenities are: ', views)
+		cities = create_list('SELECT DISTINCT City FROM eHOTELS.Hotel;')
+		print('Amenities are: ', amenities)
+		print('Views are ', views)
+		print('Available cities ', cities)
 	elif request.method == 'POST':
 		result = result.form
 		# edo vazeis query
-	return render_template('reservation.html', amenities=amenities, views=views)
+	return render_template('reservation.html', amenities=amenities, views=views, cities=cities)
 
 @app.route('/about')
 def about():
 	return render_template('about.html')
+
+@app.route('/reservation/room/<hotel_room_id>', methods=['POST', 'GET'])
+def reservation_room(hotel_room_id):
+	error_log = ''
+	reservation_id = -1
+	if request.method == 'GET':
+		return render_template('room_reservation.html', hotel_room_id = hotel_room_id)
+	elif request.method == 'POST':
+		data = request.form
+		customer_irs_number = data['CustomerIRSNumber']
+		# TODO get start and FinishDate
+		start_date = time_now()
+		finish_date = time_now()
+
+		query = reservation_query(hotel_room_id, start_date, finish_date, customer_irs_number)
+		try:
+			print('Make a booking with query', query)
+			exec_query(query, commit = True)
+			reservation_id = exec_query('SELECT last_insert_id()')[0]['last_insert_id()']
+
+			print('Reservation id is ', reservation_id)
+		except Exception as e:
+			error_log = str(e)
+			print('A problem has occured', e)
+		return render_template('reservation_result.html', error_log=error_log, reservation_id = reservation_id)
 
 
 # Returns search results

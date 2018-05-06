@@ -12,6 +12,11 @@ cnx = mysql.connector.connect(user=config.get('DBCredentials', 'USER'),
 global cusror
 cursor = cnx.cursor(dictionary=True)
 
+def reservation_query(hotel_room_id, start_date, finish_date, customer_irs_number):
+	return '''INSERT INTO eHOTELS.Reserves (`HotelRoomID`, `StartDate`, `FinishDate`, `CustomerIRSNumber`) VALUES
+				('{}', '{}', '{}', '{}');
+			'''.format(hotel_room_id, start_date, finish_date, customer_irs_number)
+
 def kl(data):
 	wheress=[]
 	simea=0
@@ -50,7 +55,7 @@ def build_join_query(data, flag=0, lista=[]):
 	simea=0
 	for key, val in data.items():
 		if val == '': continue
-		
+
 		if(key=='Capacity' or key=='Price' or key=='View' or key=='Expandable' or key=='RepairsNeed'):
 			tmp = "HR.{} = '{}'".format(key, val)
 			wheres.append(tmp)
@@ -59,9 +64,9 @@ def build_join_query(data, flag=0, lista=[]):
 			tmp = "H.{} = '{}'".format(key, val)
 			wheres.append(tmp)
 			simea=1
-			
+
 	wheres = ' and '.join(wheres)
-	
+
 	if (flag==1 and simea==1):
 		wheres = wheres + 'and HR.HotelRoomID NOT IN (%s)'
 	elif(flag==1):
