@@ -119,6 +119,14 @@ def reservation():
 def about():
 	return render_template('about.html')
 
+@app.route('/history')
+def history():
+	results = exec_query('SELECT * from eHOTELS.History')
+	error = False
+
+	return render_template('history.html', results=results)
+
+
 @app.route('/reservation/room/<hotel_room_id>', methods=['POST', 'GET'])
 def reservation_room(hotel_room_id):
 	error_log = ''

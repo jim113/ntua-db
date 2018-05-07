@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h1>History</h1>
+
+<p>Here are all past reservations</p>
+
+{% if not error %}
+
+{% for x in results %}
+<div style="padding: 2rem">
+<table border = 1>
+      {% for key, value in x.items() %}
+         <tr>
+            <td> {{ key }} </td>
+            <td> {{ value }} </td>
+         </tr>
+
+      {% endfor %}
+   </table>
+   <br>
+   {% endfor %}
+
+ </div>
+
+</div>
+
+{% else %}
+<p style="color: red">Ooops! There was an error in {{ type_of_result }}!</p>
+
+{% endif %}
+
+{% endblock %}
