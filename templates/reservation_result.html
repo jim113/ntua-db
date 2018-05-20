@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if error_log == '' %}
+
+<center>
+<p>Your reservation was successfull!</p>
+<p>Your reservation ID is {{ reservation_id }}</p>
+<p>Looking forward to seeing you soon :) </p>
+</center>
+{% else %}
+
+<p>{{ error_log }}</p>
+
+{% endif %}
+
+
+
+{% endblock %}

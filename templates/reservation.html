@@ -34,7 +34,11 @@ select {
       {% endfor %}
     </select></p>
      <p>Number of Beds<br> <input type = "text" name = "Capacity" /></p>
-     <p>City<br> <input type="text" name = "City" /></p>
+     <p>City<br> <select name="City">
+      {% for x in cities %}
+        <option value="{{ x }}">{{ x }}</option>
+      {% endfor %}
+    </select></p>
      <div id="checkboxes">
      <label>Amenities</label>
      <ul>

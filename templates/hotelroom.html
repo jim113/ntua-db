@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h2>Manage Hotel Rooms</h2>
+
+<br>
+<h2 style="text-align: center">Hotel Room Details</h2>
+<form action = "result/hotelroom" method = "POST">
+     <p>Hotel Room ID<br><input type = "text" name = "HotelRoomID" /></p>
+     <p>Hotel ID<br> <input type = "text" name = "HotelID" /></p>
+     <p>View<br> <input type = "text" name = "View" /></p>
+     <p>Capacity<br> <input type ="text" name = "Capacity" /></p>
+     <p>Repairs Need<br> <input type ="text" name = "RepairsNeed" /></p>
+     <p>Price<br> <input type="text" name = "Price" /></p>
+     <p>Expandable<br> <input type="text" name = "Expandable" /></p>
+     <p style="text-align: center"><input type = "submit" value = "Search" /></p>
+
+  </form>
+
+  <p style="text-align: center"> You can create a hotel room from here
+  <a href="create/hotelroom">Create a hotel room</a>
+  </p>
+
+{% endblock %}

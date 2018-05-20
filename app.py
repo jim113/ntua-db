@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, flash, abort
+from flask import Flask, render_template, request, flash, abort, redirect
 import mysql.connector
 import configparser, os
+import collections
 from query_builder import *
+import time
 from datetime import date, datetime, timedelta
 app = Flask(__name__)
 
@@ -22,12 +24,15 @@ global link_tables
 link_tables = {
 	'customer' : 'Customer',
 	'employee' : 'Employee',
-	'hotel' : 'Hotel'
+	'hotel' : 'Hotel',
+	'hotelroom' : 'HotelRoom',
+	'hotelgroup' : 'HotelGroup'
 }
 
 global is_admin
 is_admin = False;
 
+time_now = lambda : datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 
 
 def exec_query(q, refresh = True, commit = False, kl=''):
@@ -95,6 +100,14 @@ def employees():
 def hotels():
 	return check_admin('hotels.html')
 
+@app.route('/hotelroom')
+def hotelroom():
+	return check_admin('hotelroom.html')
+
+@app.route('/hotelgroup')
+def hotelgroup():
+	return check_admin('hotelgroup.html')
+
 @app.route('/checkin')
 def checkin():
 	return render_template('checkin.html')
@@ -104,7 +117,12 @@ def reservation():
 	if request.method == 'GET':
 		amenities = create_list('SELECT DISTINCT Amenity FROM eHOTELS.Amenities;')
 		views = create_list('SELECT DISTINCT View FROM eHOTELS.HotelRoom;')
+
 		print('Amenities are: ', amenities)
+		cities = create_list('SELECT DISTINCT City FROM eHOTELS.Hotel;')
+		print('Amenities are: ', amenities)
+		print('Views are ', views)
+		print('Available cities ', cities)
 	elif request.method == 'POST':		
 		result = result.form
 		print(result)
@@ -129,11 +147,53 @@ def reservation():
 			except:
 				error = True
 
-	return render_template('reservation.html', amenities=amenities, views=views)
+	return render_template('reservation.html', amenities=amenities, views=views,cities=cities)
+
+		
 
 @app.route('/about')
 def about():
 	return render_template('about.html')
+
+@app.route('/history/<last>', methods=['GET', 'POST'])
+@app.route('/history', methods=['GET', 'POST'])
+def history(last=''):
+	if request.method == 'POST':
+		last = request.form['last']
+
+	error = False
+	try:
+		results = exec_query('SELECT * from eHOTELS.History {};'.format('order by FinishDate desc limit ' + str(last) if last != '' else ''))
+	except:
+		error = True
+
+	return render_template('history.html', results=results, last=last, error=error)
+
+
+@app.route('/reservation/room/<hotel_room_id>', methods=['POST', 'GET'])
+def reservation_room(hotel_room_id):
+	error_log = ''
+	reservation_id = -1
+	if request.method == 'GET':
+		return render_template('room_reservation.html', hotel_room_id = hotel_room_id)
+	elif request.method == 'POST':
+		data = request.form
+		customer_irs_number = data['CustomerIRSNumber']
+		# TODO get start and FinishDate
+		start_date = time_now()
+		finish_date = time_now()
+
+		query = reservation_query(hotel_room_id, start_date, finish_date, customer_irs_number)
+		try:
+			print('Make a booking with query', query)
+			exec_query(query, commit = True)
+			reservation_id = exec_query('SELECT last_insert_id()')[0]['last_insert_id()']
+
+			print('Reservation id is ', reservation_id)
+		except Exception as e:
+			error_log = str(e)
+			print('A problem has occured', e)
+		return render_template('reservation_result.html', error_log=error_log, reservation_id = reservation_id)
 
 
 # Returns search results
@@ -251,7 +311,44 @@ def create(type_of_result):
 			print(error_log)
 			print('There was an error in insertion')
 
-	return render_template("person_create.html", type_of_result=type_of_result, error=error, tbl = tbl, error_log = error_log)
+	return render_template("create.html", type_of_result=type_of_result, error=error, tbl = tbl, error_log = error_log)
+
+
+@app.route('/edit/<type_of_result>/<id>', methods=['GET', 'POST'])
+def edit(type_of_result, id):
+	global link_tables
+	error = False
+	tbl = link_tables[type_of_result]
+	error_log = ''
+	pre_data_query = build_edit_prequery(tbl, id)
+	try:
+		data = exec_query(q = pre_data_query)
+		data = data[0]
+		print('Data before editing')
+		print(data)
+	except:
+		data = collections.defaultdict(str)
+
+
+	if request.method == 'GET':
+		print('GET')
+	elif request.method == 'POST':
+		print('POST')
+		result = request.form
+		try:
+			query = build_edit_query(result, tbl, id)
+
+			exec_query(q = query, commit = True)
+		except Exception as e:
+			error = True
+			error_log = str(e)
+			print(error_log)
+			print('There was an error in editing')
+		finally:
+			print('Edit query is \n' + query)
+			return render_template('edit_result.html', error_log=error_log)
+
+	return render_template("edit.html", data=data, type_of_result=type_of_result, id=id, error=error, tbl = tbl, error_log = error_log)
 
 
 if __name__ == '__main__':

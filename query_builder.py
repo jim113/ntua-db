@@ -12,6 +12,11 @@ cnx = mysql.connector.connect(user=config.get('DBCredentials', 'USER'),
 global cusror
 cursor = cnx.cursor(dictionary=True)
 
+def reservation_query(hotel_room_id, start_date, finish_date, customer_irs_number):
+	return '''INSERT INTO eHOTELS.Reserves (`HotelRoomID`, `StartDate`, `FinishDate`, `CustomerIRSNumber`) VALUES
+				('{}', '{}', '{}', '{}');
+			'''.format(hotel_room_id, start_date, finish_date, customer_irs_number)
+
 def kl(data):
 	wheress=[]
 	simea=0
@@ -53,6 +58,7 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 	simea=0
 	for key, val in data.items():
 		if val == '': continue
+
 		if (key=='MinimumPrice'):
 			tmp="HR.Price >= {}".format(val)
 			wheres.append(tmp)
@@ -83,6 +89,7 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 			tmp = "H.{} = '{}'".format(key, val)
 			wheres.append(tmp)
 			simea=1
+
 		if(key=='NumberOfRooms'):
 			tmp = "H.{} = {}".format(key, val)
 			wheres.append(tmp)
@@ -107,8 +114,9 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 			tmp="HR.HotelRoomID IN (SELECT HotelRoomID FROM Amenities WHERE Amenity='Massage')"
 			wheres.append(tmp)
 			simea=1
+
 	wheres = ' and '.join(wheres)
-	
+
 	if (flag==1 and simea==1):
 		wheres = wheres + ' and HR.HotelRoomID NOT IN ('+ lista+')'
 	elif(flag==1):
@@ -139,3 +147,34 @@ def build_insert_query(data, tbl='Customers'):
 	d = '({})'.format(', '.join(res.values()))
 
 	return query + cols + ' VALUES ' + d + ';'
+
+def build_edit_query(data, tbl='Customers', id = None):
+	query = 'UPDATE eHOTELS.{} SET '.format(tbl)
+	res = []
+	for key, val in data.items():
+		if val != '': res.append("{} = '{}'".format(key, val))
+
+	res = ', '.join(res)
+	if tbl in ['Employee', 'Customer']:
+		pk = 'IRSNumber'
+	elif tbl == 'Hotel':
+		pk = 'HotelID'
+	elif tbl == 'HotelRoom':
+		pk = 'HotelRoomID'
+	elif tbl == 'HotelGroup':
+		pk = 'HotelGroupID'
+	where = ' WHERE {} = {};'.format(pk, id)
+	return query + res + where
+
+def build_edit_prequery(tbl='Customers', id = None):
+	query = 'SELECT * from eHOTELS.{} '.format(tbl)
+	if tbl in ['Employee', 'Customer']:
+		pk = 'IRSNumber'
+	elif tbl == 'Hotel':
+		pk = 'HotelID'
+	elif tbl == 'HotelRoom':
+		pk = 'HotelRoomID'
+	elif tbl == 'HotelGroup':
+		pk = 'HotelGroupID'
+	where = ' WHERE {} = {};'.format(pk, id)
+	return query +  where

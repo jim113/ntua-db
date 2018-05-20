@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h2>Manage Hotel Groups</h2>
+
+<br>
+<h2 style="text-align: center">Hotel Group Details</h2>
+<form action = "result/hotelgroup" method = "POST">
+     <p>Hotel Group ID<br><input type = "text" name = "HotelGroupID" /></p>
+     <p>Number of Hotels<br> <input type = "text" name = "NumberofHotels" /></p>
+     <p>Street<br> <input type = "text" name = "Street" /></p>
+     <p>Capacity<br> <input type ="text" name = "Capacity" /></p>
+     <p>Street Number<br> <input type ="text" name = "StreetNumber" /></p>
+     <p>City<br> <input type="text" name = "City" /></p>
+     <p style="text-align: center"><input type = "submit" value = "Search" /></p>
+
+  </form>
+
+  <p style="text-align: center"> You can create a hotel group from here
+  <a href="create/hotelgroup">Create a hotel group</a>
+  </p>
+
+{% endblock %}
