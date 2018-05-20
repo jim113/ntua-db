@@ -104,10 +104,31 @@ def reservation():
 	if request.method == 'GET':
 		amenities = create_list('SELECT DISTINCT Amenity FROM eHOTELS.Amenities;')
 		views = create_list('SELECT DISTINCT View FROM eHOTELS.HotelRoom;')
-		print('Amenities are: ', views)
-	elif request.method == 'POST':
+		print('Amenities are: ', amenities)
+	elif request.method == 'POST':		
 		result = result.form
+		print(result)
 		# edo vazeis query
+		if all([x == '' for x in result.values()]):
+			error = True
+		else:
+			lista=kl(result)
+			
+			if(lista!=0):
+				query = build_join_query(result,1,lista)
+			else:
+				query = build_join_query(result,0,lista)
+			#print(result)
+
+			try:
+				print(query)
+				search_results1 = exec_query(query, refresh=False)
+				search_results = list({v['HotelRoomID']:v for v in search_results1}.values())
+				print('Found {} matches:'.format(len(search_results)))
+				print(search_results)
+			except:
+				error = True
+
 	return render_template('reservation.html', amenities=amenities, views=views)
 
 @app.route('/about')
@@ -127,30 +148,25 @@ def checkin_result(type_of_result):
 	except KeyError:
 		print ("Key error")
 		tbl = ''
-
+	
 	if request.method == 'POST':
 		result = request.form
-
+		#print(result)
 		if all([x == '' for x in result.values()]):
 			error = True
 		else:
 			lista=kl(result)
-			if(len(lista)!=0):
+			
+			if(lista!=0):
 				query = build_join_query(result,1,lista)
 			else:
 				query = build_join_query(result,0,lista)
-			print(result)
+			#print(result)
 
 			try:
-				if(len(lista)!=0):
-					in_p=', '.join(list(map(lambda x: '%s', lista)))
-					query = query % in_p
-					print(query)
-					cursor.execute(query,lista)
-					search_results=cursor.fetchall()
-				else:
-					print(query)
-					search_results = exec_query(query, refresh=False,kl=lista)
+				print(query)
+				search_results1 = exec_query(query, refresh=False)
+				search_results = list({v['HotelRoomID']:v for v in search_results1}.values())
 				print('Found {} matches:'.format(len(search_results)))
 				print(search_results)
 			except:
@@ -174,7 +190,7 @@ def result(type_of_result):
 
 	if request.method == 'POST':
 		result = request.form
-
+		
 		if all([x == '' for x in result.values()]):
 			error = True
 		else:

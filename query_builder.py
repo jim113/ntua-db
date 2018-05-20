@@ -18,21 +18,21 @@ def kl(data):
 	for key, val in data.items():
 		if val == '': continue
 		if(key=='StartDate'):
-			dt1=datetime.strptime(val,'%d-%m-%Y')
-			tmp1 = "{} >= '{}'".format(key, dt1)
+			dt1=val#datetime.strptime(val,'%d-%m-%Y')
+			tmp1 = "StartDate >= '{}'".format(dt1)
 			simea=1
 			wheress.append(tmp1)
 		if(key=='FinishDate'):
-			dt2=datetime.strptime(val,'%d-%m-%Y')
-			tmp1 = "{} <= '{}'".format(key, dt2)
+			dt2=val#datetime.strptime(val,'%d-%m-%Y')
+			tmp1 = "FinishDate <= '{}'".format(dt2)
 			simea=1
 			wheress.append(tmp1)
 	lista=[]
 	if(simea==1):
-		wheress = ' and '.join(wheress) + ';'
+		wheress = ' and '.join(wheress)
 		query1='SELECT HotelRoomID FROM Rents WHERE '
 		query=query1+wheress
-		print(query)
+		"""print(query)
 		cursor=cnx.cursor()
 		cursor.execute(query)
 		ro=cursor.fetchall()
@@ -40,32 +40,79 @@ def kl(data):
 			for i in ro:
 				for j in i:
 					lista.append(int(j))
-	return lista
+	return lista"""
+		return query
+	else:
+		return 0
 
 
 
-def build_join_query(data, flag=0, lista=[]):
-	query = 'SELECT * FROM HotelRoom AS HR INNER JOIN Hotel AS H ON HR.HotelID=H.HotelID WHERE '
+def build_join_query(data, flag=0, lista=''):#=[]):
+	query = 'SELECT * FROM HotelRoom AS HR INNER JOIN Hotel AS H ON HR.HotelID=H.HotelID INNER JOIN Amenities AS A ON A.HotelRoomID=HR.HotelRoomID WHERE '
 	wheres = []
 	simea=0
 	for key, val in data.items():
 		if val == '': continue
-		
-		if(key=='Capacity' or key=='Price' or key=='View' or key=='Expandable' or key=='RepairsNeed'):
+		if (key=='MinimumPrice'):
+			tmp="HR.Price >= {}".format(val)
+			wheres.append(tmp)
+			simea=1 
+		if(key=='MaximumPrice'):
+			tmp="HR.Price <= {}".format(val)
+			wheres.append(tmp)
+			simea=1 
+		if(key=='MinimumStars'):
+			tmp = "H.Stars >= {}".format(val)
+			wheres.append(tmp)
+			simea=1
+		if(key=='MaximumStars'):
+			tmp = "H.Stars <= {}".format(val)
+			wheres.append(tmp)
+			simea=1
+	
+
+		if(key=='View'):
 			tmp = "HR.{} = '{}'".format(key, val)
 			wheres.append(tmp)
 			simea=1
-		if(key=='Stars' or key=='City' or key=='HotelGroupID' or key=='NumberOfRooms'):
+		if(key=='Capacity'):
+			tmp = "HR.{} = {}".format(key, val)
+			wheres.append(tmp)
+			simea=1
+		if(key=='City'):
 			tmp = "H.{} = '{}'".format(key, val)
 			wheres.append(tmp)
 			simea=1
-			
+		if(key=='NumberOfRooms'):
+			tmp = "H.{} = {}".format(key, val)
+			wheres.append(tmp)
+			simea=1
+		if(key=='AC'):
+			tmp = "A.Amenity = 'AC'"#.format(val)
+			tmp="HR.HotelRoomID IN (SELECT HotelRoomID FROM Amenities WHERE Amenity='AC')"
+			wheres.append(tmp)
+			simea=1
+		if(key=='Sauna'):
+			tmp = "A.Amenity = 'Sauna'"
+			tmp="HR.HotelRoomID IN (SELECT HotelRoomID FROM Amenities WHERE Amenity='Sauna')"
+			wheres.append(tmp)
+			simea=1
+		if(key=='2WC'):
+			tmp = "A.Amenity = '2WC'"
+			tmp="HR.HotelRoomID IN (SELECT HotelRoomID FROM Amenities WHERE Amenity='2WC')"
+			wheres.append(tmp)
+			simea=1
+		if(key=='Massage'):
+			tmp = "A.Amenity = 'Massage'"
+			tmp="HR.HotelRoomID IN (SELECT HotelRoomID FROM Amenities WHERE Amenity='Massage')"
+			wheres.append(tmp)
+			simea=1
 	wheres = ' and '.join(wheres)
 	
 	if (flag==1 and simea==1):
-		wheres = wheres + 'and HR.HotelRoomID NOT IN (%s)'
+		wheres = wheres + ' and HR.HotelRoomID NOT IN ('+ lista+')'
 	elif(flag==1):
-		wheres = wheres + 'HR.HotelRoomID NOT IN (%s)'
+		wheres = wheres + 'HR.HotelRoomID NOT IN ('+lista+')'
 	wheres = wheres + ';'
 	return query + wheres
 
