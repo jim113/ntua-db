@@ -97,3 +97,29 @@ begin
 	insert into History (CustomerIRSNumber, HotelRoomID, StartDate, FinishDate, Paid)
     values (new.CustomerIRSNumber, new.HotelRoomID, new.StartDate, new.FinishDate, new.Paid);
 end; $$
+
+delimiter $$
+create trigger deletemgr
+before delete on Works
+for each row
+begin
+IF  EXISTS (select * from Works where HotelID = old.HotelID and Position = 'Manager'
+ ) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'No manager exists for this hotel!';
+END IF;
+
+end; $$
+
+delimiter $$
+create trigger updatemgr
+before update on Works
+for each row
+begin
+IF  EXISTS (select * from Works where HotelID = old.HotelID and Position = 'Manager'
+ ) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'No manager exists for this hotel!';
+END IF;
+
+end; $$
