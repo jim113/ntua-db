@@ -47,3 +47,53 @@ set @x=(SELECT IRSNumber FROM Works WHERE  HotelID=(SELECT HotelID FROM HotelRoo
 insert into Rents (CustomerIRSNumber, EmployeeIRSNumber, HotelRoomID, StartDate, FinishDate)
 VALUES (old.CustomerIRSNumber,@x ,old.HotelRoomID, old.StartDate, old.FinishDate);
 end; $$
+
+delimiter $$
+create trigger nonoverlap
+before insert on Reserves
+for each row
+begin
+IF EXISTS (select * from Reserves
+	where (HotelRoomID = new.HotelRoomID)
+	and (new.StartDate between StartDate and FinishDate) or
+		(new.FinishDate between StartDate and FinishDate)
+ ) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Overlap found!';
+END IF;
+
+end; $$
+
+delimiter $$
+create trigger nonoverlap_upd
+before update on Reserves
+for each row
+begin
+IF EXISTS (select * from Reserves
+	where (HotelRoomID = new.HotelRoomID)
+	and (new.StartDate between StartDate and FinishDate) or
+		(new.FinishDate between StartDate and FinishDate)
+ ) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Overlap found!';
+END IF;
+
+end; $$
+
+delimiter $$
+create trigger history
+after insert on Reserves
+for each row
+begin
+	insert into History (CustomerIRSNumber, HotelRoomID, StartDate, FinishDate, Paid)
+    values (new.CustomerIRSNumber, new.HotelRoomID, new.StartDate, new.FinishDate, new.Paid);
+end; $$
+
+delimiter $$
+create trigger history_upd
+after update on Reserves
+for each row
+begin
+	insert into History (CustomerIRSNumber, HotelRoomID, StartDate, FinishDate, Paid)
+    values (new.CustomerIRSNumber, new.HotelRoomID, new.StartDate, new.FinishDate, new.Paid);
+end; $$
