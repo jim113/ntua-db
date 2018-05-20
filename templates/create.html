@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block body %}
+<style>
+  input {
+    width: 100%;
+  }
+</style>
+
+<h2>Create {{ tbl }}s</h2>
+{% if error == False %}
+<p>Enter details below</p>
+<br>
+<h2 style="text-align: center">{{ tbl }} Details</h2>
+<form action = "/create/{{ type_of_result }}" method = "POST">
+    {%if type_of_result == 'hotelgroup' %}
+      <p>Number of Hotels<br> <input type = "text" name = "NumberofHotels" /></p>
+      <p>Street<br> <input type = "text" name = "Street" /></p>
+      <p>PostalCode<br> <input type ="text" name = "PostalCode" /></p>
+      <p>Street Number<br> <input type ="text" name = "StreetNumber" /></p>
+      <p>City<br> <input type="text" name = "City" /></p>
+    {% elif type_of_result == 'hotel' %}
+      <p>Stars<br> <input type = "text" name = "Stars" /></p>
+      <p>Hotel Group ID<br> <input type = "text" name = "HotelGroupID" /></p>
+      <p>Number of Rooms<br> <input type = "text" name = "NumberOfRooms" /></p>
+      <p>Address (Street)<br> <input type ="text" name = "Street" /></p>
+      <p>Number<br> <input type ="text" name = "StreetNumber" /></p>
+      <p>Postal Code<br> <input type="text" name = "PostalCode" /></p>
+      <p>City<br> <input type="text" name = "City" /></p>
+    {% elif type_of_result == 'hotelroom' %}
+    <p>Hotel ID<br> <input type = "text" name = "HotelID" /></p>
+    <p>View<br> <input type = "text" name = "View" /></p>
+    <p>Capacity<br> <input type ="text" name = "Capacity" /></p>
+    <p>Repairs Need<br> <input type ="text" name = "RepairsNeed" /></p>
+    <p>Price<br> <input type="text" name = "Price" /></p>
+    <p>Expandable<br> <input type="text" name = "Expandable" /></p>
+    {% else %}
+    <p>IRS Number<br><input type = "text" name = "IRSNumber" /></p>
+     <p>First Name<br> <input type = "text" name = "FirstName" /></p>
+     <p>Last Name<br> <input type = "text" name = "LastName" /></p>
+     <p>Social Security Number<br> <input type = "text" name = "SocialSecurityNumber" /></p>
+     <p>Address (Street)<br> <input type ="text" name = "Street" /></p>
+     <p>Number<br> <input type ="text" name = "StreetNumber" /></p>
+     <p>Postal Code<br> <input type="text" name = "PostalCode" /></p>
+     <p>City<br> <input type="text" name = "City" /></p>
+     {% endif %}
+     <p style="text-align: center"><input type = "submit" value = "Create  {{ tbl }}" /></p>
+  </form>
+
+  {% else %}
+
+  <p style="color: red">Ooops! There was an error in creating a {{ type_of_result }} since some required fields are empty!</p>
+  <p stype="color: red">{{ error_log }}</p>
+  {% endif %}
+
+
+{% endblock %}

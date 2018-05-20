@@ -3,9 +3,16 @@
 
 <h1>History</h1>
 
-<p>Here are all past reservations</p>
+<p>Here are last {{ last }} reservations</p>
 
 {% if not error %}
+
+<form action = "/history/100" method = "POST">
+    <p>Limit to last<br> <input type = "number" name = "{{ last }}" value="{{ last }}"/></p>
+    <p style="text-align: center"><input type = "submit" value = "Search" /></p>
+
+  </form>
+
 
 {% for x in results %}
 <div style="padding: 2rem">

@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block body %}
+<style>
+  input {
+    width: 100%;
+  }
+</style>
+
+<h2>Edit {{ tbl }} with ID {{ id }}</h2>
+{% if error == False %}
+<p>Edigt details below</p>
+<br>
+<h2 style="text-align: center">{{ tbl }} Details</h2>
+<form action = "/edit/{{ type_of_result }}/{{ id }}" method = "POST">
+    {%if type_of_result == 'hotelgroup' %}
+      <p>Street<br> <input type = "text" name = "Street" value="{{ data['Street'] }}"/></p>
+      <p>PostalCode<br> <input type ="text" name = "PostalCode" value="{{ data['PostalCode'] }}"/></p>
+      <p>Street Number<br> <input type ="text" name = "StreetNumber" value="{{ data['StreetNumber'] }}"/></p>
+      <p>City<br> <input type="text" name="City" value="{{ data['City'] }}"/></p>
+    {% elif type_of_result == 'hotel' %}
+      <p>Stars<br> <input type = "text" name = "Stars" /></p>
+      <p>Hotel Group ID<br> <input type = "text" name = "HotelGroupID" value="{{ data['HotelGroupID'] }}"/></p>
+      <p>Address (Street)<br> <input type ="text" name = "Street" value="{{ data['Street'] }}"/></p>
+      <p>Number<br> <input type ="text" name = "StreetNumber" value="{{ data['StreetNumber'] }}"/></p>
+      <p>Postal Code<br> <input type="text" name = "PostalCode" value="{{ data['PostalCode'] }}"/></p>
+      <p>City<br> <input type="text" name = "City" value="{{ data['City'] }}"/></p>
+    {% elif type_of_result == 'hotelroom' %}
+    <p>Hotel ID<br> <input type = "text" name = "HotelID" value="{{ data['HotelID'] }}"/></p>
+    <p>View<br> <input type = "text" name = "View" value="{{ data['View'] }}"/></p>
+    <p>Capacity<br> <input type ="text" name = "Capacity" value="{{ data['Capacity'] }}"/></p>
+    <p>Repairs Need<br> <input type ="text" name = "RepairsNeed" value="{{ data['RepairsNeed'] }}"/></p>
+    <p>Price<br> <input type="text" name = "Price" value="{{ data['Price'] }}"/></p>
+    <p>Expandable<br> <input type="text" name = "Expandable" value="{{ data['Expandable'] }}"/></p>
+    {% else %}
+     <p>First Name<br> <input type = "text" name = "FirstName" value="{{ data['FirstName'] }}"/></p>
+     <p>Last Name<br> <input type = "text" name = "LastName" value="{{ data['LastName'] }}"/></p>
+     <p>Social Security Number<br> <input type = "text" name = "SocialSecurityNumber" value="{{ data['SocialSecurityNumber'] }}"/></p>
+     <p>Address (Street)<br> <input type ="text" name = "Street" value="{{ data['Street'] }}"/></p>
+     <p>Number<br> <input type ="text" name = "StreetNumber" value="{{ data['StreetNumber'] }}"/></p>
+     <p>Postal Code<br> <input type="text" name = "PostalCode" value="{{ data['PostalCode'] }}"/></p>
+     <p>City<br> <input type="text" name = "City" value="{{ data['City'] }}"/></p>
+     {% endif %}
+     <p style="text-align: center"><input type = "submit" value = "Submit changes" /></p>
+  </form>
+
+  {% else %}
+
+  <p style="color: red">Ooops! There was an error in editing since some required fields are empty!</p>
+  <p stype="color: red">{{ error_log }}</p>
+  {% endif %}
+
+
+{% endblock %}

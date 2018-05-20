@@ -23,26 +23,42 @@ Success! Here are your resutls for searching {{ type_of_result }}s:
 <div style="padding: 2rem">
 <p>Your search returned {{ number_of_results }} results</p>
 {% if number_of_results > 0 %}
-<center>
 
 {% for x in search_results %}
 <div style="padding: 2rem">
+<center>
 <table align="left|left" border = 0>
-      {% for key, value in x.items() %}
-         <tr>
-            <th> {{ key }} </th>
-            <td> {{ value }} </td>
-         </tr>
+    {% for key, value in x.items() %}
+       <tr>
+          <th> {{ key }} </th>
+          <td> {{ value }} </td>
+       </tr>
 
-      {% endfor %}
-   </table>
+    {% endfor %}
+  </table>
+  {% if type_of_result in ['customer', 'employee'] %}
    <a href="/result/{{ type_of_result }}/delete/{{ x['IRSNumber'] }}">Delete {{ type_of_result }}</a>
-   <a href="/result/{{ type_of_result }}/edit/{{ x|tojson|safe }}">Edit {{ type_of_result }}</a>
-   <br>
+   <a href="/edit/{{ type_of_result}}/{{ x['IRSNumber'] }}">Edit {{ type_of_result }}</a>
+
+  {% elif type_of_result == 'hotelroom' %}
+  <a href="/result/{{ type_of_result }}/delete/{{ x['HotelRoomID'] }}">Delete {{ type_of_result }}</a>
+  <a href="/edit/{{ type_of_result}}/{{ x['HotelRoomID'] }}">Edit {{ type_of_result }}</a>
+  {% elif type_of_result == 'hotel' %}
+  <a href="/result/{{ type_of_result }}/delete/{{ x['HotelID'] }}">Delete {{ type_of_result }}</a>
+  <a href="/edit/{{ type_of_result}}/{{ x['HotelID'] }}">Edit {{ type_of_result }}</a>
+
+  {% elif type_of_result == 'hotelgroup' %}
+  <a href="/result/{{ type_of_result }}/delete/{{ x['HotelGroupID'] }}">Delete {{ type_of_result }}</a>
+  <a href="/edit/{{ type_of_result}}/{{ x['HotelGroupID'] }}">Edit {{ type_of_result }}</a>
+
+  {% endif %}
+
+
+</center>
+ </div>
+
    {% endfor %}
 
- </div>
-</center>
 </div>
 {% else %}
 <p>Your search returned no result so you can create one:<p>

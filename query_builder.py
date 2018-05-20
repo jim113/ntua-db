@@ -97,3 +97,34 @@ def build_insert_query(data, tbl='Customers'):
 	d = '({})'.format(', '.join(res.values()))
 
 	return query + cols + ' VALUES ' + d + ';'
+
+def build_edit_query(data, tbl='Customers', id = None):
+	query = 'UPDATE eHOTELS.{} SET '.format(tbl)
+	res = []
+	for key, val in data.items():
+		if val != '': res.append("{} = '{}'".format(key, val))
+
+	res = ', '.join(res)
+	if tbl in ['Employee', 'Customer']:
+		pk = 'IRSNumber'
+	elif tbl == 'Hotel':
+		pk = 'HotelID'
+	elif tbl == 'HotelRoom':
+		pk = 'HotelRoomID'
+	elif tbl == 'HotelGroup':
+		pk = 'HotelGroupID'
+	where = ' WHERE {} = {};'.format(pk, id)
+	return query + res + where
+
+def build_edit_prequery(tbl='Customers', id = None):
+	query = 'SELECT * from eHOTELS.{} '.format(tbl)
+	if tbl in ['Employee', 'Customer']:
+		pk = 'IRSNumber'
+	elif tbl == 'Hotel':
+		pk = 'HotelID'
+	elif tbl == 'HotelRoom':
+		pk = 'HotelRoomID'
+	elif tbl == 'HotelGroup':
+		pk = 'HotelGroupID'
+	where = ' WHERE {} = {};'.format(pk, id)
+	return query +  where
