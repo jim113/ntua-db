@@ -32,8 +32,11 @@ link_tables = {
 global is_admin
 is_admin = False;
 
-time_now = lambda : datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+global start_date
+global finish_date
+start_date, finish_date = '', ''
 
+time_now = lambda : datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 
 def exec_query(q, refresh = True, commit = False, kl=''):
 	global cnx
@@ -112,6 +115,10 @@ def hotelgroup():
 def checkin():
 	return render_template('checkin.html')
 
+@app.route('/reservation_error')
+def reservation_error():
+	return render_template('reservation_error.html')
+
 @app.route('/result_irs/<hotel_room_id>', methods=['POST', 'GET'])
 def result_irs(hotel_room_id):
 	if request.method == 'POST':
@@ -124,8 +131,6 @@ def result_irs(hotel_room_id):
 		print(results)
 
 	return render_template('result_irs.html', results=results, hotel_room_id=hotel_room_id)
-
-@app.route
 
 @app.route('/reservation', methods=['POST', 'GET'])
 def reservation():
@@ -204,10 +209,10 @@ def complete_reservation(hotel_room_id):
 	print(data)
 	customer_irs_number = data['IRSNumber']
 	# TODO get start and FinishDate
-	start_date = time_now()
-	finish_date = time_now()
+	global start_date
+	global finish_date
 	error_log = ''
-	query = reservation_query(hotel_room_id, start_date, finish_date, customer_irs_number)
+	query = reservation_query(hotel_room_id, start_date + ' 12:01:00', finish_date + ' 11:59:00', customer_irs_number)
 	try:
 		print('Make a booking with query', query)
 		exec_query(query, commit = True)
@@ -234,7 +239,21 @@ def checkin_result(type_of_result):
 
 	if request.method == 'POST':
 		result = request.form
-		#print(result)
+		global start_date
+		global finish_date
+		start_date = result['StartDate']
+		finish_date = result['FinishDate']
+
+		start_date_ = time.strptime(start_date,'%Y-%m-%d')
+		finish_date_ = time.strptime(finish_date,'%Y-%m-%d')
+		now = time.localtime()
+
+
+		if start_date_ > finish_date_ or start_date_ < now or finish_date_ < now:
+			start_date = ''
+			finish_date = ''
+			return render_template('reservation_error.html')
+
 		if all([x == '' for x in result.values()]):
 			error = True
 		else:
