@@ -112,8 +112,8 @@ def hotelgroup():
 def checkin():
 	return render_template('checkin.html')
 
-@app.route('/result_irs', methods=['POST', 'GET'])
-def result_irs():
+@app.route('/result_irs/<hotel_room_id>', methods=['POST', 'GET'])
+def result_irs(hotel_room_id):
 	if request.method == 'POST':
 		form_data = request.form
 		first_name = form_data['FirstName']
@@ -123,7 +123,7 @@ def result_irs():
 		results = exec_query(query)
 		print(results)
 
-	return render_template('result_irs.html', results=results)
+	return render_template('result_irs.html', results=results, hotel_room_id=hotel_room_id)
 
 @app.route
 
@@ -134,7 +134,7 @@ def reservation():
 		views = create_list('SELECT DISTINCT View FROM eHOTELS.HotelRoom;')
 		hotelgroupid = create_list('SELECT DISTINCT HotelGroupID FROM eHOTELS.Hotel;')
 		numberofrooms = create_list('SELECT DISTINCT NumberOfRooms FROM eHOTELS.Hotel;')
-		numberofrooms.sort();		
+		numberofrooms.sort();
 		numberofrooms.insert(0,'')
 		hotelgroupid.insert(0,'')
 		views.insert(0,'')
@@ -197,25 +197,27 @@ def reservation_room(hotel_room_id):
 	reservation_id = -1
 	if request.method == 'GET':
 		return render_template('room_reservation.html', hotel_room_id = hotel_room_id)
-	elif request.method == 'POST':
-		data = request.form
-		customer_irs_number = data['CustomerIRSNumber']
-		# TODO get start and FinishDate
-		start_date = time_now()
-		finish_date = time_now()
 
-		query = reservation_query(hotel_room_id, start_date, finish_date, customer_irs_number)
-		try:
-			print('Make a booking with query', query)
-			exec_query(query, commit = True)
-			reservation_id = exec_query('SELECT last_insert_id()')[0]['last_insert_id()']
+@app.route('/complete_reservation/<hotel_room_id>', methods=['POST', 'GET'])
+def complete_reservation(hotel_room_id):
+	data = request.form
+	print(data)
+	customer_irs_number = data['IRSNumber']
+	# TODO get start and FinishDate
+	start_date = time_now()
+	finish_date = time_now()
+	error_log = ''
+	query = reservation_query(hotel_room_id, start_date, finish_date, customer_irs_number)
+	try:
+		print('Make a booking with query', query)
+		exec_query(query, commit = True)
+		reservation_id = exec_query('SELECT last_insert_id()')[0]['last_insert_id()']
 
-			print('Reservation id is ', reservation_id)
-		except Exception as e:
-			error_log = str(e)
-			print('A problem has occured', e)
-		return render_template('reservation_result.html', error_log=error_log, reservation_id = reservation_id)
-
+		print('Reservation id is ', reservation_id)
+	except Exception as e:
+		error_log = str(e)
+		print('A problem has occured', e)
+	return render_template('reservation_result.html', error_log=error_log, reservation_id = reservation_id)
 
 # Returns search results
 @app.route('/checkin_result/<type_of_result>', methods = ['POST', 'GET'])

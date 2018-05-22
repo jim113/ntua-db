@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+<center>
+<form action = "/complete_reservation/12" method = "POST">
+    {% for result in results %}
+      <input type="radio" name="IRSNumber" value="{{ result['IRSNumber'] }}">IRSNumber : {{ result['IRSNumber'] }} <br>First Name: {{ result['FirstName'] }}<br>Last Name: {{ result['LastName'] }}<br>
+    {% endfor %}
+    <p style="text-align: center"><input type = "submit" value = "Next" /></p>
+</form>
+</center>
+{% endblock %}
