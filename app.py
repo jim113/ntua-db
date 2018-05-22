@@ -82,6 +82,31 @@ def login():
 			print('wrong password!')
 			return render_template('login.html')
 
+@app.route('/checkin_complete', methods=['POST', 'GET'])
+def checkin_complete():
+	result = request.form
+	print(result)
+	reservation_id = result['ReservationID']
+	print('About to complete checkin')
+	query = build_search_reservation(reservation_id)
+	error_log = ''
+	data = exec_query(query)[0]
+	hotel_room_id = data['HotelRoomID']
+
+
+	price = exec_query(get_price_query(hotel_room_id))[0]['Price']
+
+	# insert to db
+	checkin_query = build_checkin_query_from_reservation(data, result['EmployeeIRSNumber'], price, result['PaymentMethod'])
+	exec_query(checkin_query, commit=True)
+
+	# update payment
+	exec_query('UPDATE eHOTELS.Reserves SET Paid = 1 WHERE ReservationID = {}'.format(reservation_id), commit = True)
+
+
+	return render_template('checkin_success.html', error_log=error_log)
+
+
 @app.route('/logout')
 def logout():
 	global is_admin
@@ -391,7 +416,6 @@ def edit(type_of_result, id):
 			return render_template('edit_result.html', error_log=error_log)
 
 	return render_template("edit.html", data=data, type_of_result=type_of_result, id=id, error=error, tbl = tbl, error_log = error_log)
-
 
 if __name__ == '__main__':
 	app.run(debug=True, use_reloader=True, ssl_context='adhoc')

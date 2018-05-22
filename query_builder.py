@@ -63,11 +63,11 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 		if(key=='H.NumberOfRooms'):
 			tmp = "H.NumberOfRooms = {}".format(val)
 			wheres.append(tmp)
-			simea=1	
+			simea=1
 		if(key=='HotelGroupID'):
 			tmp = "H.HotelGroupID = {}".format(val)
 			wheres.append(tmp)
-			simea=1	
+			simea=1
 		if (key=='MinimumPrice'):
 			tmp="HR.Price >= {}".format(val)
 			wheres.append(tmp)
@@ -190,4 +190,16 @@ def build_edit_prequery(tbl='Customers', id = None):
 
 def build_name_query(first_name, last_name):
 	query = "SELECT IRSNumber, FirstName, LastName FROM eHOTELS.Customer where FirstName = '{}' and LastName = '{}';".format(first_name, last_name)
+	return query
+
+def build_search_reservation(reservation_id):
+	query = "SELECT * FROM eHOTELS.Reserves where ReservationID = '{}';".format(reservation_id)
+	return query
+
+def build_checkin_query_from_reservation(data, employee_irs_number, price=None, method=None):
+	query = "INSERT INTO eHOTELS.Rents (CustomerIRSNumber, EmployeeIRSNumber, HotelRoomID, StartDate, FinishDate, PaymentAmount, PaymentMethod) VALUES ('{}','{}','{}','{}','{}','{}','{}');".format(data['CustomerIRSNumber'], employee_irs_number, data['HotelRoomID'], data['StartDate'], data['FinishDate'], price, method)
+	return query
+
+def get_price_query(hotel_room_id):
+	query = "SELECT HotelRoomID, Price from eHOTELS.HotelRoom where HotelRoomID = '{}';".format(hotel_room_id)
 	return query

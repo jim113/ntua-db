@@ -1,32 +1,28 @@
 {% extends "layout.html" %}
 {% block body %}
 <style>
-  input {
+  input, select {
     width: 100%;
   }
 </style>
 
 <h2>Manage Checkins</h2>
 
-<p>This is the Checkin Page. From here you can see the available rooms according to your criteria and make a reservation. </p>
+<p>This is the Checkin Page</p>
 <br>
 <h2 style="text-align: center">Checkin Details</h2>
-<form action = "checkin_result/checkin_result" method = "POST">
-     <p>Capacity<br><input type = "text" name = "Capacity" /></p>
-     <p>Start Price <br> <input type = "text" name = "MinimumPrice" /></p>
-     <p>Finish Price <br> <input type = "text" name = "MaximumPrice" /></p>
-     <p>StartDate<br> <input type = "text" name = "StartDate" /></p>
-     <p>FinishDate<br> <input type = "text" name = "FinishDate" /></p>
-     <p>View(Sea/City/Mountain)<br> <input type = "text" name = "View" /></p>
-     <p>Min Stars<br> <input type ="text" name = "MinimumStars" /></p>
-     <p>Max Stars<br> <input type ="text" name = "MaximumStars" /></p>
-     <p>Number of Rooms<br> <input type="text" name = "NumberOfRooms" /></p>
-     <p>City<br> <input type="text" name = "City" /></p>
-     <p>Amenities (AC/2WC/Massage/Sauna)<br> <input type="text" name = "Amenities" /></p>
-     <p style="text-align: center"><input type = "submit" value = "Search" /></p>
+<form action = "/checkin_complete" method = "POST">
+     <p>Reservation ID<br><input type = "text" name = "ReservationID" /></p>
+     <p>Employee IRS Number<br> <input type = "text" name = "EmployeeIRSNumber" /></p>
 
+     <p>Payment Method<br> <select name="PaymentMethod">
+         <option value="CREDIT">CREDIT</option>
+         <option value="DEBIT">DEBIT</option>
+         <option value="CASH">CASH</option>
+     </select></p>
+
+     <p style="text-align: center"><input type = "submit" value = "Check in" /></p>
   </form>
-
 
   </p>
 

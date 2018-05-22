@@ -10,4 +10,6 @@ alter table Customer add constraint check(StreetNumber > 0);
 
 alter table Employee add constraint check(StreetNumber > 0);
 
-alter table Hotel add constraint check(Stars between 0 and 5); 
+alter table Hotel add constraint check(Stars between 0 and 5);
+
+alter table Rents add constraint unique (CustomerIRSNumber, EmployeeIRSNumber, HotelRoomID, StartDate, FinishDate);

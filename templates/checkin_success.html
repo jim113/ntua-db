@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if error_log == '' %}
+
+<center>
+<p> The checkin was sucessfull </p>
+</center>
+{% else %}
+
+<p>{{ error_log }}</p>
+
+{% endif %}
+
+
+
+{% endblock %}
