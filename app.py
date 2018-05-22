@@ -117,6 +117,8 @@ def reservation():
 	if request.method == 'GET':
 		amenities = create_list('SELECT DISTINCT Amenity FROM eHOTELS.Amenities;')
 		views = create_list('SELECT DISTINCT View FROM eHOTELS.HotelRoom;')
+		hotelgroupid = create_list('SELECT DISTINCT HotelGroupID FROM eHOTELS.Hotel;')
+		hotelgroupid.insert(0,'')
 		views.insert(0,'')
 		print('Amenities are: ', amenities)
 		cities = create_list('SELECT DISTINCT City FROM eHOTELS.Hotel;')
@@ -148,7 +150,7 @@ def reservation():
 			except:
 				error = True
 
-	return render_template('reservation.html', amenities=amenities, views=views,cities=cities)
+	return render_template('reservation.html', amenities=amenities, views=views,cities=cities,hotelgroupid=hotelgroupid)
 
 		
 

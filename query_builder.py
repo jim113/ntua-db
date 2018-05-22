@@ -60,7 +60,10 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 	simea=0
 	for key, val in data.items():
 		if val == '': continue
-
+		if(key=='HotelGroupID'):
+			tmp = "H.HotelGroupID = {}".format(val)
+			wheres.append(tmp)
+			simea=1	
 		if (key=='MinimumPrice'):
 			tmp="HR.Price >= {}".format(val)
 			wheres.append(tmp)
