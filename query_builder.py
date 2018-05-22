@@ -24,17 +24,19 @@ def kl(data):
 		if val == '': continue
 		if(key=='StartDate'):
 			dt1=val#datetime.strptime(val,'%d-%m-%Y')
-			tmp1 = "StartDate >= '{}'".format(dt1)
-			simea=1
-			wheress.append(tmp1)
+			
 		if(key=='FinishDate'):
 			dt2=val#datetime.strptime(val,'%d-%m-%Y')
-			tmp1 = "FinishDate <= '{}'".format(dt2)
-			simea=1
-			wheress.append(tmp1)
+			
+	tmp1 = "StartDate BETWEEN '{}' AND '{}'".format(dt1,dt2)
+	simea=1
+	wheress.append(tmp1)
+	tmp1 = "FinishDate BETWEEN '{}' AND '{}'".format(dt1,dt2)
+	simea=1
+	wheress.append(tmp1)
 	lista=[]
 	if(simea==1):
-		wheress = ' and '.join(wheress)
+		wheress = ' or '.join(wheress)
 		query1='SELECT HotelRoomID FROM Rents WHERE '
 		query=query1+wheress
 		"""print(query)
@@ -53,7 +55,7 @@ def kl(data):
 
 
 def build_join_query(data, flag=0, lista=''):#=[]):
-	query = 'SELECT * FROM HotelRoom AS HR INNER JOIN Hotel AS H ON HR.HotelID=H.HotelID INNER JOIN Amenities AS A ON A.HotelRoomID=HR.HotelRoomID WHERE '
+	query = 'SELECT HR.HotelRoomID, HR.HotelID,HR.Price,HR.Capacity,HR.View,H.Stars,H.Street,H.StreetNumber,H.PostalCode FROM HotelRoom AS HR INNER JOIN Hotel AS H ON HR.HotelID=H.HotelID INNER JOIN Amenities AS A ON A.HotelRoomID=HR.HotelRoomID WHERE '
 	wheres = []
 	simea=0
 	for key, val in data.items():

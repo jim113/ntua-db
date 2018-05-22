@@ -117,7 +117,7 @@ def reservation():
 	if request.method == 'GET':
 		amenities = create_list('SELECT DISTINCT Amenity FROM eHOTELS.Amenities;')
 		views = create_list('SELECT DISTINCT View FROM eHOTELS.HotelRoom;')
-
+		views.append('')
 		print('Amenities are: ', amenities)
 		cities = create_list('SELECT DISTINCT City FROM eHOTELS.Hotel;')
 		print('Amenities are: ', amenities)
