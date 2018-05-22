@@ -44,6 +44,11 @@ select {
         <option value="{{ x }}">{{ x }}</option>
       {% endfor %}
     </select></p>
+    <p>Number of rooms<br> <select name="NumberOfRooms">
+      {% for x in numberofrooms %}
+        <option value="{{ x }}">{{ x }}</option>
+      {% endfor %}
+    </select></p>
      <div id="checkboxes">
      <label>Amenities</label>
      <ul>
