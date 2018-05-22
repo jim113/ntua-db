@@ -68,7 +68,7 @@ CREATE TABLE `Customer` (
 
 LOCK TABLES `Customer` WRITE;
 /*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
-INSERT INTO `Customer` VALUES (3,'jimko','kal','2018-04-20 01:19:16',0,'vbm','32','5543','athens'),(54,'vagel','vim','2018-04-20 01:21:07',0,'ces','23','111','athens'),(345,'gdf','gfd','2018-04-19 10:35:44',0,'ASDsadsa','35','12345','athens'),(543,'gfd','','2018-04-19 10:32:36',0,'adsdsad','543','12345','athens'),(12345,'dsapok','fsdpok','2018-04-22 11:41:02',123342,'Archeafksda','5','17237','Athens'),(13213,'Panagiotis','Tsapatsaris','2018-04-27 20:05:03',321321,'Lelas Karagianni','3','23112','Ilioupoli'),(123213,'Marios','Papachristou','2018-04-27 20:05:03',123123,'Archimandriti Archadjikaki ','5','17237','Hymmetus'),(123214,'Dimitris','Kelesis','2018-04-27 20:05:03',321445,'Teo','3','23133','Zografou'),(5566447,'jim','kle','2018-04-19 09:04:19',0,'tre','42','6789','Kalamata');
+INSERT INTO `Customer` VALUES (3,'jimko','kal','2018-04-20 01:19:16',0,'vbm','32','5543','athens'),(54,'vagel','vim','2018-04-20 01:21:07',0,'ces','23','111','athens'),(345,'gdf','gfd','2018-04-19 10:35:44',0,'ASDsadsa','35','12345','athens'),(543,'gdf','teleios','2018-04-19 10:32:36',0,'adsdsad','543','12345','athens'),(12345,'dsapok','fsdpok','2018-04-22 11:41:02',123342,'Archeafksda','5','17237','Athens'),(13213,'Panagiotis','Tsapatsaris','2018-04-27 20:05:03',321321,'Lelas Karagianni','3','23112','Ilioupoli'),(123213,'Marios','Papachristou','2018-04-27 20:05:03',123123,'Archimandriti Archadjikaki ','5','17237','Hymmetus'),(123214,'Dimitris','Kelesis','2018-04-27 20:05:03',321445,'Teo','3','23133','Zografou'),(5566447,'jim','kle','2018-04-19 09:04:19',0,'tre','42','6789','Kalamata');
 /*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +152,7 @@ CREATE TABLE `Hotel` (
   PRIMARY KEY (`HotelID`),
   KEY `HotelGroupID` (`HotelGroupID`),
   CONSTRAINT `Hotel_ibfk_1` FOREIGN KEY (`HotelGroupID`) REFERENCES `HotelGroup` (`HotelGroupID`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,9 +161,30 @@ CREATE TABLE `Hotel` (
 
 LOCK TABLES `Hotel` WRITE;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
-INSERT INTO `Hotel` VALUES (1,2,5,1,'Papastratou','10','17237','Athens'),(2,3,5,1,'Imittou','3','41231','Athens'),(3,4,5,1,'Kanari','100','31298','Kolokotronitsi'),(4,5,5,1,'Adsad','213','32133','Thesalloniki'),(5,1,5,1,'Adsaokdp','312','39081','Patras'),(6,1,5,2,'Adasdsa','321','32132','RickAndMorty'),(7,3,5,2,'Mpotsari','21','31212','Bolzano'),(8,3,5,2,'Adsadasd','23','33213','Weierstrass'),(9,4,5,2,'ASdsadsa','234','32121','Bolzano'),(10,5,5,2,'Adsadsad','342','43242','Einstein'),(11,1,5,3,'Ilioupolis','12','16263','Athens'),(12,2,5,3,'Argiroupolis','44','13515','Volos'),(13,3,5,3,'Iliou','123','41244','Volos'),(14,4,5,3,'Os','125','12421','Bolzano'),(15,5,5,3,'Damni','31','51255','Einstein'),(16,1,5,4,'Traino','124','21412','Rassias'),(17,2,5,4,'Tikano','51','31233','Cuppertino'),(18,3,5,4,'Popis','241','12412','Rassias'),(19,4,5,4,'Fuuuu','25','12415','RickAndMorty'),(20,5,5,4,'Toutou','124','12424','Popos'),(21,1,1,5,'ASdsadas','345','32423','Weierstrass'),(22,2,2,5,'Adasdsadas','432','32131','California'),(23,3,3,5,'Adasidla','423','87989','Palo Alto Arkadias'),(24,4,5,5,'Adsadasa','321','23123','Cuppertino'),(25,5,4,5,'Elm Street','321','32312','California');
+INSERT INTO `Hotel` VALUES (1,2,5,1,'Papastratou','10','17237','Athens'),(2,3,5,1,'Imittou','3','41231','Athens'),(3,4,5,1,'Kanari','100','31298','Kolokotronitsi'),(4,5,5,1,'Adsad','213','32133','Thesalloniki'),(5,1,5,1,'Adsaokdp','312','39081','Patras'),(6,1,5,2,'Adasdsa','321','32132','RickAndMorty'),(7,3,5,2,'Mpotsari','21','31212','Bolzano'),(8,3,5,2,'Adsadasd','23','33213','Weierstrass'),(9,4,5,2,'ASdsadsa','234','32121','Bolzano'),(10,5,5,2,'Adsadsad','342','43242','Einstein'),(11,1,5,3,'Ilioupolis','12','16263','Athens'),(12,2,5,3,'Argiroupolis','44','13515','Volos'),(13,3,5,3,'Iliou','123','41244','Volos'),(14,4,5,3,'Os','125','12421','Bolzano'),(15,5,5,3,'Damni','31','51255','Einstein'),(16,1,5,4,'Traino','124','21412','Rassias'),(17,2,5,4,'Tikano','51','31233','Cuppertino'),(18,3,5,4,'Popis','241','12412','Rassias'),(19,4,5,4,'Fuuuu','25','12415','RickAndMorty'),(20,5,5,4,'Toutou','124','12424','Popos'),(21,1,1,5,'ASdsadas','345','32423','Weierstrass'),(22,2,2,5,'Adasdsadas','432','32131','California'),(23,3,3,5,'Adasidla','423','87989','Palo Alto Arkadias'),(24,4,5,5,'Adsadasa','321','23123','Cuppertino'),(25,5,4,5,'Elm Street','321','32312','California'),(36,5,5,1,'Test Street','34','43234','California');
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger update_nr_hotels
+before insert on Hotel
+for each row
+begin
+	update HotelGroup set NumberOfHotels = NumberOfHotels + 1 
+    where HotelGroupID = new.HotelGroupID;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -234,7 +255,7 @@ CREATE TABLE `HotelGroup` (
   `PostalCode` varchar(5) DEFAULT NULL,
   `City` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`HotelGroupID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +264,7 @@ CREATE TABLE `HotelGroup` (
 
 LOCK TABLES `HotelGroup` WRITE;
 /*!40000 ALTER TABLE `HotelGroup` DISABLE KEYS */;
-INSERT INTO `HotelGroup` VALUES (1,5,'Peiraios','116','12345','Imittos'),(2,5,'Syggrou','100','12343','Athens'),(3,5,'Aristotelous','2','54321','Thessaloniki'),(4,5,'Mpoumpoulinas','42','18211','Patras'),(5,5,'Kolokotroni','17','18221','Dervenakia');
+INSERT INTO `HotelGroup` VALUES (1,6,'Peiraios','116','12345','Imittos'),(2,5,'Syggrou','100','12343','Athens'),(3,5,'Aristotelous','2','54321','Thessaloniki'),(4,5,'Mpoumpoulinas','42','18211','Patras'),(5,5,'Kolokotroni','17','18221','Dervenakia');
 /*!40000 ALTER TABLE `HotelGroup` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -391,6 +412,27 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger update_nr_rooms
+before insert on HotelRoom
+for each row
+begin
+	update Hotel set NumberOfRooms = NumberOfRooms + 1
+    where HotelID = new.HotelID;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger delroom
 before delete on HotelRoom
 for each row
@@ -405,6 +447,45 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Temporary table structure for view `HotelRoomCapacityView`
+--
+
+DROP TABLE IF EXISTS `HotelRoomCapacityView`;
+/*!50001 DROP VIEW IF EXISTS `HotelRoomCapacityView`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `HotelRoomCapacityView` AS SELECT 
+ 1 AS `HotelRoomID`,
+ 1 AS `HotelID`,
+ 1 AS `Price`,
+ 1 AS `Capacity`,
+ 1 AS `View`,
+ 1 AS `Expandable`,
+ 1 AS `RepairsNeed`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `HotelRoomLocationView`
+--
+
+DROP TABLE IF EXISTS `HotelRoomLocationView`;
+/*!50001 DROP VIEW IF EXISTS `HotelRoomLocationView`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `HotelRoomLocationView` AS SELECT 
+ 1 AS `HotelRoomID`,
+ 1 AS `HotelID`,
+ 1 AS `Price`,
+ 1 AS `Expandable`,
+ 1 AS `RepairsNeed`,
+ 1 AS `Stars`,
+ 1 AS `Street`,
+ 1 AS `StreetNumber`,
+ 1 AS `PostalCode`,
+ 1 AS `-City`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `Rents`
@@ -427,7 +508,7 @@ CREATE TABLE `Rents` (
   CONSTRAINT `Rents_ibfk_1` FOREIGN KEY (`CustomerIRSNumber`) REFERENCES `Customer` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Rents_ibfk_2` FOREIGN KEY (`EmployeeIRSNumber`) REFERENCES `Employee` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Rents_ibfk_3` FOREIGN KEY (`HotelRoomID`) REFERENCES `HotelRoom` (`HotelRoomID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -587,7 +668,7 @@ CREATE TABLE `Works` (
   KEY `HotelID` (`HotelID`),
   CONSTRAINT `Works_ibfk_1` FOREIGN KEY (`IRSNumber`) REFERENCES `Employee` (`IRSNumber`),
   CONSTRAINT `Works_ibfk_2` FOREIGN KEY (`HotelID`) REFERENCES `Hotel` (`HotelID`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -596,9 +677,95 @@ CREATE TABLE `Works` (
 
 LOCK TABLES `Works` WRITE;
 /*!40000 ALTER TABLE `Works` DISABLE KEYS */;
-INSERT INTO `Works` VALUES (1,6772345,1,'Manager','2000-03-03 00:00:00','2005-03-04 00:00:00'),(2,564398,2,'Manager','1990-02-02 00:00:00','2000-03-04 00:00:00'),(3,124670,3,'Manager','1990-02-04 00:00:00','2000-03-04 00:00:00'),(4,87654,4,'Manager','1990-02-05 00:00:00','2000-03-04 00:00:00'),(5,87546,5,'Manager','1997-02-06 00:00:00','2000-03-04 00:00:00'),(6,56780,6,'Manager','1998-04-05 00:00:00','2000-03-04 00:00:00'),(7,56745,7,'Manager','1994-05-03 00:00:00','2000-03-04 00:00:00'),(8,55431,8,'Manager','1987-06-08 00:00:00','2000-03-04 00:00:00'),(9,54452,9,'Manager','1999-05-07 00:00:00','2000-03-04 00:00:00'),(10,53418,10,'Manager','1990-04-01 00:00:00','2000-03-04 00:00:00'),(11,53412,11,'Manager','1990-01-01 00:00:00','2000-03-04 00:00:00'),(12,42365,12,'Manager','1990-01-02 00:00:00','2000-03-04 00:00:00'),(13,23453,13,'Manager','1990-04-05 00:00:00','2000-03-04 00:00:00'),(14,10123,14,'Manager','2000-02-06 00:00:00','2000-03-04 00:00:00'),(15,9076,15,'Manager','1990-05-09 00:00:00','2000-03-04 00:00:00'),(16,7562,16,'Manager','2000-06-03 00:00:00','2004-03-04 00:00:00'),(17,6789,17,'Manager','1996-07-05 00:00:00','2000-03-04 00:00:00'),(18,6541,18,'Manager','1990-06-04 00:00:00','2000-03-04 00:00:00'),(19,6532,19,'Manager','1999-06-05 00:00:00','2000-03-04 00:00:00'),(20,5234,20,'Manager','2000-01-01 00:00:00','2005-03-04 00:00:00'),(21,3678,21,'Manager','1999-03-01 00:00:00','2000-03-04 00:00:00'),(22,3333,22,'Manager','2000-01-04 00:00:00','2007-03-04 00:00:00'),(23,1237,23,'Manager','2001-01-01 00:00:00','2010-03-04 00:00:00'),(24,1233,24,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(25,1155,25,'Manager','2015-01-04 00:00:00','2017-03-04 00:00:00');
+INSERT INTO `Works` VALUES (1,6772345,1,'Manager','2000-03-03 00:00:00','2005-03-04 00:00:00'),(2,564398,2,'Manager','1990-02-02 00:00:00','2000-03-04 00:00:00'),(3,124670,3,'Manager','1990-02-04 00:00:00','2000-03-04 00:00:00'),(4,87654,4,'Manager','1990-02-05 00:00:00','2000-03-04 00:00:00'),(5,87546,5,'Manager','1997-02-06 00:00:00','2000-03-04 00:00:00'),(6,56780,6,'Manager','1998-04-05 00:00:00','2000-03-04 00:00:00'),(7,56745,7,'Manager','1994-05-03 00:00:00','2000-03-04 00:00:00'),(8,55431,8,'Manager','1987-06-08 00:00:00','2000-03-04 00:00:00'),(9,54452,9,'Manager','1999-05-07 00:00:00','2000-03-04 00:00:00'),(10,53418,10,'Manager','1990-04-01 00:00:00','2000-03-04 00:00:00'),(11,53412,11,'Manager','1990-01-01 00:00:00','2000-03-04 00:00:00'),(12,42365,12,'Manager','1990-01-02 00:00:00','2000-03-04 00:00:00'),(13,23453,13,'Manager','1990-04-05 00:00:00','2000-03-04 00:00:00'),(14,10123,14,'Manager','2000-02-06 00:00:00','2000-03-04 00:00:00'),(15,9076,15,'Manager','1990-05-09 00:00:00','2000-03-04 00:00:00'),(16,7562,16,'Manager','2000-06-03 00:00:00','2004-03-04 00:00:00'),(17,6789,17,'Manager','1996-07-05 00:00:00','2000-03-04 00:00:00'),(18,6541,18,'Manager','1990-06-04 00:00:00','2000-03-04 00:00:00'),(19,6532,19,'Manager','1999-06-05 00:00:00','2000-03-04 00:00:00'),(20,5234,20,'Manager','2000-01-01 00:00:00','2005-03-04 00:00:00'),(21,3678,21,'Manager','1999-03-01 00:00:00','2000-03-04 00:00:00'),(22,3333,22,'Manager','2000-01-04 00:00:00','2007-03-04 00:00:00'),(23,1237,23,'Manager','2001-01-01 00:00:00','2010-03-04 00:00:00'),(24,1233,24,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(25,1233,25,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(26,1233,25,'Cleaner','2007-03-04 00:00:00','2007-03-04 00:00:00');
 /*!40000 ALTER TABLE `Works` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger deletemgr_upd
+before update on Works
+for each row
+begin
+IF  EXISTS (select * from Works where HotelID = old.HotelID and Position = 'Manager'
+ ) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'No manager exists for this hotel!';
+END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger deletemgr
+before delete on Works
+for each row
+begin
+IF  EXISTS (select * from Works where HotelID = old.HotelID and Position = 'Manager'
+ ) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'No manager exists for this hotel!';
+END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `HotelRoomCapacityView`
+--
+
+/*!50001 DROP VIEW IF EXISTS `HotelRoomCapacityView`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `HotelRoomCapacityView` AS select `HotelRoom`.`HotelRoomID` AS `HotelRoomID`,`HotelRoom`.`HotelID` AS `HotelID`,`HotelRoom`.`Price` AS `Price`,`HotelRoom`.`Capacity` AS `Capacity`,`HotelRoom`.`View` AS `View`,`HotelRoom`.`Expandable` AS `Expandable`,`HotelRoom`.`RepairsNeed` AS `RepairsNeed` from `HotelRoom` order by `HotelRoom`.`Capacity` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `HotelRoomLocationView`
+--
+
+/*!50001 DROP VIEW IF EXISTS `HotelRoomLocationView`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `HotelRoomLocationView` AS select `HotelRoom`.`HotelRoomID` AS `HotelRoomID`,`Hotel`.`HotelID` AS `HotelID`,`HotelRoom`.`Price` AS `Price`,`HotelRoom`.`Expandable` AS `Expandable`,`HotelRoom`.`RepairsNeed` AS `RepairsNeed`,`Hotel`.`Stars` AS `Stars`,`Hotel`.`Street` AS `Street`,`Hotel`.`StreetNumber` AS `StreetNumber`,`Hotel`.`PostalCode` AS `PostalCode`,-(`Hotel`.`City`) AS `-City` from (`HotelRoom` join `Hotel` on((`Hotel`.`HotelID` = `HotelRoom`.`HotelID`))) order by `Hotel`.`City` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -609,4 +776,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-20 19:29:36
+-- Dump completed on 2018-05-22 18:55:54

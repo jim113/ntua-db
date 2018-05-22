@@ -123,3 +123,22 @@ IF  EXISTS (select * from Works where HotelID = old.HotelID and Position = 'Mana
 END IF;
 
 end; $$
+
+delimiter $$
+create trigger update_nr_hotels
+before insert on Hotel
+for each row
+begin
+	update HotelGroup set NumberOfHotels = NumberOfHotels + 1
+    where HotelGroupID = new.HotelGroupID;
+end; $$
+
+
+delimiter $$
+create trigger update_nr_rooms
+before insert on HotelRoom
+for each row
+begin
+	update Hotel set NumberOfRooms = NumberOfRooms + 1
+    where HotelID = new.HotelID;
+end; $$

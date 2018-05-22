@@ -24,10 +24,10 @@ def kl(data):
 		if val == '': continue
 		if(key=='StartDate'):
 			dt1=val#datetime.strptime(val,'%d-%m-%Y')
-			
+
 		if(key=='FinishDate'):
 			dt2=val#datetime.strptime(val,'%d-%m-%Y')
-			
+
 	tmp1 = "StartDate BETWEEN '{}' AND '{}'".format(dt1,dt2)
 	simea=1
 	wheress.append(tmp1)
@@ -64,11 +64,11 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 		if (key=='MinimumPrice'):
 			tmp="HR.Price >= {}".format(val)
 			wheres.append(tmp)
-			simea=1 
+			simea=1
 		if(key=='MaximumPrice'):
 			tmp="HR.Price <= {}".format(val)
 			wheres.append(tmp)
-			simea=1 
+			simea=1
 		if(key=='MinimumStars'):
 			tmp = "H.Stars >= {}".format(val)
 			wheres.append(tmp)
@@ -77,7 +77,7 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 			tmp = "H.Stars <= {}".format(val)
 			wheres.append(tmp)
 			simea=1
-	
+
 
 		if(key=='View'):
 			tmp = "HR.{} = '{}'".format(key, val)
@@ -180,3 +180,7 @@ def build_edit_prequery(tbl='Customers', id = None):
 		pk = 'HotelGroupID'
 	where = ' WHERE {} = {};'.format(pk, id)
 	return query +  where
+
+def build_name_query(first_name, last_name):
+	query = "SELECT IRSNumber, FirstName, LastName FROM eHOTELS.Customer where FirstName = '{}' and LastName = '{}';".format(first_name, last_name)
+	return query

@@ -112,6 +112,21 @@ def hotelgroup():
 def checkin():
 	return render_template('checkin.html')
 
+@app.route('/result_irs', methods=['POST', 'GET'])
+def result_irs():
+	if request.method == 'POST':
+		form_data = request.form
+		first_name = form_data['FirstName']
+		last_name = form_data['LastName']
+		error_log = ''
+		query = build_search_query(form_data, 'Customer')
+		results = exec_query(query)
+		print(results)
+
+	return render_template('result_irs.html', results=results)
+
+@app.route
+
 @app.route('/reservation', methods=['POST', 'GET'])
 def reservation():
 	if request.method == 'GET':
@@ -124,7 +139,7 @@ def reservation():
 		print('Amenities are: ', amenities)
 		print('Views are ', views)
 		print('Available cities ', cities)
-	elif request.method == 'POST':		
+	elif request.method == 'POST':
 		result = result.form
 		print(result)
 		# edo vazeis query
@@ -132,7 +147,7 @@ def reservation():
 			error = True
 		else:
 			lista=kl(result)
-			
+
 			if(lista!=0):
 				query = build_join_query(result,1,lista)
 			else:
@@ -150,7 +165,7 @@ def reservation():
 
 	return render_template('reservation.html', amenities=amenities, views=views,cities=cities)
 
-		
+
 
 @app.route('/about')
 def about():
@@ -209,7 +224,7 @@ def checkin_result(type_of_result):
 	except KeyError:
 		print ("Key error")
 		tbl = ''
-	
+
 	if request.method == 'POST':
 		result = request.form
 		#print(result)
@@ -217,7 +232,7 @@ def checkin_result(type_of_result):
 			error = True
 		else:
 			lista=kl(result)
-			
+
 			if(lista!=0):
 				query = build_join_query(result,1,lista)
 			else:
@@ -251,7 +266,7 @@ def result(type_of_result):
 
 	if request.method == 'POST':
 		result = request.form
-		
+
 		if all([x == '' for x in result.values()]):
 			error = True
 		else:
