@@ -71,8 +71,8 @@ for each row
 begin
 IF EXISTS (select * from Reserves
 	where (HotelRoomID = new.HotelRoomID)
-	and (new.StartDate between StartDate and FinishDate) or
-		(new.FinishDate between StartDate and FinishDate)
+	and ((new.StartDate between StartDate and FinishDate) or
+		(new.FinishDate between StartDate and FinishDate)) and Paid = new.Paid
  ) THEN
   SIGNAL SQLSTATE '45000'
   SET MESSAGE_TEXT = 'Overlap found!';
@@ -141,4 +141,21 @@ for each row
 begin
 	update Hotel set NumberOfRooms = NumberOfRooms + 1
     where HotelID = new.HotelID;
+end; $$
+
+delimiter $$
+create trigger rentcheck
+before insert on Rents
+for each row
+begin
+IF EXISTS (
+	select * from WorksHotelRoom where WorksHotelRoom.IRSNumber = new.EmployeeIRSNumber
+    and WorksHotelRoom.HotelRoomID = new.HotelRoomID
+		-- and CURRENT_TIMESTAMP between WorksHotelRoom.StartDate and WorksHotelRoom.FinishDate
+
+ ) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Wrong Employee or Employee does not work here anymore!';
+END IF;
+
 end; $$

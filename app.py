@@ -90,21 +90,28 @@ def checkin_complete():
 	print('About to complete checkin')
 	query = build_search_reservation(reservation_id)
 	error_log = ''
-	data = exec_query(query)[0]
-	hotel_room_id = data['HotelRoomID']
+	rent_id = -1
+
+	try:
+		data = exec_query(query)[0]
+		hotel_room_id = data['HotelRoomID']
+
+		price = exec_query(get_price_query(hotel_room_id))[0]['Price']
+
+		# insert to db
+		checkin_query = build_checkin_query_from_reservation(data, result['EmployeeIRSNumber'], price, result['PaymentMethod'])
+		exec_query(checkin_query, commit=True)
+		rent_id = exec_query('SELECT last_insert_id()')[0]['last_insert_id()']
+
+		# update payment
+		# exec_query('UPDATE eHOTELS.Reserves SET Paid = 1 WHERE ReservationID = {}'.format(reservation_id), commit = True)
+	except:
+		error_log = '''Something went wrong: check that you have entered the correct details and the valid employee
+						or that you are entering a valid reservation ID'''
 
 
-	price = exec_query(get_price_query(hotel_room_id))[0]['Price']
 
-	# insert to db
-	checkin_query = build_checkin_query_from_reservation(data, result['EmployeeIRSNumber'], price, result['PaymentMethod'])
-	exec_query(checkin_query, commit=True)
-
-	# update payment
-	exec_query('UPDATE eHOTELS.Reserves SET Paid = 1 WHERE ReservationID = {}'.format(reservation_id), commit = True)
-
-
-	return render_template('checkin_success.html', error_log=error_log)
+	return render_template('checkin_success.html', error_log=error_log, rent_id=rent_id)
 
 
 @app.route('/logout')
