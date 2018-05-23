@@ -128,8 +128,12 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 
 	if (flag==1 and simea==1):
 		wheres = wheres + ' and HR.HotelRoomID NOT IN ('+ lista+')'
+		lista11 = lista.replace("Rents", "Reserves")
+		wheres = wheres + ' and HR.HotelRoomID NOT IN ('+ lista11+')'
 	elif(flag==1):
 		wheres = wheres + 'HR.HotelRoomID NOT IN ('+lista+')'
+		lista11 = lista.replace("Rents", "Reserves")
+		wheres = wheres + ' and HR.HotelRoomID NOT IN ('+ lista11+')'		
 	wheres = wheres + ';'
 	return query + wheres
 
