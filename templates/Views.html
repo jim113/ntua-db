@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+<h2>See available Views</h2>
+
+<p>Please select your preference below</p>
+<br>
+
+<form action = "/Views_result" method = "POST"> 
+      
+     <label>Ordered by</label><br>
+     
+     <input type="radio" name="orderby" value="capacity"> Capacity<br>
+     
+     <input type="radio" name="orderby" value="city"> Region<br>
+     
+     <p style="text-align: center"><input type = "submit" value = "Search" /></p>
+   </div>
+  </form>
+
+
+
+
+{% endblock %}
