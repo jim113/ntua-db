@@ -173,6 +173,9 @@ def reservation():
 		numberofrooms = create_list('SELECT DISTINCT NumberOfRooms FROM eHOTELS.Hotel;')
 		numberofrooms.sort();
 		numberofrooms.insert(0,'')
+		capacityofrooms = create_list('SELECT DISTINCT Capacity FROM eHOTELS.HotelRoom;')
+		capacityofrooms.sort();
+		capacityofrooms.insert(0,'')
 		hotelgroupid.insert(0,'')
 		views.insert(0,'')
 		print('Amenities are: ', amenities)
@@ -205,7 +208,7 @@ def reservation():
 			except:
 				error = True
 
-	return render_template('reservation.html', amenities=amenities, views=views,cities=cities,hotelgroupid=hotelgroupid,numberofrooms=numberofrooms)
+	return render_template('reservation.html', amenities=amenities, views=views,cities=cities,hotelgroupid=hotelgroupid,numberofrooms=numberofrooms,capacityofrooms=capacityofrooms)
 
 
 

@@ -55,7 +55,7 @@ def kl(data):
 
 
 def build_join_query(data, flag=0, lista=''):#=[]):
-	query = 'SELECT HR.HotelRoomID, HR.HotelID,HR.Price,HR.Capacity,HR.View,H.Stars,H.Street,H.StreetNumber,H.PostalCode FROM HotelRoom AS HR INNER JOIN Hotel AS H ON HR.HotelID=H.HotelID INNER JOIN Amenities AS A ON A.HotelRoomID=HR.HotelRoomID WHERE '
+	query = 'SELECT HR.HotelRoomID, HR.HotelID,HR.Price,HR.Capacity,HR.View,H.Stars,H.City,H.Street,H.StreetNumber,H.PostalCode FROM HotelRoom AS HR INNER JOIN Hotel AS H ON HR.HotelID=H.HotelID INNER JOIN Amenities AS A ON A.HotelRoomID=HR.HotelRoomID WHERE '
 	wheres = []
 	simea=0
 	for key, val in data.items():
