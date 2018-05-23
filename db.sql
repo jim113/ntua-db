@@ -523,7 +523,7 @@ CREATE TABLE `Rents` (
   CONSTRAINT `Rents_ibfk_1` FOREIGN KEY (`CustomerIRSNumber`) REFERENCES `Customer` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Rents_ibfk_2` FOREIGN KEY (`EmployeeIRSNumber`) REFERENCES `Employee` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Rents_ibfk_3` FOREIGN KEY (`HotelRoomID`) REFERENCES `HotelRoom` (`HotelRoomID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -532,6 +532,7 @@ CREATE TABLE `Rents` (
 
 LOCK TABLES `Rents` WRITE;
 /*!40000 ALTER TABLE `Rents` DISABLE KEYS */;
+INSERT INTO `Rents` VALUES (1,123214,6772345,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',199,'CREDIT'),(2,123214,6772345,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',199,'CREDIT');
 /*!40000 ALTER TABLE `Rents` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -547,10 +548,10 @@ DELIMITER ;;
 before insert on Rents
 for each row
 begin
-IF not EXISTS ( 
-	select * from WorksHotelRoom where WorksHotelRoom.IRSNumber = new.EmployeeIRSNumber 
-    and WorksHotelRoom.HotelRoomID = new.HotelRoomID and 
-    CURRENT_TIMESTAMP between WorksHotelRoom.StartDate and WorksHotelRoom.FinishDate
+IF EXISTS (
+	select * from WorksHotelRoom where WorksHotelRoom.IRSNumber = new.EmployeeIRSNumber
+    and WorksHotelRoom.HotelRoomID = new.HotelRoomID
+		-- and CURRENT_TIMESTAMP between WorksHotelRoom.StartDate and WorksHotelRoom.FinishDate
 
  ) THEN
   SIGNAL SQLSTATE '45000'
@@ -724,6 +725,56 @@ LOCK TABLES `Works` WRITE;
 INSERT INTO `Works` VALUES (1,6772345,1,'Manager','2000-03-03 00:00:00','2100-03-04 00:00:00'),(2,564398,2,'Manager','1990-02-02 00:00:00','2000-03-04 00:00:00'),(3,124670,3,'Manager','1990-02-04 00:00:00','2000-03-04 00:00:00'),(4,87654,4,'Manager','1990-02-05 00:00:00','2000-03-04 00:00:00'),(5,87546,5,'Manager','1997-02-06 00:00:00','2000-03-04 00:00:00'),(6,56780,6,'Manager','1998-04-05 00:00:00','2000-03-04 00:00:00'),(7,56745,7,'Manager','1994-05-03 00:00:00','2000-03-04 00:00:00'),(8,55431,8,'Manager','1987-06-08 00:00:00','2000-03-04 00:00:00'),(9,54452,9,'Manager','1999-05-07 00:00:00','2000-03-04 00:00:00'),(10,53418,10,'Manager','1990-04-01 00:00:00','2000-03-04 00:00:00'),(11,53412,11,'Manager','1990-01-01 00:00:00','2000-03-04 00:00:00'),(12,42365,12,'Manager','1990-01-02 00:00:00','2000-03-04 00:00:00'),(13,23453,13,'Manager','1990-04-05 00:00:00','2000-03-04 00:00:00'),(14,10123,14,'Manager','2000-02-06 00:00:00','2000-03-04 00:00:00'),(15,9076,15,'Manager','1990-05-09 00:00:00','2000-03-04 00:00:00'),(16,7562,16,'Manager','2000-06-03 00:00:00','2004-03-04 00:00:00'),(17,6789,17,'Manager','1996-07-05 00:00:00','2000-03-04 00:00:00'),(18,6541,18,'Manager','1990-06-04 00:00:00','2000-03-04 00:00:00'),(19,6532,19,'Manager','1999-06-05 00:00:00','2000-03-04 00:00:00'),(20,5234,20,'Manager','2000-01-01 00:00:00','2005-03-04 00:00:00'),(21,3678,21,'Manager','1999-03-01 00:00:00','2000-03-04 00:00:00'),(22,3333,22,'Manager','2000-01-04 00:00:00','2007-03-04 00:00:00'),(23,1237,23,'Manager','2001-01-01 00:00:00','2010-03-04 00:00:00'),(24,1233,24,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(25,1233,25,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(26,1233,25,'Cleaner','2007-03-04 00:00:00','2007-03-04 00:00:00');
 /*!40000 ALTER TABLE `Works` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger updatemgr
+before update on Works
+for each row
+begin
+IF  EXISTS (select * from Works where HotelID = old.HotelID and Position = 'Manager'
+ ) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'No manager exists for this hotel!';
+END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger deletemgr
+before delete on Works
+for each row
+begin
+IF  EXISTS (select * from Works where HotelID = old.HotelID and Position = 'Manager'
+ ) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'No manager exists for this hotel!';
+END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Temporary table structure for view `WorksHotel`
@@ -855,4 +906,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-23  9:38:55
+-- Dump completed on 2018-05-23 10:42:19
