@@ -315,6 +315,7 @@ def result(type_of_result):
 	global link_tables
 	error = False
 	search_results = []
+
 	print(link_tables)
 	try:
 		tbl = link_tables[type_of_result]
@@ -323,12 +324,16 @@ def result(type_of_result):
 		tbl = ''
 
 	if request.method == 'POST':
-		result = request.form
+		tmp = request.form
+		result = {}
+		for key, val in tmp.items():
+			result[key] = val
 
 		if all([x == '' for x in result.values()]):
 			error = True
 		else:
 			query = build_search_query(result, tbl)
+			print(query)
 			print(result)
 			try:
 				search_results = exec_query(query, refresh=False)
