@@ -362,12 +362,26 @@ def result(type_of_result):
 			query = build_search_query(result, tbl)
 			print(query)
 			print(result)
+			print('Search phones and emails')
 			try:
 				search_results = exec_query(query, refresh=False)
 				print('Found {} matches:'.format(len(search_results)))
 				print(search_results)
-			except:
+				if type_of_result == 'hotelgroup':
+					for x in search_results:
+						phones = create_list(get_phone_numbers(x['HotelGroupID']))
+						emails = create_list(get_emails(x['HotelGroupID']))
+						x['Phone Numbers'] = ', '.join(phones)
+						x['e-mails'] = ', '.join(emails)
+				if type_of_result == 'hotel':
+					for x in search_results:
+						phones = create_list(get_phone_numbers(x['HotelID'], 'HotelPhoneNumbers'))
+						emails = create_list(get_emails(x['HotelID'], 'HotelEmailAddress'))
+						x['Phone Numbers'] = ', '.join(phones)
+						x['e-mails'] = ', '.join(emails)
+			except Exception as e:
 				error = True
+
 
 
 		return render_template("result.html",result = result, search_results = search_results, number_of_results = len(search_results), error=error, type_of_result=type_of_result)

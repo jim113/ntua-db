@@ -134,7 +134,7 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 	elif(flag==1):
 		wheres = wheres + 'HR.HotelRoomID NOT IN ('+lista+')'
 		lista11 = lista.replace("Rents", "Reserves")
-		wheres = wheres + ' and HR.HotelRoomID NOT IN ('+ lista11+')'		
+		wheres = wheres + ' and HR.HotelRoomID NOT IN ('+ lista11+')'
 	wheres = wheres + ';'
 	return query + wheres
 
@@ -208,4 +208,14 @@ def build_checkin_query_from_reservation(data, employee_irs_number, price=None, 
 
 def get_price_query(hotel_room_id):
 	query = "SELECT HotelRoomID, Price from eHOTELS.HotelRoom where HotelRoomID = '{}';".format(hotel_room_id)
+	return query
+
+def get_phone_numbers(id, tbl='HotelGroupPhoneNumbers'):
+	id_name = 'HotelGroupID' if tbl == 'HotelGroupPhoneNumbers' else 'HotelID'
+	query = "SELECT PhoneNumber from eHOTELS.{} where {} ='{}';".format(tbl, id_name, id)
+	return query
+
+def get_emails(id, tbl='HotelGroupEmailAddress'):
+	id_name = 'HotelGroupID' if tbl == 'HotelGroupEmailAddress' else 'HotelID'
+	query = "SELECT EmailAddress from eHOTELS.{} where {} ='{}';".format(tbl, id_name, id)
 	return query
