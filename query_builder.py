@@ -157,11 +157,21 @@ def build_insert_query(data, tbl='Customers'):
 	res = {}
 	for key, val in data.items():
 		if val == '': raise Exception('Not a valid insertion')
+		if key in ['Emails', 'Phones']:
+			continue
 		res[key] = "'{}'".format(val)
 	cols = '({})'.format(', '.join(res.keys()))
 	d = '({})'.format(', '.join(res.values()))
 
 	return query + cols + ' VALUES ' + d + ';'
+
+def build_insert_query_email(id, email, tbl='HotelGroup'):
+	query = "INSERT INTO eHOTELS.{}EmailAddress ({}ID, EmailAddress) VALUES ('{}','{}');".format(tbl, tbl, id, email)
+	return query
+
+def build_insert_query_phone_number(id, phone, tbl='HotelGroup'):
+	query = "INSERT INTO eHOTELS.{}PhoneNumbers ({}ID, PhoneNumber) VALUES ('{}','{}');".format(tbl, tbl, id, phone)
+	return query
 
 def build_edit_query(data, tbl='Customers', id = None):
 	query = 'UPDATE eHOTELS.{} SET '.format(tbl)

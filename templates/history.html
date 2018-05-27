@@ -7,11 +7,6 @@
 
 {% if not error %}
 
-<form action = "/history/100" method = "POST">
-    <p>Limit to last<br> <input type = "number" name = "{{ last }}" value="{{ last }}"/></p>
-    <p style="text-align: center"><input type = "submit" value = "Search" /></p>
-
-  </form>
 
 
 {% for x in results %}
@@ -26,9 +21,9 @@
       {% endfor %}
    </table>
    <br>
+ </div>
    {% endfor %}
 
- </div>
 
 </div>
 

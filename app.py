@@ -425,6 +425,19 @@ def create(type_of_result):
 			query = build_insert_query(result, tbl)
 			print('Insert query is \n' + query)
 			exec_query(q = query, commit = True)
+			if type_of_result in ['hotel', 'hotelgroup']:
+				emails = result['Emails'].strip(' ').split(',')
+				phones = result['Phones'].strip(' ').split(',')
+				id_ = exec_query('SELECT last_insert_id()')[0]['last_insert_id()']
+				for email in emails:
+					query = build_insert_query_email(id_, email, tbl)
+					print(query)
+					exec_query(q = query, commit=True)
+				for phone in phones:
+					query = build_insert_query_phone_number(id_, phone, tbl)
+					print(query)
+					exec_query(q = query, commit=True)
+
 		except Exception as e:
 			error = True
 			error_log = str(e)
