@@ -100,9 +100,10 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 			simea=1
 
 		if(key=='NumberOfRooms'):
-			tmp = "H.{} = {}".format(key, val)
-			wheres.append(tmp)
-			simea=1
+			lista11 = lista.replace("Rents", "Reserves")
+			tmp67 = 'SELECT HotelID FROM Hotel HAVING ((SELECT COUNT(HR.HotelRoomID) AS num FROM HotelRoom AS HR INNER JOIN Hotel AS H on H.HotelID=HR.HotelID WHERE HR.HotelRoomID NOT IN (' + lista + ')' ' AND HR.HotelRoomID NOT IN ('+lista11+'))   >= {})'.format(val)
+			#wheres.append(tmp)
+			#simea=1
 		if(key=='AC'):
 			tmp = "A.Amenity = 'AC'"#.format(val)
 			tmp="HR.HotelRoomID IN (SELECT HotelRoomID FROM Amenities WHERE Amenity='AC')"
@@ -125,7 +126,7 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 			simea=1
 
 	wheres = ' and '.join(wheres)
-
+	wheres = wheres + ' and H.HotelID IN (' + tmp67 +')'
 	if (flag==1 and simea==1):
 		wheres = wheres + ' and HR.HotelRoomID NOT IN ('+ lista+')'
 		lista11 = lista.replace("Rents", "Reserves")
