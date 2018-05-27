@@ -151,6 +151,30 @@ def checkin():
 def reservation_error():
 	return render_template('reservation_error.html')
 
+@app.route('/Views', methods=['POST', 'GET'])
+def Views():
+	return render_template('Views.html')
+
+@app.route('/Views_result', methods=['POST', 'GET'])
+def Views_result():
+	global link_tables
+	error = False
+	search_results = []
+	if request.method == 'POST':
+		result = request.form
+		print(result.items())
+		for key, val in result.items():
+			if val == '': continue
+			print(val)
+			if(val=='capacity'):
+				query='SELECT * FROM eHOTELS.HotelRoomCapacityView'
+			if(val=='city'):
+				query='SELECT * FROM eHOTELS.HotelRoomLocationView'
+			search_results=exec_query(query)
+			print(search_results)
+	return render_template('Views_result.html',result = result, search_results = search_results, number_of_results = len(search_results), error=error)
+
+
 @app.route('/result_irs/<hotel_room_id>', methods=['POST', 'GET'])
 def result_irs(hotel_room_id):
 	if request.method == 'POST':
@@ -173,6 +197,9 @@ def reservation():
 		numberofrooms = create_list('SELECT DISTINCT NumberOfRooms FROM eHOTELS.Hotel;')
 		numberofrooms.sort();
 		numberofrooms.insert(0,'')
+		capacityofrooms = create_list('SELECT DISTINCT Capacity FROM eHOTELS.HotelRoom;')
+		capacityofrooms.sort();
+		capacityofrooms.insert(0,'')
 		hotelgroupid.insert(0,'')
 		views.insert(0,'')
 		print('Amenities are: ', amenities)
@@ -205,7 +232,7 @@ def reservation():
 			except:
 				error = True
 
-	return render_template('reservation.html', amenities=amenities, views=views,cities=cities,hotelgroupid=hotelgroupid,numberofrooms=numberofrooms)
+	return render_template('reservation.html', amenities=amenities, views=views,cities=cities,hotelgroupid=hotelgroupid,numberofrooms=numberofrooms,capacityofrooms=capacityofrooms)
 
 
 

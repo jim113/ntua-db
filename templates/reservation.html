@@ -33,7 +33,11 @@ select {
         <option value="{{ x }}">{{ x }}</option>
       {% endfor %}
     </select></p>
-     <p>Number of Beds<br> <input type = "text" name = "Capacity" /></p>
+     <p>Number of bed<br> <select name="Capacity">
+      {% for x in capacityofrooms %}
+        <option value="{{ x }}">{{ x }}</option>
+      {% endfor %}
+    </select></p>
      <p>City<br> <select name="City">
       {% for x in cities %}
         <option value="{{ x }}">{{ x }}</option>
@@ -56,10 +60,7 @@ select {
        <li><input name="{{ x }}" type="checkbox">{{ x }}</li>
        {% endfor %}
      </ul>
-     <label>Ordered by</label><br>
-     <input type="radio" name="orderby" value="capacity"> Capacity<br>
-     <input type="radio" name="orderby" value="city"> Region<br>
-
+     
      <p style="text-align: center"><input type = "submit" value = "Search" /></p>
    </div>
   </form>
