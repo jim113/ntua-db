@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <center>
-<form action = "/complete_reservation/12" method = "POST">
+<form action = "/complete_reservation/{{ hotel_room_id }}" method = "POST">
     {% for result in results %}
       <input type="radio" name="IRSNumber" value="{{ result['IRSNumber'] }}">IRSNumber : {{ result['IRSNumber'] }} <br>First Name: {{ result['FirstName'] }}<br>Last Name: {{ result['LastName'] }}<br>
     {% endfor %}

@@ -266,6 +266,7 @@ def reservation_room(hotel_room_id):
 def complete_reservation(hotel_room_id):
 	data = request.form
 	print(data)
+	reservation_id = -1
 	customer_irs_number = data['IRSNumber']
 	# TODO get start and FinishDate
 	global start_date
