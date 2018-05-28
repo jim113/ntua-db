@@ -58,7 +58,8 @@ CREATE TABLE `Customer` (
   `PostalCode` varchar(5) DEFAULT NULL,
   `City` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`IRSNumber`),
-  KEY `IRSNumber` (`IRSNumber`,`LastName`,`FirstName`)
+  KEY `IRSNumber` (`IRSNumber`,`LastName`,`FirstName`),
+  KEY `customerindex` (`FirstName`,`LastName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -118,6 +119,7 @@ CREATE TABLE `History` (
   `Paid` tinyint(1) DEFAULT NULL,
   UNIQUE KEY `CustomerIRSNumber` (`CustomerIRSNumber`,`HotelRoomID`,`StartDate`,`FinishDate`),
   KEY `HotelRoomID` (`HotelRoomID`),
+  KEY `historyindex` (`StartDate`,`FinishDate`),
   CONSTRAINT `History_ibfk_1` FOREIGN KEY (`CustomerIRSNumber`) REFERENCES `Customer` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `History_ibfk_2` FOREIGN KEY (`HotelRoomID`) REFERENCES `HotelRoom` (`HotelRoomID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -129,7 +131,7 @@ CREATE TABLE `History` (
 
 LOCK TABLES `History` WRITE;
 /*!40000 ALTER TABLE `History` DISABLE KEYS */;
-INSERT INTO `History` VALUES (3,1,'1973-01-01 00:00:01','1974-01-01 00:00:01',0),(123214,12,'2018-05-22 19:44:48','2018-05-22 19:44:48',0),(123214,12,'2018-05-22 19:44:54','2018-05-22 19:44:54',0),(123214,12,'2018-05-22 19:45:15','2018-05-22 19:45:15',0),(123214,12,'2018-05-22 19:55:20','2018-05-22 19:55:20',0),(123214,12,'1997-02-10 12:01:00','1997-03-11 11:59:00',0),(5566447,12,'2020-02-02 12:01:00','2040-02-02 11:59:00',0),(3,1,'1970-01-01 00:00:01','1971-01-01 00:00:01',1),(123214,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',0);
+INSERT INTO `History` VALUES (3,1,'1973-01-01 00:00:01','1974-01-01 00:00:01',0),(123214,12,'2018-05-22 19:44:48','2018-05-22 19:44:48',0),(123214,12,'2018-05-22 19:44:54','2018-05-22 19:44:54',0),(123214,12,'2018-05-22 19:45:15','2018-05-22 19:45:15',0),(123214,12,'2018-05-22 19:55:20','2018-05-22 19:55:20',0),(123214,12,'1997-02-10 12:01:00','1997-03-11 11:59:00',0),(5566447,12,'2020-02-02 12:01:00','2040-02-02 11:59:00',0),(3,1,'1970-01-01 00:00:01','1971-01-01 00:00:01',1),(123214,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',0),(123214,12,'2100-02-01 12:01:00','2101-02-01 11:59:00',0);
 /*!40000 ALTER TABLE `History` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,7 +257,7 @@ CREATE TABLE `HotelGroup` (
   `PostalCode` varchar(5) DEFAULT NULL,
   `City` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`HotelGroupID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +266,7 @@ CREATE TABLE `HotelGroup` (
 
 LOCK TABLES `HotelGroup` WRITE;
 /*!40000 ALTER TABLE `HotelGroup` DISABLE KEYS */;
-INSERT INTO `HotelGroup` VALUES (1,6,'Peiraios','116','12345','Imittos'),(2,5,'Syggrou','100','12343','Athens'),(3,5,'Aristotelous','2','54321','Thessaloniki'),(4,5,'Mpoumpoulinas','42','18211','Patras'),(5,5,'Kolokotroni','17','18221','Dervenakia');
+INSERT INTO `HotelGroup` VALUES (1,6,'Peiraios','116','12345','Imittos'),(2,5,'Syggrou','100','12343','Athens'),(3,5,'Aristotelous','2','54321','Thessaloniki'),(4,5,'Mpoumpoulinas','42','18211','Patras'),(5,5,'Kolokotroni','17','18221','Dervenakia'),(6,10,'A street','4','17237','Athens'),(7,10,'ASdsa','4','17237','Athens'),(8,10,'5','2','Adsad','Athens'),(9,10,'5','2','17237','Athens'),(10,10,'A street','10','17237','Athens'),(11,20,'Str','10','17237','Athens'),(12,10,'12','33','21312','Athens'),(13,10,'12','33','21312','Athens'),(14,10,'3','3','17331','Athens'),(15,10,'4','3','24312','athens'),(16,40,'Archimandriti Archadjikaki 5','33','17243','Hymmetus, Athens'),(17,10,'Archimandriti Archadjikaki 5','3','17237','Hymmetus, Athens'),(18,10,'Archimandriti Archadjikaki 5','22','17237','Athens'),(19,10,'ASOIDJsa','3','2313','Athens'),(20,10,'ASOIDJsa','3','2313','Athens'),(21,20,'Archimandriti Archadjikaki 5','333','17237','Hymmetus, Athens');
 /*!40000 ALTER TABLE `HotelGroup` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -305,7 +307,7 @@ CREATE TABLE `HotelGroupEmailAddress` (
   PRIMARY KEY (`AddressID`),
   KEY `HotelGroupID` (`HotelGroupID`),
   CONSTRAINT `HotelGroupEmailAddress_ibfk_1` FOREIGN KEY (`HotelGroupID`) REFERENCES `HotelGroup` (`HotelGroupID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,7 +316,7 @@ CREATE TABLE `HotelGroupEmailAddress` (
 
 LOCK TABLES `HotelGroupEmailAddress` WRITE;
 /*!40000 ALTER TABLE `HotelGroupEmailAddress` DISABLE KEYS */;
-INSERT INTO `HotelGroupEmailAddress` VALUES (1,1,'ge14620272@mail.ntua.gr'),(2,2,'ge11653689@mail.ntua.gr'),(3,3,'ge19326669@mail.ntua.gr'),(4,4,'ge16674383@mail.ntua.gr'),(5,5,'ge19345984@mail.ntua.gr');
+INSERT INTO `HotelGroupEmailAddress` VALUES (1,1,'ge14620272@mail.ntua.gr'),(2,2,'ge11653689@mail.ntua.gr'),(3,3,'ge19326669@mail.ntua.gr'),(4,4,'ge16674383@mail.ntua.gr'),(5,5,'ge19345984@mail.ntua.gr'),(6,1,'testemail@mail.ntua.gr'),(29,20,'mrmarios97@gmail.com'),(30,21,'mrmarios97@gmail.com'),(31,21,' pikouli@mail.ntua.gr');
 /*!40000 ALTER TABLE `HotelGroupEmailAddress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,7 +334,7 @@ CREATE TABLE `HotelGroupPhoneNumbers` (
   PRIMARY KEY (`NumberID`),
   KEY `HotelGroupID` (`HotelGroupID`),
   CONSTRAINT `HotelGroupPhoneNumbers_ibfk_1` FOREIGN KEY (`HotelGroupID`) REFERENCES `HotelGroup` (`HotelGroupID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -341,7 +343,7 @@ CREATE TABLE `HotelGroupPhoneNumbers` (
 
 LOCK TABLES `HotelGroupPhoneNumbers` WRITE;
 /*!40000 ALTER TABLE `HotelGroupPhoneNumbers` DISABLE KEYS */;
-INSERT INTO `HotelGroupPhoneNumbers` VALUES (1,1,'1604042397'),(2,2,'1827094517'),(3,3,'1802094588'),(4,4,'1576973590'),(5,5,'1334325946');
+INSERT INTO `HotelGroupPhoneNumbers` VALUES (1,1,'1604042397'),(2,2,'1827094517'),(3,3,'1802094588'),(4,4,'1576973590'),(5,5,'1334325946'),(17,1,'6979614463'),(18,20,'6979614463'),(19,21,'6979614463');
 /*!40000 ALTER TABLE `HotelGroupPhoneNumbers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -520,6 +522,7 @@ CREATE TABLE `Rents` (
   KEY `CustomerIRSNumber` (`CustomerIRSNumber`),
   KEY `EmployeeIRSNumber` (`EmployeeIRSNumber`),
   KEY `HotelRoomID` (`HotelRoomID`),
+  KEY `rentindex` (`StartDate`,`FinishDate`),
   CONSTRAINT `Rents_ibfk_1` FOREIGN KEY (`CustomerIRSNumber`) REFERENCES `Customer` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Rents_ibfk_2` FOREIGN KEY (`EmployeeIRSNumber`) REFERENCES `Employee` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Rents_ibfk_3` FOREIGN KEY (`HotelRoomID`) REFERENCES `HotelRoom` (`HotelRoomID`) ON DELETE SET NULL ON UPDATE CASCADE
@@ -582,9 +585,10 @@ CREATE TABLE `Reserves` (
   PRIMARY KEY (`ReservationID`),
   KEY `CustomerIRSNumber` (`CustomerIRSNumber`),
   KEY `HotelRoomID` (`HotelRoomID`),
+  KEY `resindex` (`StartDate`,`FinishDate`),
   CONSTRAINT `Reserves_ibfk_1` FOREIGN KEY (`CustomerIRSNumber`) REFERENCES `Customer` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Reserves_ibfk_2` FOREIGN KEY (`HotelRoomID`) REFERENCES `HotelRoom` (`HotelRoomID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -593,7 +597,7 @@ CREATE TABLE `Reserves` (
 
 LOCK TABLES `Reserves` WRITE;
 /*!40000 ALTER TABLE `Reserves` DISABLE KEYS */;
-INSERT INTO `Reserves` VALUES (1,3,1,'1970-01-01 00:00:01','1971-01-01 00:00:01',1),(3,123214,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',0);
+INSERT INTO `Reserves` VALUES (1,3,1,'1970-01-01 00:00:01','1971-01-01 00:00:01',1),(3,123214,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',0),(4,123214,12,'2100-02-01 12:01:00','2101-02-01 11:59:00',0);
 /*!40000 ALTER TABLE `Reserves` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -609,10 +613,12 @@ DELIMITER ;;
 before insert on Reserves
 for each row
 begin
-IF EXISTS (select * from Reserves 
+IF EXISTS (select * from Reserves
 	where (HotelRoomID = new.HotelRoomID)
-	and (new.StartDate between StartDate and FinishDate) or 
-		(new.FinishDate between StartDate and FinishDate)
+	and ( (new.StartDate between StartDate and FinishDate) or
+		 (new.FinishDate between StartDate and FinishDate) or 
+         (StartDate between new.StartDate and new.FinishDate) or
+	     (FinishDate between new.StartDate and new.FinishDate))
  ) THEN
   SIGNAL SQLSTATE '45000'
   SET MESSAGE_TEXT = 'Overlap found!';
@@ -638,34 +644,6 @@ after insert on Reserves
 for each row
 begin
 	insert into History (CustomerIRSNumber, HotelRoomID, StartDate, FinishDate, Paid) values (new.CustomerIRSNumber, new.HotelRoomID, new.StartDate, new.FinishDate, new.Paid);
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger nonoverlap_upd
-before update on Reserves
-for each row
-begin
-IF EXISTS (select * from Reserves
-	where (HotelRoomID = new.HotelRoomID)
-	and ((new.StartDate between StartDate and FinishDate) or
-		(new.FinishDate between StartDate and FinishDate)) and Paid = new.Paid
- ) THEN
-  SIGNAL SQLSTATE '45000'
-  SET MESSAGE_TEXT = 'Overlap found!';
-END IF;
-
 end */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -906,4 +884,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-23 10:42:56
+-- Dump completed on 2018-05-28 16:57:12
