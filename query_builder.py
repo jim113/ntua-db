@@ -39,22 +39,14 @@ def kl(data):
 		wheress = ' or '.join(wheress)
 		query1='SELECT HotelRoomID FROM Rents WHERE '
 		query=query1+wheress
-		"""print(query)
-		cursor=cnx.cursor()
-		cursor.execute(query)
-		ro=cursor.fetchall()
-		if(len(ro)!=0):
-			for i in ro:
-				for j in i:
-					lista.append(int(j))
-	return lista"""
+
 		return query
 	else:
 		return 0
 
 
 
-def build_join_query(data, flag=0, lista=''):#=[]):
+def build_join_query(data, flag=0, lista='', orderBy='Capacity'):#=[]):
 	query = 'SELECT HR.HotelRoomID, HR.HotelID,HR.Price,HR.Capacity,HR.View,H.Stars,H.City,H.Street,H.StreetNumber,H.PostalCode FROM HotelRoom AS HR INNER JOIN Hotel AS H ON HR.HotelID=H.HotelID INNER JOIN Amenities AS A ON A.HotelRoomID=HR.HotelRoomID WHERE '
 	wheres = []
 	simea=0
@@ -135,7 +127,7 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 		wheres = wheres + 'HR.HotelRoomID NOT IN ('+lista+')'
 		lista11 = lista.replace("Rents", "Reserves")
 		wheres = wheres + ' and HR.HotelRoomID NOT IN ('+ lista11+')'
-	wheres = wheres + ';'
+	wheres = wheres + 'ORDER BY {};'.format(orderBy)
 	return query + wheres
 
 

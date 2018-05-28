@@ -153,7 +153,7 @@ def reservation_error():
 
 @app.route('/Views', methods=['POST', 'GET'])
 def Views():
-	return render_template('Views.html')
+	return check_admin('Views.html')
 
 @app.route('/Views_result', methods=['POST', 'GET'])
 def Views_result():
@@ -298,6 +298,7 @@ def checkin_result(type_of_result):
 
 	if request.method == 'POST':
 		result = request.form
+		orderBy = result['orderBy']
 		global start_date
 		global finish_date
 		start_date = result['StartDate']
@@ -319,9 +320,9 @@ def checkin_result(type_of_result):
 			lista=kl(result)
 
 			if(lista!=0):
-				query = build_join_query(result,1,lista)
+				query = build_join_query(result,1,lista, orderBy)
 			else:
-				query = build_join_query(result,0,lista)
+				query = build_join_query(result,0,lista, orderBy)
 			#print(result)
 
 			try:
@@ -329,12 +330,18 @@ def checkin_result(type_of_result):
 				search_results1 = exec_query(query, refresh=False)
 				search_results = list({v['HotelRoomID']:v for v in search_results1}.values())
 				print('Found {} matches:'.format(len(search_results)))
+				if orderBy == 'Capacity':
+					search_results = sorted(search_results, key=lambda x : int(x['Capacity']))
+				counter = collections.defaultdict(int)
+				for s in search_results:
+					counter[s[orderBy]] += 1
+
 				print(search_results)
 			except:
 				error = True
 
 
-		return render_template("checkin_result.html",result = result, search_results = search_results, number_of_results = len(search_results), error=error, type_of_result=type_of_result)
+		return render_template("checkin_result.html",result = result, search_results = search_results, counter=counter, number_of_results = len(search_results), error=error, type_of_result=type_of_result)
 
 
 @app.route('/result/<type_of_result>', methods = ['POST', 'GET'])

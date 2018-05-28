@@ -48,11 +48,8 @@ select {
         <option value="{{ x }}">{{ x }}</option>
       {% endfor %}
     </select></p>
-    <p>Number of rooms<br> <select name="NumberOfRooms">
-      {% for x in numberofrooms %}
-        <option value="{{ x }}">{{ x }}</option>
-      {% endfor %}
-    </select></p>
+    <p>Number Of Available Rooms<br> <input type = "number" name = "NumberOfRooms" required/></p>
+
      <div id="checkboxes">
      <label>Amenities</label>
      <ul>
@@ -61,11 +58,11 @@ select {
        {% endfor %}
      </ul>
 
-    <!-- <label>Ordered by</label><br>
+    <label>Ordered by</label><br>
     <ul>
-    <li><input type="radio" name="orderBy" value="capacity" required> Capacity<br></li>
-    <li><input type="radio" name="orderBy" value="city"> Region<br></li>
-    <ul> -->
+    <li><input type="radio" name="orderBy" value="Capacity" required> Capacity<br></li>
+    <li><input type="radio" name="orderBy" value="City"> Region<br></li>
+    <ul>
      <p style="text-align: center"><input type = "submit" value = "Search" /></p>
    </div>
   </form>

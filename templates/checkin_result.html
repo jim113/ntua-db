@@ -2,7 +2,7 @@
 {% block body %}
 
 {% if not error %}
-Success! Here are your resutls for searching {{ type_of_result }}s:
+<p>Success! Here are your resutls for searching:</p>
 <br>
 
 <div style="padding: 2rem">
@@ -19,6 +19,29 @@ Success! Here are your resutls for searching {{ type_of_result }}s:
    </table>
 </center>
 </div>
+
+<p>Ordered by {{ orderBy }}:</p>
+
+<div style="padding: 2rem">
+<center>
+<table align="left|left" border = 0>
+      <tr>
+         <th> {{ result['orderBy'] }} </th>
+         <td> Count </td>
+      </tr>
+      {% for key, value in counter.items() %}
+      {% if value != '' %}
+         <tr>
+            <th> {{ key }} </th>
+            <td> {{ value }} </td>
+         </tr>
+      {% endif %}
+      {% endfor %}
+   </table>
+</center>
+</div>
+
+
 
 <div style="padding: 2rem">
 <p>Your search returned {{ number_of_results }} results</p>
