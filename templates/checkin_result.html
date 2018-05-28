@@ -49,6 +49,7 @@
 <center>
 
 {% for x in search_results %}
+{% if x['HotelRoomID'] not in occupied %}
 <div style="padding: 2rem">
 <table align="left|left" border = 0>
       {% for key, value in x.items() %}
@@ -62,6 +63,7 @@
    <a href="/reservation/room/{{ x['HotelRoomID'] }}">Make Reservation</a>
    <br>
  </div>
+ {% endif %}
    {% endfor %}
 
 </center>

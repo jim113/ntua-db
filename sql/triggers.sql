@@ -55,8 +55,10 @@ for each row
 begin
 IF EXISTS (select * from Reserves
 	where (HotelRoomID = new.HotelRoomID)
-	and (new.StartDate between StartDate and FinishDate) or
-		(new.FinishDate between StartDate and FinishDate)
+	and ( (new.StartDate between StartDate and FinishDate) or
+		 (new.FinishDate between StartDate and FinishDate) or
+         (StartDate between new.StartDate and new.FinishDate) or
+	     (FinishDate between new.StartDate and new.FinishDate))
  ) THEN
   SIGNAL SQLSTATE '45000'
   SET MESSAGE_TEXT = 'Overlap found!';
@@ -72,7 +74,9 @@ begin
 IF EXISTS (select * from Reserves
 	where (HotelRoomID = new.HotelRoomID)
 	and ((new.StartDate between StartDate and FinishDate) or
-		(new.FinishDate between StartDate and FinishDate)) and Paid = new.Paid
+		(new.FinishDate between StartDate and FinishDate) or
+		(StartDate between new.StartDate and new.FinishDate) or
+			(FinishDate between new.StartDate and new.FinishDate)) and Paid = new.Paid
  ) THEN
   SIGNAL SQLSTATE '45000'
   SET MESSAGE_TEXT = 'Overlap found!';

@@ -299,6 +299,14 @@ def checkin_result(type_of_result):
 	if request.method == 'POST':
 		result = request.form
 		orderBy = result['orderBy']
+
+
+
+
+
+
+
+
 		global start_date
 		global finish_date
 		start_date = result['StartDate']
@@ -327,6 +335,13 @@ def checkin_result(type_of_result):
 
 			try:
 				print(query)
+				occupied = create_list('''SELECT DISTINCT HotelRoomID FROM Reserves where
+					 (StartDate >= {0} and FinishDate <= {1}) or
+			         (StartDate between '{0}' and '{1}') or
+				     (FinishDate between '{0}' and '{1}');
+				'''.format(start_date, finish_date))
+
+
 				search_results1 = exec_query(query, refresh=False)
 				search_results = list({v['HotelRoomID']:v for v in search_results1}.values())
 				print('Found {} matches:'.format(len(search_results)))
@@ -337,11 +352,13 @@ def checkin_result(type_of_result):
 					counter[s[orderBy]] += 1
 
 				print(search_results)
+				print('occupied')
+				print(occupied)
 			except:
 				error = True
 
 
-		return render_template("checkin_result.html",result = result, search_results = search_results, counter=counter, number_of_results = len(search_results), error=error, type_of_result=type_of_result)
+		return render_template("checkin_result.html",result = result, occupied=occupied, search_results = search_results, counter=counter, number_of_results = len(search_results), error=error, type_of_result=type_of_result)
 
 
 @app.route('/result/<type_of_result>', methods = ['POST', 'GET'])
