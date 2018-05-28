@@ -59,7 +59,7 @@ def build_join_query(data, flag=0, lista=''):#=[]):
 	wheres = []
 	simea=0
 	for key, val in data.items():
-		if val == '': continue
+		if val == '' or key == 'orderBy': continue
 		if(key=='H.NumberOfRooms'):
 			tmp = "H.NumberOfRooms = {}".format(val)
 			wheres.append(tmp)
