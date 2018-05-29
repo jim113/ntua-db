@@ -72,6 +72,30 @@ LOCK TABLES `Customer` WRITE;
 INSERT INTO `Customer` VALUES (3,'jimko','kal','2018-04-20 01:19:16',0,'vbm','32','5543','athens'),(54,'vagel','vim','2018-04-20 01:21:07',0,'ces','23','111','athens'),(345,'gdf','gfd','2018-04-19 10:35:44',0,'ASDsadsa','35','12345','athens'),(543,'gdf','teleios','2018-04-19 10:32:36',0,'adsdsad','543','12345','athens'),(12345,'dsapok','fsdpok','2018-04-22 11:41:02',123342,'Archeafksda','5','17237','Athens'),(13213,'Panagiotis','Tsapatsaris','2018-04-27 20:05:03',321321,'Lelas Karagianni','3','23112','Ilioupoli'),(123213,'Marios','Papachristou','2018-04-27 20:05:03',123123,'Archimandriti Archadjikaki ','5','17237','Hymmetus'),(123214,'Dimitris','Kelesis','2018-04-27 20:05:03',321445,'Teo','3','23133','Zografou'),(5566447,'Dimitris','kle','2018-04-19 09:04:19',0,'tre','42','6789','Kalamata');
 /*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger chkstreet2
+before insert on Customer
+for each row
+begin
+IF (new.StreetNumber < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative street number!';
+END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `Employee`
@@ -103,6 +127,30 @@ LOCK TABLES `Employee` WRITE;
 INSERT INTO `Employee` VALUES (1155,'Kostas','bnvc',76532,'jgr','66','5346','reaf'),(1233,'Victor','ertgv',654,'fg','4','5436','gfds'),(1237,'bwsg','rewd',5432,'jgda','643','6346','dfse'),(3333,'rty','rewc',7542,'gdj','456','63434','gfsd'),(3678,'tyue','tqwv',45356,'jye','76','643','dfsh'),(5234,'Thanasis','Fgfd',6433,'dfgdf','6','8888','Athens'),(6532,'Maria','Vit',1234,'gdfs','4','7777','Sparti'),(6541,'ytgn','javwe',8563,'yme','125','6345','reae'),(6789,'hqbs','fdsas',2546,'jhg','34','6433','hera'),(7562,'wetas','tyrw',8276,'jyew','56','6435','ryea'),(9076,'krmwe','fdtby',6547,'jky','34','6436','hreer'),(10123,'gfdsg','asdfv',4537,'jtye','23','6432','hfsb'),(23453,'nhg','gfdwk',45362,'jyr','45','6245','reah'),(42365,'btrs','cvba',7562,'gerw','25','6346','hyre'),(53412,'ghrg','iopyh',845,'wef','65','6542','hrae'),(53418,'htrb','ertgh',838,'myt','12','6345','yrea'),(54452,'gerb','hsfnb',758,'trnw','123','6432','tera'),(55431,'gerbr','ywbs',7651,'hw','54','63465','yre'),(56745,'fgdrb','ffer',76530,'jety','24','64323','tegv'),(56780,'resfgsd','rfik',65463,'mkuy','235','6433','rew'),(87546,'jytsb','xwef',37,'htr','34','6243','yhrea'),(87654,'kuytyh','qwexj',765,'hwte','54','6345','ret'),(124670,'hrtb','gebe',6731,'we','34','6423','aer'),(564398,'gfdwe','qsc',75632,'ger','77','3646','hrea'),(6772345,'tsfvbr','tywe',8710,'jtwner','76','6435','eryar');
 /*!40000 ALTER TABLE `Employee` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger chkstreet
+before insert on Employee
+for each row
+begin
+IF (new.StreetNumber < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative street number!';
+END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `History`
@@ -131,7 +179,7 @@ CREATE TABLE `History` (
 
 LOCK TABLES `History` WRITE;
 /*!40000 ALTER TABLE `History` DISABLE KEYS */;
-INSERT INTO `History` VALUES (3,1,'1973-01-01 00:00:01','1974-01-01 00:00:01',0),(123214,12,'2018-05-22 19:44:48','2018-05-22 19:44:48',0),(123214,12,'2018-05-22 19:44:54','2018-05-22 19:44:54',0),(123214,12,'2018-05-22 19:45:15','2018-05-22 19:45:15',0),(123214,12,'2018-05-22 19:55:20','2018-05-22 19:55:20',0),(123214,12,'1997-02-10 12:01:00','1997-03-11 11:59:00',0),(5566447,12,'2020-02-02 12:01:00','2040-02-02 11:59:00',0),(3,1,'1970-01-01 00:00:01','1971-01-01 00:00:01',1),(123214,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',0),(123214,12,'2100-02-01 12:01:00','2101-02-01 11:59:00',0);
+INSERT INTO `History` VALUES (3,1,'1973-01-01 00:00:01','1974-01-01 00:00:01',0),(123214,12,'2018-05-22 19:44:48','2018-05-22 19:44:48',0),(123214,12,'2018-05-22 19:44:54','2018-05-22 19:44:54',0),(123214,12,'2018-05-22 19:45:15','2018-05-22 19:45:15',0),(123214,12,'2018-05-22 19:55:20','2018-05-22 19:55:20',0),(123214,12,'1997-02-10 12:01:00','1997-03-11 11:59:00',0),(5566447,12,'2020-02-02 12:01:00','2040-02-02 11:59:00',0),(3,1,'1970-01-01 00:00:01','1971-01-01 00:00:01',1),(123214,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',0),(123214,12,'2100-02-01 12:01:00','2101-02-01 11:59:00',0),(123213,12,'2200-02-02 12:01:00','2201-02-02 11:59:00',0),(123213,1,'2200-02-02 12:01:00','2201-02-02 11:59:00',0),(123213,121,'2200-02-02 12:01:00','2201-02-02 11:59:00',0),(123213,121,'2210-02-02 12:01:00','2211-02-02 11:59:00',1),(3,12,'1970-01-01 00:00:01','1971-01-01 00:00:01',0),(123213,12,'1970-01-01 00:00:01','1971-01-01 00:00:01',1);
 /*!40000 ALTER TABLE `History` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,7 +202,7 @@ CREATE TABLE `Hotel` (
   PRIMARY KEY (`HotelID`),
   KEY `HotelGroupID` (`HotelGroupID`),
   CONSTRAINT `Hotel_ibfk_1` FOREIGN KEY (`HotelGroupID`) REFERENCES `HotelGroup` (`HotelGroupID`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,7 +211,7 @@ CREATE TABLE `Hotel` (
 
 LOCK TABLES `Hotel` WRITE;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
-INSERT INTO `Hotel` VALUES (1,2,5,1,'Papastratou','10','17237','Athens'),(2,3,5,1,'Imittou','3','41231','Athens'),(3,4,5,1,'Kanari','100','31298','Kolokotronitsi'),(4,5,5,1,'Adsad','213','32133','Thesalloniki'),(5,1,5,1,'Adsaokdp','312','39081','Patras'),(6,1,5,2,'Adasdsa','321','32132','RickAndMorty'),(7,3,5,2,'Mpotsari','21','31212','Bolzano'),(8,3,5,2,'Adsadasd','23','33213','Weierstrass'),(9,4,5,2,'ASdsadsa','234','32121','Bolzano'),(10,5,5,2,'Adsadsad','342','43242','Einstein'),(11,1,5,3,'Ilioupolis','12','16263','Athens'),(12,2,5,3,'Argiroupolis','44','13515','Volos'),(13,3,5,3,'Iliou','123','41244','Volos'),(14,4,5,3,'Os','125','12421','Bolzano'),(15,5,5,3,'Damni','31','51255','Einstein'),(16,1,5,4,'Traino','124','21412','Rassias'),(17,2,5,4,'Tikano','51','31233','Cuppertino'),(18,3,5,4,'Popis','241','12412','Rassias'),(19,4,5,4,'Fuuuu','25','12415','RickAndMorty'),(20,5,5,4,'Toutou','124','12424','Popos'),(21,1,1,5,'ASdsadas','345','32423','Weierstrass'),(22,2,2,5,'Adasdsadas','432','32131','California'),(23,3,3,5,'Adasidla','423','87989','Palo Alto Arkadias'),(24,4,5,5,'Adsadasa','321','23123','Cuppertino'),(25,5,4,5,'Elm Street','321','32312','California'),(36,5,5,1,'Test Street','34','43234','California');
+INSERT INTO `Hotel` VALUES (1,2,5,1,'Papastratou','10','17237','Athens'),(2,3,5,1,'Imittou','3','41231','Athens'),(3,4,5,1,'Kanari','100','31298','Kolokotronitsi'),(4,5,5,1,'Adsad','213','32133','Thesalloniki'),(5,1,7,1,'Adsaokdp','312','39081','Patras'),(6,1,5,2,'Adasdsa','321','32132','RickAndMorty'),(7,3,5,2,'Mpotsari','21','31212','Bolzano'),(8,3,5,2,'Adsadasd','23','33213','Weierstrass'),(9,4,5,2,'ASdsadsa','234','32121','Bolzano'),(10,5,5,2,'Adsadsad','342','43242','Einstein'),(11,1,5,3,'Ilioupolis','12','16263','Athens'),(12,2,5,3,'Argiroupolis','44','13515','Volos'),(13,3,5,3,'Iliou','123','41244','Volos'),(14,4,5,3,'Os','125','12421','Bolzano'),(15,5,5,3,'Damni','31','51255','Einstein'),(16,1,5,4,'Traino','124','21412','Rassias'),(17,2,5,4,'Tikano','51','31233','Cuppertino'),(18,3,5,4,'Popis','241','12412','Rassias'),(19,4,5,4,'Fuuuu','25','12415','RickAndMorty'),(20,5,5,4,'Toutou','124','12424','Popos'),(21,1,1,5,'ASdsadas','345','32423','Weierstrass'),(22,2,2,5,'Adasdsadas','432','32131','California'),(23,3,3,5,'Adasidla','423','87989','Palo Alto Arkadias'),(24,4,5,5,'Adsadasa','321','23123','Cuppertino'),(25,5,4,5,'Elm Street','321','32312','California'),(36,5,5,1,'Test Street','34','43234','California'),(37,1,0,5,'A street','3','12341','California');
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -196,16 +244,82 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger chknrrooms
+before insert on Hotel
+for each row
+begin
+IF (new.NumberOfRooms < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative number of rooms!';
+END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger chkstreet3
+before insert on Hotel
+for each row
+begin
+IF (new.StreetNumber < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative street number!';
+END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger chkstars
+before insert on Hotel
+for each row
+begin
+IF not(new.Stars between 0 and 5) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'No valid stars!';
+END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger delroomgr
 before delete on Hotel
 for each row
 begin
-delete from Works where HotelID=old.HotelID;
-delete from HotelEmailAddress where HotelID=old.HotelID;
-delete from HotelPhoneNumbers where HotelID=old.HotelID;
-delete from Rents where HotelRoomID in (select HotelRoomID FROM HotelRoom where HotelID=old.HotelID);
-delete from Amenities where HotelRoomID in (select HotelRoomID FROM HotelRoom where HotelID=old.HotelID);
-delete from HotelRoom where HotelID=old.HotelID;
 update HotelGroup set NumberOfHotels = NumberOfHotels - 1 where HotelGroupID = old.HotelGroupID;
 
 end */;;
@@ -266,7 +380,7 @@ CREATE TABLE `HotelGroup` (
 
 LOCK TABLES `HotelGroup` WRITE;
 /*!40000 ALTER TABLE `HotelGroup` DISABLE KEYS */;
-INSERT INTO `HotelGroup` VALUES (1,6,'Peiraios','116','12345','Imittos'),(2,5,'Syggrou','100','12343','Athens'),(3,5,'Aristotelous','2','54321','Thessaloniki'),(4,5,'Mpoumpoulinas','42','18211','Patras'),(5,5,'Kolokotroni','17','18221','Dervenakia'),(6,10,'A street','4','17237','Athens'),(7,10,'ASdsa','4','17237','Athens'),(8,10,'5','2','Adsad','Athens'),(9,10,'5','2','17237','Athens'),(10,10,'A street','10','17237','Athens'),(11,20,'Str','10','17237','Athens'),(12,10,'12','33','21312','Athens'),(13,10,'12','33','21312','Athens'),(14,10,'3','3','17331','Athens'),(15,10,'4','3','24312','athens'),(16,40,'Archimandriti Archadjikaki 5','33','17243','Hymmetus, Athens'),(17,10,'Archimandriti Archadjikaki 5','3','17237','Hymmetus, Athens'),(18,10,'Archimandriti Archadjikaki 5','22','17237','Athens'),(19,10,'ASOIDJsa','3','2313','Athens'),(20,10,'ASOIDJsa','3','2313','Athens'),(21,20,'Archimandriti Archadjikaki 5','333','17237','Hymmetus, Athens');
+INSERT INTO `HotelGroup` VALUES (1,6,'Peiraios','116','12345','Imittos'),(2,5,'Syggrou','100','12343','Athens'),(3,5,'Aristotelous','2','54321','Thessaloniki'),(4,5,'Mpoumpoulinas','42','18211','Patras'),(5,6,'Kolokotroni','17','18221','Dervenakia'),(6,10,'A street','4','17237','Athens'),(7,10,'ASdsa','4','17237','Athens'),(8,10,'5','2','Adsad','Athens'),(9,10,'5','2','17237','Athens'),(10,10,'A street','10','17237','Athens'),(11,20,'Str','10','17237','Athens'),(12,10,'12','33','21312','Athens'),(13,10,'12','33','21312','Athens'),(14,10,'3','3','17331','Athens'),(15,10,'4','3','24312','athens'),(16,40,'Archimandriti Archadjikaki 5','33','17243','Hymmetus, Athens'),(17,10,'Archimandriti Archadjikaki 5','3','17237','Hymmetus, Athens'),(18,10,'Archimandriti Archadjikaki 5','22','17237','Athens'),(19,10,'ASOIDJsa','3','2313','Athens'),(20,10,'ASOIDJsa','3','2313','Athens'),(21,20,'Archimandriti Archadjikaki 5','333','17237','Hymmetus, Athens');
 /*!40000 ALTER TABLE `HotelGroup` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -278,13 +392,14 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger delhotgr
-before delete on HotelGroup
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger chknrhotels
+before insert on HotelGroup
 for each row
 begin
-delete from HotelGroupEmailAddress where HotelGroupID=old.HotelGroupID;
-delete from HotelGroupPhoneNumbers where HotelGroupID=old.HotelGroupID;
-delete from Hotel where HotelGroupID=old.HotelGroupID;
+IF (new.NumberOfHotels < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative number of rooms!';
+END IF;
 
 end */;;
 DELIMITER ;
@@ -334,7 +449,7 @@ CREATE TABLE `HotelGroupPhoneNumbers` (
   PRIMARY KEY (`NumberID`),
   KEY `HotelGroupID` (`HotelGroupID`),
   CONSTRAINT `HotelGroupPhoneNumbers_ibfk_1` FOREIGN KEY (`HotelGroupID`) REFERENCES `HotelGroup` (`HotelGroupID`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -343,9 +458,31 @@ CREATE TABLE `HotelGroupPhoneNumbers` (
 
 LOCK TABLES `HotelGroupPhoneNumbers` WRITE;
 /*!40000 ALTER TABLE `HotelGroupPhoneNumbers` DISABLE KEYS */;
-INSERT INTO `HotelGroupPhoneNumbers` VALUES (1,1,'1604042397'),(2,2,'1827094517'),(3,3,'1802094588'),(4,4,'1576973590'),(5,5,'1334325946'),(17,1,'6979614463'),(18,20,'6979614463'),(19,21,'6979614463');
+INSERT INTO `HotelGroupPhoneNumbers` VALUES (1,1,'1604042397'),(2,2,'1827094517'),(3,3,'1802094588'),(4,4,'1576973590'),(5,5,'1334325946'),(17,1,'6979614463'),(18,5,'6979614463'),(19,5,'6979614463'),(20,5,'2107626351');
 /*!40000 ALTER TABLE `HotelGroupPhoneNumbers` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger phonecheck before insert on HotelGroupPhoneNumbers
+for each row
+begin 
+IF (new.PhoneNumber regexp '^(\\+?[0-9]{1,4}-)?[0-9]{3,10}$' ) = 0 THEN 
+  SIGNAL SQLSTATE '45000'
+     SET MESSAGE_TEXT = 'Wrong phone number!';
+end if; 
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Temporary table structure for view `HotelHotelRoom`
@@ -386,6 +523,28 @@ LOCK TABLES `HotelPhoneNumbers` WRITE;
 INSERT INTO `HotelPhoneNumbers` VALUES (1,1,'2103454333'),(2,2,'1851391598'),(3,3,'1423302058'),(4,4,'1391656269'),(5,5,'1449375211'),(6,6,'1593013229'),(7,7,'1097050142'),(8,8,'1187913665'),(9,9,'1860847820'),(10,10,'1106959246'),(11,11,'1238762441'),(12,12,'1825289995'),(13,13,'1313102017'),(14,14,'1029028119'),(15,15,'1366227363'),(16,16,'1094847198'),(17,17,'2109939785'),(18,18,'1608548919'),(19,19,'1582780041'),(20,20,'1450582443'),(21,21,'1322242695'),(22,22,'2058415666'),(23,23,'1878799270'),(24,24,'1354967203'),(25,25,'1370474408');
 /*!40000 ALTER TABLE `HotelPhoneNumbers` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger phonecheck2 before insert on HotelPhoneNumbers
+for each row
+begin 
+IF (new.PhoneNumber regexp '^(\\+?[0-9]{1,4}-)?[0-9]{3,10}$' ) = 0 THEN 
+  SIGNAL SQLSTATE '45000'
+     SET MESSAGE_TEXT = 'Wrong phone number!';
+end if; 
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `HotelRoom`
@@ -406,7 +565,7 @@ CREATE TABLE `HotelRoom` (
   UNIQUE KEY `HotelRoomID` (`HotelRoomID`,`HotelID`),
   KEY `HotelID` (`HotelID`,`HotelRoomID`),
   CONSTRAINT `HotelRoom_ibfk_1` FOREIGN KEY (`HotelID`) REFERENCES `Hotel` (`HotelID`)
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,7 +574,7 @@ CREATE TABLE `HotelRoom` (
 
 LOCK TABLES `HotelRoom` WRITE;
 /*!40000 ALTER TABLE `HotelRoom` DISABLE KEYS */;
-INSERT INTO `HotelRoom` VALUES (1,1,11,1,'Sea',1,1),(2,1,178,2,'City',0,1),(3,1,94,3,'Sea',1,0),(4,1,294,4,'Mountain',0,0),(5,1,115,5,'City',0,1),(6,2,144,1,'City',0,1),(7,2,288,2,'City',1,1),(8,2,299,3,'City',0,1),(9,2,139,4,'City',0,1),(10,2,135,5,'Mountain',1,1),(11,3,116,1,'Sea',1,1),(12,3,199,2,'City',1,1),(13,3,247,3,'Mountain',1,0),(14,3,55,4,'Mountain',1,0),(15,3,79,5,'Mountain',0,0),(16,4,229,1,'Mountain',0,1),(17,4,75,2,'Sea',1,0),(18,4,115,3,'Sea',1,0),(19,4,291,4,'City',0,0),(20,4,64,5,'City',0,0),(21,5,231,1,'Sea',0,1),(22,5,121,2,'Mountain',1,1),(23,5,224,3,'Mountain',1,0),(24,5,69,4,'City',1,1),(25,5,154,5,'Sea',0,1),(26,6,138,1,'Sea',1,1),(27,6,136,2,'Mountain',1,0),(28,6,246,3,'Mountain',0,0),(29,6,57,4,'Sea',1,0),(30,6,204,5,'Mountain',1,0),(31,7,132,1,'City',1,1),(32,7,121,2,'Mountain',1,0),(33,7,140,3,'Mountain',0,1),(34,7,278,4,'City',0,1),(35,7,127,5,'City',1,1),(36,8,294,1,'Mountain',0,0),(37,8,70,2,'Mountain',0,0),(38,8,126,3,'Mountain',1,0),(39,8,59,4,'Mountain',1,0),(40,8,212,5,'Sea',1,0),(41,9,267,1,'City',0,0),(42,9,290,2,'City',0,0),(43,9,154,3,'City',1,1),(44,9,133,4,'Sea',0,0),(45,9,177,5,'Mountain',0,0),(46,10,256,1,'Sea',1,0),(47,10,200,2,'City',1,0),(48,10,276,3,'City',1,0),(49,10,70,4,'City',1,0),(50,10,168,5,'Mountain',1,1),(51,11,221,1,'City',1,0),(52,11,78,2,'City',1,0),(53,11,125,3,'Mountain',1,0),(54,11,152,4,'Mountain',1,1),(55,11,234,5,'Mountain',1,0),(56,12,208,1,'City',0,0),(57,12,252,2,'City',0,0),(58,12,216,3,'Sea',1,0),(59,12,164,4,'Mountain',1,1),(60,12,275,5,'Mountain',0,1),(61,13,56,1,'Sea',0,1),(62,13,96,2,'Mountain',0,0),(63,13,278,3,'City',0,0),(64,13,151,4,'Mountain',1,1),(65,13,273,5,'City',0,0),(66,14,254,1,'City',0,0),(67,14,296,2,'Mountain',0,0),(68,14,110,3,'City',1,1),(69,14,223,4,'City',0,0),(70,14,175,5,'City',0,0),(71,15,61,1,'Mountain',1,0),(72,15,238,2,'City',0,1),(73,15,149,3,'Sea',1,1),(74,15,175,4,'City',0,0),(75,15,289,5,'City',1,0),(76,16,139,1,'Sea',1,1),(77,16,229,2,'City',1,1),(78,16,149,3,'Sea',0,0),(79,16,219,4,'Mountain',1,0),(80,16,231,5,'Mountain',0,1),(81,17,120,1,'Mountain',1,1),(82,17,59,2,'Mountain',0,1),(83,17,215,3,'Mountain',1,0),(84,17,139,4,'Mountain',0,1),(85,17,271,5,'Sea',0,1),(86,18,96,1,'Sea',1,0),(87,18,78,2,'City',1,0),(88,18,200,3,'Mountain',0,0),(89,18,95,4,'City',0,0),(90,18,57,5,'City',1,1),(91,19,116,1,'Mountain',0,1),(92,19,216,2,'Sea',1,1),(93,19,199,3,'Mountain',0,1),(94,19,224,4,'Mountain',1,0),(95,19,164,5,'City',0,0),(96,20,223,1,'Mountain',0,0),(97,20,221,2,'City',0,1),(98,20,298,3,'Sea',1,0),(99,20,180,4,'City',1,1),(100,20,207,5,'City',1,1),(101,21,224,1,'Mountain',1,1),(102,21,120,2,'Mountain',0,1),(103,21,265,3,'Sea',1,1),(104,21,175,4,'City',0,1),(105,21,222,5,'Mountain',1,1),(106,22,258,1,'Sea',1,1),(107,22,225,2,'City',0,1),(108,22,83,3,'City',0,1),(109,22,259,4,'Sea',0,1),(110,22,100,5,'Mountain',0,0),(111,23,252,1,'Mountain',0,1),(112,23,140,2,'Mountain',1,1),(113,23,78,3,'City',0,1),(114,23,157,4,'Mountain',0,0),(115,23,94,5,'City',0,0),(116,24,124,1,'Mountain',1,1),(117,24,81,2,'Mountain',1,0),(118,24,248,3,'Sea',0,0),(119,24,71,4,'City',1,1),(120,24,64,5,'City',1,1),(121,25,281,1,'Sea',1,1),(122,25,149,2,'Sea',0,0),(123,25,267,3,'Sea',0,1),(124,25,250,4,'Mountain',1,1),(125,25,128,5,'Mountain',1,0),(126,5,100,10,'Maraca',1,1);
+INSERT INTO `HotelRoom` VALUES (1,1,11,1,'Sea',1,1),(2,1,178,2,'City',0,1),(3,1,94,3,'Sea',1,0),(4,1,294,4,'Mountain',0,0),(5,1,115,5,'City',0,1),(6,2,144,1,'City',0,1),(7,2,288,2,'City',1,1),(8,2,299,3,'City',0,1),(9,2,139,4,'City',0,1),(10,2,135,5,'Mountain',1,1),(11,3,116,1,'Sea',1,1),(12,3,199,2,'City',1,1),(13,3,247,3,'Mountain',1,0),(14,3,55,4,'Mountain',1,0),(15,3,79,5,'Mountain',0,0),(16,4,229,1,'Mountain',0,1),(17,4,75,2,'Sea',1,0),(18,4,115,3,'Sea',1,0),(19,4,291,4,'City',0,0),(20,4,64,5,'City',0,0),(21,5,231,1,'Sea',0,1),(22,5,121,2,'Mountain',1,1),(23,5,224,3,'Mountain',1,0),(24,5,69,4,'City',1,1),(25,5,154,5,'Sea',0,1),(26,6,138,1,'Sea',1,1),(27,6,136,2,'Mountain',1,0),(28,6,246,3,'Mountain',0,0),(29,6,57,4,'Sea',1,0),(30,6,204,5,'Mountain',1,0),(31,7,132,1,'City',1,1),(32,7,121,2,'Mountain',1,0),(33,7,140,3,'Mountain',0,1),(34,7,278,4,'City',0,1),(35,7,127,5,'City',1,1),(36,8,294,1,'Mountain',0,0),(37,8,70,2,'Mountain',0,0),(38,8,126,3,'Mountain',1,0),(39,8,59,4,'Mountain',1,0),(40,8,212,5,'Sea',1,0),(41,9,267,1,'City',0,0),(42,9,290,2,'City',0,0),(43,9,154,3,'City',1,1),(44,9,133,4,'Sea',0,0),(45,9,177,5,'Mountain',0,0),(46,10,256,1,'Sea',1,0),(47,10,200,2,'City',1,0),(48,10,276,3,'City',1,0),(49,10,70,4,'City',1,0),(50,10,168,5,'Mountain',1,1),(51,11,221,1,'City',1,0),(52,11,78,2,'City',1,0),(53,11,125,3,'Mountain',1,0),(54,11,152,4,'Mountain',1,1),(55,11,234,5,'Mountain',1,0),(56,12,208,1,'City',0,0),(57,12,252,2,'City',0,0),(58,12,216,3,'Sea',1,0),(59,12,164,4,'Mountain',1,1),(60,12,275,5,'Mountain',0,1),(61,13,56,1,'Sea',0,1),(62,13,96,2,'Mountain',0,0),(63,13,278,3,'City',0,0),(64,13,151,4,'Mountain',1,1),(65,13,273,5,'City',0,0),(66,14,254,1,'City',0,0),(67,14,296,2,'Mountain',0,0),(68,14,110,3,'City',1,1),(69,14,223,4,'City',0,0),(70,14,175,5,'City',0,0),(71,15,61,1,'Mountain',1,0),(72,15,238,2,'City',0,1),(73,15,149,3,'Sea',1,1),(74,15,175,4,'City',0,0),(75,15,289,5,'City',1,0),(76,16,139,1,'Sea',1,1),(77,16,229,2,'City',1,1),(78,16,149,3,'Sea',0,0),(79,16,219,4,'Mountain',1,0),(80,16,231,5,'Mountain',0,1),(81,17,120,1,'Mountain',1,1),(82,17,59,2,'Mountain',0,1),(83,17,215,3,'Mountain',1,0),(84,17,139,4,'Mountain',0,1),(85,17,271,5,'Sea',0,1),(86,18,96,1,'Sea',1,0),(87,18,78,2,'City',1,0),(88,18,200,3,'Mountain',0,0),(89,18,95,4,'City',0,0),(90,18,57,5,'City',1,1),(91,19,116,1,'Mountain',0,1),(92,19,216,2,'Sea',1,1),(93,19,199,3,'Mountain',0,1),(94,19,224,4,'Mountain',1,0),(95,19,164,5,'City',0,0),(96,20,223,1,'Mountain',0,0),(97,20,221,2,'City',0,1),(98,20,298,3,'Sea',1,0),(99,20,180,4,'City',1,1),(100,20,207,5,'City',1,1),(101,21,224,1,'Mountain',1,1),(102,21,120,2,'Mountain',0,1),(103,21,265,3,'Sea',1,1),(104,21,175,4,'City',0,1),(105,21,222,5,'Mountain',1,1),(106,22,258,1,'Sea',1,1),(107,22,225,2,'City',0,1),(108,22,83,3,'City',0,1),(109,22,259,4,'Sea',0,1),(110,22,100,5,'Mountain',0,0),(111,23,252,1,'Mountain',0,1),(112,23,140,2,'Mountain',1,1),(113,23,78,3,'City',0,1),(114,23,157,4,'Mountain',0,0),(115,23,94,5,'City',0,0),(116,24,124,1,'Mountain',1,1),(117,24,81,2,'Mountain',1,0),(118,24,248,3,'Sea',0,0),(119,24,71,4,'City',1,1),(120,24,64,5,'City',1,1),(121,25,281,1,'Sea',1,1),(122,25,149,2,'Sea',0,0),(123,25,267,3,'Sea',0,1),(124,25,250,4,'Mountain',1,1),(125,25,128,5,'Mountain',1,0),(126,5,100,10,'Maraca',1,1),(127,5,100,1,'Sea',1,1),(128,5,150,1,'Sea',1,1);
 /*!40000 ALTER TABLE `HotelRoom` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -448,13 +607,35 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger chkprice
+before insert on HotelRoom
+for each row
+begin
+IF (new.Price < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative Price!';
+END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger delroom
 before delete on HotelRoom
 for each row
 begin
 update Hotel set NumberOfRooms = NumberOfRooms - 1 where HotelRoomID = old.HotelRoomID;
-delete from Amenities where HotelRoomID= old.HotelRoomID;
-delete from Rents where HotelRoomID = old.HotelRoomID;
 
 end */;;
 DELIMITER ;
@@ -526,7 +707,7 @@ CREATE TABLE `Rents` (
   CONSTRAINT `Rents_ibfk_1` FOREIGN KEY (`CustomerIRSNumber`) REFERENCES `Customer` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Rents_ibfk_2` FOREIGN KEY (`EmployeeIRSNumber`) REFERENCES `Employee` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Rents_ibfk_3` FOREIGN KEY (`HotelRoomID`) REFERENCES `HotelRoom` (`HotelRoomID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -535,38 +716,9 @@ CREATE TABLE `Rents` (
 
 LOCK TABLES `Rents` WRITE;
 /*!40000 ALTER TABLE `Rents` DISABLE KEYS */;
-INSERT INTO `Rents` VALUES (1,123214,6772345,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',199,'CREDIT'),(2,123214,6772345,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',199,'CREDIT');
+INSERT INTO `Rents` VALUES (1,123214,6772345,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',199,'CREDIT'),(2,3,6772345,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',NULL,NULL),(4,3,6772345,1,'1970-01-01 00:00:01','1971-01-01 00:00:01',11,'CREDIT');
 /*!40000 ALTER TABLE `Rents` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger rentcheck
-before insert on Rents
-for each row
-begin
-IF EXISTS (
-	select * from WorksHotelRoom where WorksHotelRoom.IRSNumber = new.EmployeeIRSNumber
-    and WorksHotelRoom.HotelRoomID = new.HotelRoomID
-		-- and CURRENT_TIMESTAMP between WorksHotelRoom.StartDate and WorksHotelRoom.FinishDate
-
- ) THEN
-  SIGNAL SQLSTATE '45000'
-  SET MESSAGE_TEXT = 'Wrong Employee or Employee does not work here anymore!';
-END IF;
-
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `Reserves`
@@ -588,7 +740,7 @@ CREATE TABLE `Reserves` (
   KEY `resindex` (`StartDate`,`FinishDate`),
   CONSTRAINT `Reserves_ibfk_1` FOREIGN KEY (`CustomerIRSNumber`) REFERENCES `Customer` (`IRSNumber`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Reserves_ibfk_2` FOREIGN KEY (`HotelRoomID`) REFERENCES `HotelRoom` (`HotelRoomID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -597,7 +749,7 @@ CREATE TABLE `Reserves` (
 
 LOCK TABLES `Reserves` WRITE;
 /*!40000 ALTER TABLE `Reserves` DISABLE KEYS */;
-INSERT INTO `Reserves` VALUES (1,3,1,'1970-01-01 00:00:01','1971-01-01 00:00:01',1),(3,123214,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',0),(4,123214,12,'2100-02-01 12:01:00','2101-02-01 11:59:00',0);
+INSERT INTO `Reserves` VALUES (1,3,1,'1970-01-01 00:00:01','1971-01-01 00:00:01',1),(3,123214,12,'2020-10-02 12:01:00','2021-10-02 11:59:00',0),(4,123214,12,'2100-02-01 12:01:00','2101-02-01 11:59:00',0),(5,123213,12,'2200-02-02 12:01:00','2201-02-02 11:59:00',0),(6,123213,1,'2200-02-02 12:01:00','2201-02-02 11:59:00',0),(7,123213,121,'2200-02-02 12:01:00','2201-02-02 11:59:00',0),(8,123213,121,'2210-02-02 12:01:00','2211-02-02 11:59:00',1),(9,123213,12,'1970-01-01 00:00:01','1971-01-01 00:00:01',1);
 /*!40000 ALTER TABLE `Reserves` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -616,7 +768,7 @@ begin
 IF EXISTS (select * from Reserves
 	where (HotelRoomID = new.HotelRoomID)
 	and ( (new.StartDate between StartDate and FinishDate) or
-		 (new.FinishDate between StartDate and FinishDate) or 
+		 (new.FinishDate between StartDate and FinishDate) or
          (StartDate between new.StartDate and new.FinishDate) or
 	     (FinishDate between new.StartDate and new.FinishDate))
  ) THEN
@@ -644,27 +796,6 @@ after insert on Reserves
 for each row
 begin
 	insert into History (CustomerIRSNumber, HotelRoomID, StartDate, FinishDate, Paid) values (new.CustomerIRSNumber, new.HotelRoomID, new.StartDate, new.FinishDate, new.Paid);
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger history_upd
-after update on Reserves
-for each row
-begin
-	insert into History (CustomerIRSNumber, HotelRoomID, StartDate, FinishDate, Paid)
-    values (new.CustomerIRSNumber, new.HotelRoomID, new.StartDate, new.FinishDate, new.Paid);
 end */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -700,34 +831,9 @@ CREATE TABLE `Works` (
 
 LOCK TABLES `Works` WRITE;
 /*!40000 ALTER TABLE `Works` DISABLE KEYS */;
-INSERT INTO `Works` VALUES (1,6772345,1,'Manager','2000-03-03 00:00:00','2100-03-04 00:00:00'),(2,564398,2,'Manager','1990-02-02 00:00:00','2000-03-04 00:00:00'),(3,124670,3,'Manager','1990-02-04 00:00:00','2000-03-04 00:00:00'),(4,87654,4,'Manager','1990-02-05 00:00:00','2000-03-04 00:00:00'),(5,87546,5,'Manager','1997-02-06 00:00:00','2000-03-04 00:00:00'),(6,56780,6,'Manager','1998-04-05 00:00:00','2000-03-04 00:00:00'),(7,56745,7,'Manager','1994-05-03 00:00:00','2000-03-04 00:00:00'),(8,55431,8,'Manager','1987-06-08 00:00:00','2000-03-04 00:00:00'),(9,54452,9,'Manager','1999-05-07 00:00:00','2000-03-04 00:00:00'),(10,53418,10,'Manager','1990-04-01 00:00:00','2000-03-04 00:00:00'),(11,53412,11,'Manager','1990-01-01 00:00:00','2000-03-04 00:00:00'),(12,42365,12,'Manager','1990-01-02 00:00:00','2000-03-04 00:00:00'),(13,23453,13,'Manager','1990-04-05 00:00:00','2000-03-04 00:00:00'),(14,10123,14,'Manager','2000-02-06 00:00:00','2000-03-04 00:00:00'),(15,9076,15,'Manager','1990-05-09 00:00:00','2000-03-04 00:00:00'),(16,7562,16,'Manager','2000-06-03 00:00:00','2004-03-04 00:00:00'),(17,6789,17,'Manager','1996-07-05 00:00:00','2000-03-04 00:00:00'),(18,6541,18,'Manager','1990-06-04 00:00:00','2000-03-04 00:00:00'),(19,6532,19,'Manager','1999-06-05 00:00:00','2000-03-04 00:00:00'),(20,5234,20,'Manager','2000-01-01 00:00:00','2005-03-04 00:00:00'),(21,3678,21,'Manager','1999-03-01 00:00:00','2000-03-04 00:00:00'),(22,3333,22,'Manager','2000-01-04 00:00:00','2007-03-04 00:00:00'),(23,1237,23,'Manager','2001-01-01 00:00:00','2010-03-04 00:00:00'),(24,1233,24,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(25,1233,25,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(26,1233,25,'Cleaner','2007-03-04 00:00:00','2007-03-04 00:00:00');
+INSERT INTO `Works` VALUES (1,6772345,1,'Manager','2000-03-03 00:00:00','2100-03-04 00:00:00'),(2,564398,2,'Manager','1990-02-02 00:00:00','2040-03-04 00:00:00'),(3,124670,3,'Manager','1990-02-04 00:00:00','2010-03-04 00:00:00'),(4,87654,4,'Manager','1990-02-05 00:00:00','2000-03-04 00:00:00'),(5,87546,5,'Manager','1997-02-06 00:00:00','2000-03-04 00:00:00'),(6,56780,6,'Manager','1998-04-05 00:00:00','2000-03-04 00:00:00'),(7,56745,7,'Manager','1994-05-03 00:00:00','2000-03-04 00:00:00'),(8,55431,8,'Manager','1987-06-08 00:00:00','2000-03-04 00:00:00'),(9,54452,9,'Manager','1999-05-07 00:00:00','2000-03-04 00:00:00'),(10,53418,10,'Manager','1990-04-01 00:00:00','2000-03-04 00:00:00'),(11,53412,11,'Manager','1990-01-01 00:00:00','2000-03-04 00:00:00'),(12,42365,12,'Manager','1990-01-02 00:00:00','2000-03-04 00:00:00'),(13,23453,13,'Manager','1990-04-05 00:00:00','2000-03-04 00:00:00'),(14,10123,14,'Manager','2000-02-06 00:00:00','2000-03-04 00:00:00'),(15,9076,15,'Manager','1990-05-09 00:00:00','2000-03-04 00:00:00'),(16,7562,16,'Manager','2000-06-03 00:00:00','2004-03-04 00:00:00'),(17,6789,17,'Manager','1996-07-05 00:00:00','2000-03-04 00:00:00'),(18,6541,18,'Manager','1990-06-04 00:00:00','2000-03-04 00:00:00'),(19,6532,19,'Manager','1999-06-05 00:00:00','2000-03-04 00:00:00'),(20,5234,20,'Manager','2000-01-01 00:00:00','2005-03-04 00:00:00'),(21,3678,21,'Manager','1999-03-01 00:00:00','2000-03-04 00:00:00'),(22,3333,22,'Manager','2000-01-04 00:00:00','2007-03-04 00:00:00'),(23,1237,23,'Manager','2001-01-01 00:00:00','2010-03-04 00:00:00'),(24,1233,24,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(25,1233,25,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(26,1233,25,'Cleaner','2007-03-04 00:00:00','2007-03-04 00:00:00');
 /*!40000 ALTER TABLE `Works` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger updatemgr
-before update on Works
-for each row
-begin
-IF  EXISTS (select * from Works where HotelID = old.HotelID and Position = 'Manager'
- ) THEN
-  SIGNAL SQLSTATE '45000'
-  SET MESSAGE_TEXT = 'No manager exists for this hotel!';
-END IF;
-
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -884,4 +990,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-28 16:57:12
+-- Dump completed on 2018-05-29 20:28:33
