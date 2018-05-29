@@ -280,7 +280,7 @@ def complete_reservation(hotel_room_id):
 
 		print('Reservation id is ', reservation_id)
 	except Exception as e:
-		error_log = str(e)
+		error_log = 'An error occured in your reservation! You have either entered invalid details or you have not chosen some options'
 		print('A problem has occured', e)
 	return render_template('reservation_result.html', error_log=error_log, reservation_id = reservation_id)
 
@@ -465,7 +465,7 @@ def create(type_of_result):
 
 		except Exception as e:
 			error = True
-			error_log = str(e)
+			error_log = 'Error in creating ' + type_of_result + '. Please check your fields again!'
 			print(error_log)
 			print('There was an error in insertion')
 
@@ -499,7 +499,7 @@ def edit(type_of_result, id):
 			exec_query(q = query, commit = True)
 		except Exception as e:
 			error = True
-			error_log = str(e)
+			error_log = 'There was an error in editing! Please check that you put in the correct fields with the correct types'
 			print(error_log)
 			print('There was an error in editing')
 		finally:
