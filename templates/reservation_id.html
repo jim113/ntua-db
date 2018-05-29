@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+<style>
+  input, select {
+    width: 100%;
+  }
+</style>
+
+<h2>Manage Checkins</h2>
+
+<p>This is the Checkin Page</p>
+<br>
+<h2 style="text-align: center">Checkin Details</h2>
+<form action = "/checkin" method = "POST">
+     <p>Reservation ID<br><input type = "text" name = "ReservationID" /></p>
+
+     <p style="text-align: center"><input type = "submit" value = "Search" /></p>
+  </form>
+
+  </p>
+
+{% endblock %}
