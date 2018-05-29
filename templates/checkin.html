@@ -8,12 +8,17 @@
 
 <h2>Manage Checkins</h2>
 
-<p>This is the Checkin Page</p>
+<p>This is the Checkin Page for Reservation ID {{ reservation_id }} and room {{ hotel_room_id }}</p>
 <br>
 <h2 style="text-align: center">Checkin Details</h2>
 <form action = "/checkin_complete" method = "POST">
-     <p>Reservation ID<br><input type = "text" name = "ReservationID" /></p>
-     <p>Employee IRS Number<br> <input type = "text" name = "EmployeeIRSNumber" /></p>
+     <p>Reservation ID<br><input type = "text" name = "ReservationID" value="{{ reservation_id }}"/></p>
+     <p>Employee IRS Number<br> <select name="EmployeeIRSNumber">
+       {% for x in employees %}
+         <option value="{{ x }}">{{ x }}</option>
+       {% endfor %}
+     </select></p>
+
 
      <p>Payment Method<br> <select name="PaymentMethod">
          <option value="CREDIT">CREDIT</option>

@@ -1,43 +1,3 @@
-use eHOTELS;
-
-delimiter $$
-create trigger delroomgr
-before delete on Hotel
-for each row
-begin
-delete from Works where HotelID=old.HotelID;
-delete from HotelEmailAddress where HotelID=old.HotelID;
-delete from HotelPhoneNumbers where HotelID=old.HotelID;
-delete from Rents where HotelRoomID in (select HotelRoomID FROM HotelRoom where HotelID=old.HotelID);
-delete from Amenities where HotelRoomID in (select HotelRoomID FROM HotelRoom where HotelID=old.HotelID);
-delete from HotelRoom where HotelID=old.HotelID;
-update HotelGroup set NumberOfHotels = NumberOfHotels - 1 where HotelGroupID = old.HotelGroupID;
-
-end; $$
-
-delimiter $$
-create trigger delhotgr
-before delete on HotelGroup
-for each row
-begin
-delete from HotelGroupEmailAddress where HotelGroupID=old.HotelGroupID;
-delete from HotelGroupPhoneNumbers where HotelGroupID=old.HotelGroupID;
-delete from Hotel where HotelGroupID=old.HotelGroupID;
-
-end; $$
-
-delimiter $$
-
-create trigger delroom
-before delete on HotelRoom
-for each row
-begin
-update Hotel set NumberOfRooms = NumberOfRooms - 1 where HotelRoomID = old.HotelRoomID;
-delete from Amenities where HotelRoomID= old.HotelRoomID;
-delete from Rents where HotelRoomID = old.HotelRoomID;
-
-end; $$
-
 delimiter $$
 create trigger reservtrig1
 after delete on Reserves
@@ -66,21 +26,21 @@ END IF;
 
 end; $$
 
+
 delimiter $$
-create trigger nonoverlap_upd
-before update on Reserves
+create trigger delroomgr
+before delete on Hotel
 for each row
 begin
-IF EXISTS (select * from Reserves
-	where (HotelRoomID = new.HotelRoomID)
-	and ((new.StartDate between StartDate and FinishDate) or
-		(new.FinishDate between StartDate and FinishDate) or
-		(StartDate between new.StartDate and new.FinishDate) or
-			(FinishDate between new.StartDate and new.FinishDate)) and Paid = new.Paid
- ) THEN
-  SIGNAL SQLSTATE '45000'
-  SET MESSAGE_TEXT = 'Overlap found!';
-END IF;
+update HotelGroup set NumberOfHotels = NumberOfHotels - 1 where HotelGroupID = old.HotelGroupID;
+
+end; $$
+
+create trigger delroom
+before delete on HotelRoom
+for each row
+begin
+update Hotel set NumberOfRooms = NumberOfRooms - 1 where HotelRoomID = old.HotelRoomID;
 
 end; $$
 
@@ -93,14 +53,6 @@ begin
     values (new.CustomerIRSNumber, new.HotelRoomID, new.StartDate, new.FinishDate, new.Paid);
 end; $$
 
-delimiter $$
-create trigger history_upd
-after update on Reserves
-for each row
-begin
-	insert into History (CustomerIRSNumber, HotelRoomID, StartDate, FinishDate, Paid)
-    values (new.CustomerIRSNumber, new.HotelRoomID, new.StartDate, new.FinishDate, new.Paid);
-end; $$
 
 delimiter $$
 create trigger deletemgr
@@ -147,19 +99,127 @@ begin
     where HotelID = new.HotelID;
 end; $$
 
+drop trigger rentcheck;
 delimiter $$
 create trigger rentcheck
 before insert on Rents
 for each row
 begin
-IF EXISTS (
+IF not EXISTS (
 	select * from WorksHotelRoom where WorksHotelRoom.IRSNumber = new.EmployeeIRSNumber
     and WorksHotelRoom.HotelRoomID = new.HotelRoomID
-		-- and CURRENT_TIMESTAMP between WorksHotelRoom.StartDate and WorksHotelRoom.FinishDate
-
  ) THEN
   SIGNAL SQLSTATE '45000'
-  SET MESSAGE_TEXT = 'Wrong Employee or Employee does not work here anymore!';
+  SET MESSAGE_TEXT = 'Wrong Employee!';
+END IF;
+
+end; $$
+
+end; $$
+
+delimiter $$
+create trigger chkprice
+before insert on HotelRoom
+for each row
+begin
+IF (new.Price < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative Price!';
+END IF;
+
+end; $$
+
+delimiter $$
+create trigger chknrrooms
+before insert on Hotel
+for each row
+begin
+IF (new.NumberOfRooms < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative number of rooms!';
+END IF;
+
+end; $$
+
+delimiter $$
+create trigger chknrhotels
+before insert on HotelGroup
+for each row
+begin
+IF (new.NumberOfHotels < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative number of hotels!';
+END IF;
+
+end; $$
+
+delimiter $$
+create trigger chknrhotels
+before insert on HotelGroup
+for each row
+begin
+IF (new.NumberOfHotels < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative number of hotels!';
+END IF;
+
+end; $$
+
+delimiter $$
+create trigger phonecheck before insert on HotelGroupPhoneNumbers
+for each row
+begin
+IF (new.PhoneNumber regexp '^(\\+?[0-9]{1,4}-)?[0-9]{3,10}$' ) = 0 THEN
+  SIGNAL SQLSTATE '45000'
+     SET MESSAGE_TEXT = 'Wrong phone number!';
+end if;
+END$$
+
+delimiter $$
+create trigger chkstreet
+before insert on Employee
+for each row
+begin
+IF (new.StreetNumber < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative street number!';
+END IF;
+
+end; $$
+
+delimiter $$
+create trigger chkstreet2
+before insert on Customer
+for each row
+begin
+IF (new.StreetNumber < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative street number!';
+END IF;
+
+end; $$
+
+delimiter $$
+create trigger chkstreet3
+before insert on Hotel
+for each row
+begin
+IF (new.StreetNumber < 0) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'Negative street number!';
+END IF;
+
+end; $$
+
+
+delimiter $$
+create trigger chkstars
+before insert on Hotel
+for each row
+begin
+IF not(new.Stars between 0 and 5) THEN
+  SIGNAL SQLSTATE '45000'
+  SET MESSAGE_TEXT = 'No valid stars!';
 END IF;
 
 end; $$

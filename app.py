@@ -104,7 +104,7 @@ def checkin_complete():
 		rent_id = exec_query('SELECT last_insert_id()')[0]['last_insert_id()']
 
 		# update payment
-		# exec_query('UPDATE eHOTELS.Reserves SET Paid = 1 WHERE ReservationID = {}'.format(reservation_id), commit = True)
+		exec_query("UPDATE eHOTELS.Reserves SET Paid = 1 WHERE ReservationID = '{}';".format(reservation_id), commit = True)
 	except:
 		error_log = '''Something went wrong: check that you have entered the correct details and the valid employee
 						or that you are entering a valid reservation ID'''
@@ -135,6 +135,10 @@ def employees():
 def hotels():
 	return check_admin('hotels.html')
 
+@app.route('/reservation_id')
+def reservation_id():
+	return render_template('reservation_id.html')
+
 @app.route('/hotelroom')
 def hotelroom():
 	return check_admin('hotelroom.html')
@@ -143,9 +147,17 @@ def hotelroom():
 def hotelgroup():
 	return check_admin('hotelgroup.html')
 
-@app.route('/checkin')
+@app.route('/checkin', methods=['GET', 'POST'])
 def checkin():
-	return render_template('checkin.html')
+	reservation_id = -1
+	if request.method == 'POST':
+		result = request.form
+		reservation_id = result['ReservationID']
+		hotel_room_id = create_list("SELECT HotelRoomID from Reserves where ReservationID='{}'".format(reservation_id))[0]
+		employees = create_list("SELECT IRSNumber from WorksHotelRoom where HotelRoomID='{}'".format(hotel_room_id))
+		print(employees)
+
+	return render_template('checkin.html', reservation_id=reservation_id, hotel_room_id = hotel_room_id, employees=employees)
 
 @app.route('/reservation_error')
 def reservation_error():
