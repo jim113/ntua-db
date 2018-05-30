@@ -306,6 +306,32 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger delroomgr
+before delete on Hotel
+for each row
+begin
+delete from Works where HotelID=old.HotelID;
+delete from HotelEmailAddress where HotelID=old.HotelID;
+delete from HotelPhoneNumbers where HotelID=old.HotelID;
+delete from Rents where HotelRoomID in (select HotelRoomID FROM HotelRoom where HotelID=old.HotelID);
+delete from Amenities where HotelRoomID in (select HotelRoomID FROM HotelRoom where HotelID=old.HotelID);
+delete from HotelRoom where HotelID=old.HotelID;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `HotelEmailAddress`
@@ -378,6 +404,29 @@ IF (new.NumberOfHotels < 0) THEN
   SIGNAL SQLSTATE '45000'
   SET MESSAGE_TEXT = 'Negative number of rooms!';
 END IF;
+
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger delhotgr
+before delete on HotelGroup
+for each row
+begin
+delete from HotelGroupEmailAddress where HotelGroupID=old.HotelGroupID;
+delete from HotelGroupPhoneNumbers where HotelGroupID=old.HotelGroupID;
+delete from Hotel where HotelGroupID=old.HotelGroupID;
 
 end */;;
 DELIMITER ;
@@ -600,6 +649,27 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger delhotroomgr
+before delete on HotelRoom
+for each row
+begin
+delete from Reserves where HotelRoomID=old.HotelRoomID;
+delete from Rents where HotelRoomID=old.HotelRoomID;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Temporary table structure for view `HotelRoomCapacityView`
@@ -610,13 +680,8 @@ DROP TABLE IF EXISTS `HotelRoomCapacityView`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `HotelRoomCapacityView` AS SELECT 
- 1 AS `HotelRoomID`,
- 1 AS `HotelID`,
- 1 AS `Price`,
  1 AS `Capacity`,
- 1 AS `View`,
- 1 AS `Expandable`,
- 1 AS `RepairsNeed`*/;
+ 1 AS `Rooms_Per_Capacity`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -628,16 +693,8 @@ DROP TABLE IF EXISTS `HotelRoomLocationView`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `HotelRoomLocationView` AS SELECT 
- 1 AS `HotelRoomID`,
- 1 AS `HotelID`,
- 1 AS `Price`,
- 1 AS `Expandable`,
- 1 AS `RepairsNeed`,
- 1 AS `Stars`,
- 1 AS `Street`,
- 1 AS `StreetNumber`,
- 1 AS `PostalCode`,
- 1 AS `-City`*/;
+ 1 AS `City`,
+ 1 AS `Rooms_Per_City`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -792,31 +849,6 @@ LOCK TABLES `Works` WRITE;
 INSERT INTO `Works` VALUES (1,6772345,1,'Manager','2000-03-03 00:00:00','2100-03-04 00:00:00'),(2,564398,2,'Manager','1990-02-02 00:00:00','2040-03-04 00:00:00'),(3,124670,3,'Manager','1990-02-04 00:00:00','2010-03-04 00:00:00'),(4,87654,4,'Manager','1990-02-05 00:00:00','2000-03-04 00:00:00'),(5,87546,5,'Manager','1997-02-06 00:00:00','2000-03-04 00:00:00'),(6,56780,6,'Manager','1998-04-05 00:00:00','2000-03-04 00:00:00'),(7,56745,7,'Manager','1994-05-03 00:00:00','2000-03-04 00:00:00'),(8,55431,8,'Manager','1987-06-08 00:00:00','2000-03-04 00:00:00'),(9,54452,9,'Manager','1999-05-07 00:00:00','2000-03-04 00:00:00'),(10,53418,10,'Manager','1990-04-01 00:00:00','2000-03-04 00:00:00'),(11,53412,11,'Manager','1990-01-01 00:00:00','2000-03-04 00:00:00'),(12,42365,12,'Manager','1990-01-02 00:00:00','2000-03-04 00:00:00'),(13,23453,13,'Manager','1990-04-05 00:00:00','2000-03-04 00:00:00'),(14,10123,14,'Manager','2000-02-06 00:00:00','2000-03-04 00:00:00'),(15,9076,15,'Manager','1990-05-09 00:00:00','2000-03-04 00:00:00'),(16,7562,16,'Manager','2000-06-03 00:00:00','2004-03-04 00:00:00'),(17,6789,17,'Manager','1996-07-05 00:00:00','2000-03-04 00:00:00'),(18,6541,18,'Manager','1990-06-04 00:00:00','2000-03-04 00:00:00'),(19,6532,19,'Manager','1999-06-05 00:00:00','2000-03-04 00:00:00'),(20,5234,20,'Manager','2000-01-01 00:00:00','2005-03-04 00:00:00'),(21,3678,21,'Manager','1999-03-01 00:00:00','2000-03-04 00:00:00'),(22,3333,22,'Manager','2000-01-04 00:00:00','2007-03-04 00:00:00'),(23,1237,23,'Manager','2001-01-01 00:00:00','2010-03-04 00:00:00'),(24,1233,24,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(25,1233,25,'Manager','2002-02-02 00:00:00','2007-03-04 00:00:00'),(26,1233,25,'Cleaner','2007-03-04 00:00:00','2007-03-04 00:00:00'),(27,432432,38,'Manager','2007-03-04 00:00:00','2008-03-04 00:00:00');
 /*!40000 ALTER TABLE `Works` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger deletemgr
-before delete on Works
-for each row
-begin
-IF  EXISTS (select * from Works where HotelID = old.HotelID and Position = 'Manager'
- ) THEN
-  SIGNAL SQLSTATE '45000'
-  SET MESSAGE_TEXT = 'No manager exists for this hotel!';
-END IF;
-
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Temporary table structure for view `WorksHotel`
@@ -880,7 +912,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `HotelRoomCapacityView` AS select `HotelRoom`.`HotelRoomID` AS `HotelRoomID`,`HotelRoom`.`HotelID` AS `HotelID`,`HotelRoom`.`Price` AS `Price`,`HotelRoom`.`Capacity` AS `Capacity`,`HotelRoom`.`View` AS `View`,`HotelRoom`.`Expandable` AS `Expandable`,`HotelRoom`.`RepairsNeed` AS `RepairsNeed` from `HotelRoom` order by `HotelRoom`.`Capacity` */;
+/*!50001 VIEW `HotelRoomCapacityView` AS select `HotelRoom`.`Capacity` AS `Capacity`,count(`HotelRoom`.`HotelRoomID`) AS `Rooms_Per_Capacity` from `HotelRoom` where (not(`HotelRoom`.`HotelRoomID` in (select `Rents`.`HotelRoomID` from `Rents`))) group by `HotelRoom`.`Capacity` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -898,7 +930,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `HotelRoomLocationView` AS select `HotelRoom`.`HotelRoomID` AS `HotelRoomID`,`Hotel`.`HotelID` AS `HotelID`,`HotelRoom`.`Price` AS `Price`,`HotelRoom`.`Expandable` AS `Expandable`,`HotelRoom`.`RepairsNeed` AS `RepairsNeed`,`Hotel`.`Stars` AS `Stars`,`Hotel`.`Street` AS `Street`,`Hotel`.`StreetNumber` AS `StreetNumber`,`Hotel`.`PostalCode` AS `PostalCode`,-(`Hotel`.`City`) AS `-City` from (`HotelRoom` join `Hotel` on((`Hotel`.`HotelID` = `HotelRoom`.`HotelID`))) order by `Hotel`.`City` */;
+/*!50001 VIEW `HotelRoomLocationView` AS select `H`.`City` AS `City`,count(`HR`.`HotelRoomID`) AS `Rooms_Per_City` from (`Hotel` `H` join `HotelRoom` `HR` on((`H`.`HotelID` = `HR`.`HotelID`))) where (not(`HR`.`HotelRoomID` in (select `Rents`.`HotelRoomID` from `Rents`))) group by `H`.`City` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -948,4 +980,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-30 10:02:58
+-- Dump completed on 2018-05-30 11:43:16
