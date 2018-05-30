@@ -313,13 +313,6 @@ def checkin_result(type_of_result):
 		result = request.form
 		orderBy = result['orderBy']
 
-
-
-
-
-
-
-
 		global start_date
 		global finish_date
 		start_date = result['StartDate']
@@ -426,18 +419,26 @@ def result(type_of_result):
 
 @app.route('/result/<type_of_result>/delete/<irs_number>')
 def result_delete(type_of_result, irs_number):
-	global link_tables
 	error = False
-	try:
-		tbl = link_tables[type_of_result]
-	except KeyError:
-		print ('Wrong')
-		tbl = ''
 
-	try:
-		query = "DELETE FROM eHOTELS.{} where IRSNumber = '{}';".format(tbl, irs_number)
-		exec_query(query, refresh=True, commit=True)
-	except: error = True
+	global link_tables
+	if type_of_result == 'hotel':
+		delete_hotel(irs_number)
+	elif type_of_result == 'hotelroom':
+		delete_hotel_room(irs_number)
+	elif type_of_result == 'hotelgroup':
+		delete_hotel_group(irs_number)
+	else:
+		try:
+			tbl = link_tables[type_of_result]
+		except KeyError:
+			print ('Wrong')
+			tbl = ''
+
+		try:
+			query = "DELETE FROM eHOTELS.{} where IRSNumber = '{}';".format(tbl, irs_number)
+			exec_query(query, refresh=True, commit=True)
+		except: error = True
 
 	return render_template("result_delete.html", irs_number = irs_number, type_of_result = type_of_result, error=error)
 
@@ -519,6 +520,37 @@ def edit(type_of_result, id):
 			return render_template('edit_result.html', error_log=error_log)
 
 	return render_template("edit.html", data=data, type_of_result=type_of_result, id=id, error=error, tbl = tbl, error_log = error_log)
+
+def delete_hotel_room(hotel_room_id):
+    exec_query('DELETE FROM Amenities where HotelRoomID = {}'.format(hotel_room_id), commit=True)
+    exec_query('DELETE FROM Rents where HotelRoomID = {}'.format(hotel_room_id), commit=True)
+    exec_query('DELETE FROM Reserves where HotelRoomID = {}'.format(hotel_room_id), commit=True)
+    exec_query('DELETE from HotelRoom where HotelRoom.HotelRoomID = {}'.format(hotel_room_id), commit=True)
+
+def delete_hotel(hotel_id):
+    exec_query('DELETE FROM HotelPhoneNumbers where HotelID = {}'.format(hotel_id), commit=True)
+    exec_query('DELETE FROM HotelEmailAddress where HotelID = {}'.format(hotel_id), commit=True)
+    exec_query('DELETE FROM Works where HotelID = {}'.format(hotel_id), commit=True)
+    rooms = create_list('SELECT HotelRoomID from HotelRoom where HotelID = {}'.format(hotel_id))
+
+    for room in rooms:
+        delete_hotel_room(room)
+    print(rooms)
+    exec_query('DELETE FROM Hotel where HotelID = {}'.format(hotel_id), commit=True)
+
+
+def delete_hotel_group(hotel_group_id):
+    print('phone')
+    exec_query('DELETE FROM HotelGroupPhoneNumbers where HotelGroupID = {}'.format(hotel_group_id), commit=True)
+    print('room')
+    exec_query('DELETE FROM HotelGroupEmailAddress where HotelGroupID = {}'.format(hotel_group_id), commit=True)
+    hotels = create_list('SELECT HotelID from Hotel where HotelGroupID = {}'.format(hotel_group_id))
+    print('boo')
+    for hotel in hotels:
+        delete_hotel(hotel)
+    print(hotels)
+    exec_query('DELETE FROM HotelGroup where HotelGroupID = {}'.format(hotel_group_id), commit=True)
+
 
 if __name__ == '__main__':
 	app.run(debug=True, use_reloader=True, ssl_context='adhoc')
